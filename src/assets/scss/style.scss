@@ -1,0 +1,80 @@
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
+
+$black: #020203;
+$white: #ffffff;
+$red: #E60000;
+$light-grey: #FBFBFB;
+$dark-grey: #282D30;
+$grey: #74798c;
+$light-grey: #cccccc;
+
+$size_index: 0.0625;
+$font_size: (
+    '24px': calc(24rem *  $size_index),
+    '20px': calc(20rem *  $size_index),
+    '26px': calc(26rem *  $size_index),
+    '36px': calc(36rem * $size_index),
+    '48px': calc(48rem * $size_index),
+    '18px': calc(18rem * $size_index),
+    '288px': calc(288rem * $size_index),
+    '14px': calc(14rem * $size_index),
+    '12px': calc(12rem * $size_index),
+    '96px': calc(96rem * $size_index),
+    );
+
+.select{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    border: solid 1px $grey;
+    border-radius: 5px;
+    position: relative;
+    &--def-item-cont{
+        display: flex;
+        align-items: stretch;
+        
+        &--input{
+          flex-grow: 2;
+          padding: .3rem;
+          font-size: 1.2rem;
+          color: $dark-grey;
+          cursor: pointer;
+        }
+        button{
+            background-color: transparent;
+            border: 0;
+            padding-left: .7rem;
+            padding-right: .7rem; 
+        }
+    }
+
+    ul{
+        position: absolute;
+        top: 2.4rem;
+        left: -1px;
+        border: solid 1px $grey;
+        border-radius: 5px;
+        width: calc(100% + 2px);
+        padding: 0;
+        li{
+            list-style: none;
+            width: 100%;
+            cursor: pointer;
+            padding: .5rem;
+            &:hover{
+                background-color: $light-grey;
+            }
+        }
+    }
+}
+
+input{
+    display: flex;
+    width: 100%;
+    border: solid 1px $grey;
+    border-radius: 5px;
+    padding: .3rem;
+    font-size: 1.2rem;
+    color: $dark-grey;
+}
