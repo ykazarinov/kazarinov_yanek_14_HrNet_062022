@@ -15,9 +15,17 @@ export default function Home(){
                 <input id="firstName" />
             </div>
             <div className="col-6">
-                <label htmlFor="state">State</label>
-                <Select data={selectList} id='state'></Select>
+                <label htmlFor='lastName'>Last Name</label>
+                <input id="lastName" />
             </div>
+
+            <fieldset className="address col-6">
+                    <legend>Address</legend>
+                    <label htmlFor="state">State</label>
+                    <Select data={selectList} id='state'></Select>
+                   
+            </fieldset>
+            <button>test</button>
         </form>
             
         </main>

@@ -11119,13 +11119,23 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+body {
+  background-color: #f0f1f3;
+}
+
+h1, .h1 {
+  text-align: center;
+  color: #74798c;
+}
+
 .select {
   display: flex;
   width: 100%;
   flex-direction: column;
-  border: solid 1px #74798c;
+  border: solid 2px #74798c;
   border-radius: 5px;
   position: relative;
+  background-color: #ffffff;
 }
 .select--def-item-cont {
   display: flex;
@@ -11138,7 +11148,7 @@ textarea.form-control-lg {
   color: #282D30;
   cursor: pointer;
 }
-.select--def-item-cont button {
+.select--def-item-cont .btn {
   background-color: transparent;
   border: 0;
   padding-left: 0.7rem;
@@ -11152,6 +11162,7 @@ textarea.form-control-lg {
   border-radius: 5px;
   width: calc(100% + 2px);
   padding: 0;
+  background-color: #ffffff;
 }
 .select ul li {
   list-style: none;
@@ -11166,11 +11177,48 @@ textarea.form-control-lg {
 input {
   display: flex;
   width: 100%;
-  border: solid 1px #74798c;
+  border: solid 2px #74798c;
   border-radius: 5px;
   padding: 0.3rem;
   font-size: 1.2rem;
   color: #282D30;
+  margin-bottom: 1rem;
+}
+
+header {
+  background-color: #74798c;
+  padding: 0.5rem;
+  color: #ffffff;
+  min-height: 3rem;
+  display: flex;
+}
+header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 5px;
+}
+header .logo a {
+  color: #ffffff;
+  text-decoration: none;
+}
+header .logo a span {
+  font-weight: normal;
+}
+
+footer {
+  background-color: #74798c;
+  padding: 0.5rem;
+  color: #ffffff;
+  height: 3rem;
+}
+
+main {
+  min-height: calc(100vh - 6rem);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 /*# sourceMappingURL=style.css.map */

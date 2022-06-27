@@ -11958,6 +11958,15 @@ fieldset:disabled .btn {
   }
 }
 
+body {
+  background-color: #f0f1f3;
+}
+
+h1, .h1 {
+  text-align: center;
+  color: #74798c;
+}
+
 .select {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11970,6 +11979,7 @@ fieldset:disabled .btn {
   border: solid 1px #74798c;
   border-radius: 5px;
   position: relative;
+  background-color: #ffffff;
 }
 
 .select--def-item-cont {
@@ -12006,6 +12016,7 @@ fieldset:disabled .btn {
   border-radius: 5px;
   width: calc(100% + 2px);
   padding: 0;
+  background-color: #ffffff;
 }
 
 .select ul li {
@@ -12029,5 +12040,13 @@ input {
   padding: .3rem;
   font-size: 1.2rem;
   color: #282D30;
+  margin-bottom: 1rem;
+}
+
+header {
+  background-color: #146ebe;
+  padding: .5rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
 }
 /*# sourceMappingURL=style.css.map */

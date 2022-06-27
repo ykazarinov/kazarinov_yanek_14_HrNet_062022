@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-const reducer = {
+import selectReducer from "./slices/select.slice";
 
+const reducer = {
+  actualItem: selectReducer,
+  isOpen: selectReducer,
 }
 
 const store = configureStore({
