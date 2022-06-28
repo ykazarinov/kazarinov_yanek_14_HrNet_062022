@@ -11136,6 +11136,7 @@ h1, .h1 {
   border-radius: 5px;
   position: relative;
   background-color: #ffffff;
+  margin-bottom: 1rem;
 }
 .select--def-item-cont {
   display: flex;
@@ -11229,6 +11230,7 @@ main {
   border-radius: 5px;
   position: relative;
   background-color: #ffffff;
+  margin-bottom: 1rem;
 }
 .calendar--def-item-cont {
   display: flex;
@@ -11257,6 +11259,37 @@ main {
   padding: 0;
   background-color: #ffffff;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+.calendar .calendar-week {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.calendar .calendar-day {
+  width: 2rem;
+  height: 2rem;
+  margin: 0.2rem;
+  background-color: #cccccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.calendar .calendar-weektitles {
+  display: flex;
+  justify-content: center;
+}
+.calendar .calendar-weekdayname {
+  width: 2rem;
+  height: 2rem;
+  margin: 0.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */

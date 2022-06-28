@@ -24,7 +24,7 @@ export default function Select( props ){
 
     return <div className="select">
         <div className="select--def-item-cont"
-            onBlur={()=>setIsOpen(false)}
+            onChange={()=>setIsOpen(false)}
         >
             <div 
                 className="select--def-item-cont--input actual-item-cont"
