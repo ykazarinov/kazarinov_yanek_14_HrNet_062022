@@ -11221,4 +11221,42 @@ main {
   padding-bottom: 1rem;
 }
 
+.calendar {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  border: solid 2px #74798c;
+  border-radius: 5px;
+  position: relative;
+  background-color: #ffffff;
+}
+.calendar--def-item-cont {
+  display: flex;
+  align-items: stretch;
+}
+.calendar--def-item-cont--input {
+  flex-grow: 2;
+  padding: 0.3rem;
+  font-size: 1.2rem;
+  color: #282D30;
+  cursor: pointer;
+}
+.calendar--def-item-cont .btn {
+  background-color: transparent;
+  border: 0;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+}
+.calendar .calendar-body {
+  position: absolute;
+  top: 2.4rem;
+  left: -1px;
+  border: solid 1px #74798c;
+  border-radius: 5px;
+  width: calc(100% + 2px);
+  padding: 0;
+  background-color: #ffffff;
+  z-index: 10;
+}
+
 /*# sourceMappingURL=style.css.map */

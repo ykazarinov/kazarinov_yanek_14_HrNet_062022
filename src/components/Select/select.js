@@ -1,10 +1,5 @@
 import styled from "styled-components"
-
-import { useSelector, useDispatch } from "react-redux";
-
-import { setActualItem } from "../../slices/select.slice";
-import { setIsOpen } from "../../slices/select.slice";
-
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
@@ -12,26 +7,40 @@ const OpenSelectList = styled('ul')`
     display: block;`
 const CloseSelectList = styled('ul')`display: none;`
 
-export default function Select({data}){
+function trueOrFalse(isOpen){
+    return isOpen === true ? false : true
+}
 
-    const dispatch = useDispatch();
-    const { actualItem } = useSelector((state) => state.actualItem);
-    const { isOpen } = useSelector((state) => state.isOpen)
+
+
+export default function Select( props ){
+
+    const [actualItem, setActualItem] = useState('Choose item...')
+    const [isOpen, setIsOpen] = useState(false)
+
+    useEffect(()=>{
+        setIsOpen(false)
+    }, [])
 
     return <div className="select">
-        <div className="select--def-item-cont">
+        <div className="select--def-item-cont"
+            onBlur={()=>setIsOpen(false)}
+        >
             <div 
                 className="select--def-item-cont--input actual-item-cont"
-                onClick={()=>dispatch(setIsOpen())}>{actualItem}</div>
-            <div className="btn" onClick={()=>dispatch(setIsOpen())}>
+                onClick={()=>setIsOpen(trueOrFalse(isOpen))}
+                >{actualItem}
+            </div>
+            <div className="btn" onClick={()=>setIsOpen(trueOrFalse(isOpen))}>
                 <FontAwesomeIcon icon={faAngleDown} />
             </div>
         </div>
         
         {isOpen ?
         <OpenSelectList>
-            {data.map && data.map((item, index)=>
-                (<li key={index} onClick={()=>{dispatch(setActualItem(item))}}>{item}</li>)
+            {props.data.map && props.data.map((item, index)=>
+                (<li key={index} onClick={()=>{setActualItem(item)
+                     setIsOpen(trueOrFalse(isOpen))}}>{item}</li>)
             )}
         </OpenSelectList>
         : <CloseSelectList></CloseSelectList>

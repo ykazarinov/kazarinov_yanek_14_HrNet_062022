@@ -129,3 +129,45 @@ main{
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
+
+.calendar{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    border: solid 2px $grey;
+    border-radius: 5px;
+    position: relative;
+    background-color: $white;
+    &--def-item-cont{
+        display: flex;
+        align-items: stretch;
+        
+        &--input{
+          flex-grow: 2;
+          padding: .3rem;
+          font-size: 1.2rem;
+          color: $dark-grey;
+          cursor: pointer;
+        }
+        .btn{
+            background-color: transparent;
+            border: 0;
+            padding-left: .7rem;
+            padding-right: .7rem; 
+            
+        }
+    }
+
+    .calendar-body{
+        position: absolute;
+        top: 2.4rem;
+        left: -1px;
+        border: solid 1px $grey;
+        border-radius: 5px;
+        width: calc(100% + 2px);
+        padding: 0;
+        background-color: $white;
+        z-index: 10;
+       
+    }
+}

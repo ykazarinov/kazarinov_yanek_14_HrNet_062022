@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import selectReducer from "./slices/select.slice";
+import selectReducer1 from "./slices/select.slice";
+import selectReducer2 from "./slices/select.slice";
+
 
 const reducer = {
-  actualItem: selectReducer,
-  isOpen: selectReducer,
+  actualItem1: selectReducer1,
+  isOpen1: selectReducer1,
+  actualItem2: selectReducer2,
+  isOpen2: selectReducer2,
 }
 
 const store = configureStore({
