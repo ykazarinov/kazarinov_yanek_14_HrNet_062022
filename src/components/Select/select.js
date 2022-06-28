@@ -15,19 +15,19 @@ function trueOrFalse(isOpen){
 
 export default function Select( props ){
 
-    const [actualItem, setActualItem] = useState('Choose item...')
+    const [actualItem, setActualItem] = useState(props.defaultValue || 'Choose item...')
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(()=>{
         setIsOpen(false)
     }, [])
 
-    return <div className="select">
-        <div className="select--def-item-cont"
+    return <div className={props.prefix}>
+        <div className={props.prefix + "--def-item-cont"}
             onChange={()=>setIsOpen(false)}
         >
             <div 
-                className="select--def-item-cont--input actual-item-cont"
+                className={props.prefix + "--def-item-cont--input actual-item-cont"}
                 onClick={()=>setIsOpen(trueOrFalse(isOpen))}
                 >{actualItem}
             </div>

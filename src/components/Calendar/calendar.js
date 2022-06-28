@@ -1,7 +1,9 @@
 import styled from "styled-components"
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendarDays } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarDays, faAngleLeft, faAngleRight, faHouse } from '@fortawesome/free-solid-svg-icons'
+
+import Select from "../Select/select"
 
 const OpenCalendarList = styled('div')`
     display: block;`
@@ -95,9 +97,62 @@ export default function Calendar(){
     const [choosedMonth, setChoosedMonth] = useState(currentDay.getMonth() + 1)
     const [choosedDay, setChoosedDay] = useState(currentDay.getDate())
 
+    const [currentMonth, setCurrentMonth] = useState(monthDates(choosedYear, choosedMonth))
+
     const weekDaysNames = [ 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di']
+    const monthNames = [
+        'Janvier',
+        'Février',
+        'Mars',
+        'Avril',
+        'Mai',
+        'Juin',
+        'Juillet',
+        'Août',
+        'Septembre',
+        'Octobre',
+        'Novembre',
+        'Décembre']
+    const yearsNames = []
+        for(let i=currentDay.getFullYear(); i>=1900; i--){
+            yearsNames.push(i)
+        }
 
     const [isOpen, setIsOpen] = useState(false)
+
+    const leftDown = (() => {
+        
+        if(choosedMonth === 1){
+            setChoosedMonth(12)
+            setChoosedYear(choosedYear - 1)
+            console.log(choosedYear)
+            console.log(choosedMonth)
+            setCurrentMonth(monthDates(choosedYear, choosedMonth))
+
+        }else{
+            setChoosedMonth(choosedMonth - 1)
+            console.log(choosedYear)
+            console.log(choosedMonth)
+            setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        }
+    })
+
+    const rightDown = (() => {
+        
+        if(choosedMonth === 12){
+            setChoosedMonth(1)
+            setChoosedYear(choosedYear + 1)
+            console.log(choosedYear)
+            console.log(choosedMonth)
+            setCurrentMonth(monthDates(choosedYear, choosedMonth))
+
+        }else{
+            setChoosedMonth(choosedMonth + 1)
+            console.log(choosedYear)
+            console.log(choosedMonth)
+            setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        }
+    })
 
     return <div className="calendar">
         <div className="calendar--def-item-cont">
@@ -111,14 +166,31 @@ export default function Calendar(){
         </div>
         {isOpen ?
         <OpenCalendarList className='calendar-body'>
+            <div className='control-elements'>
+                <div className='control-left' onClick={()=>leftDown()}><FontAwesomeIcon icon={faAngleLeft} /></div>
+                <div className='control-home' ><FontAwesomeIcon icon={faHouse} /></div>
+                <Select 
+                    data={monthNames} 
+                    id='month' 
+                    prefix='calsel' 
+                    defaultValue={monthNames[choosedMonth - 1]}>
+                </Select>
+                <Select 
+                    data={yearsNames} 
+                    id='year' 
+                    prefix='calsel' 
+                    defaultValue={choosedYear}>
+                </Select>
+                <div className='control-right' onClick={()=>rightDown()}><FontAwesomeIcon icon={faAngleRight} /></div>
+            </div>
             <div className='calendar-weektitles'>
                 {weekDaysNames.map && weekDaysNames.map((weekDayName, i) => (
                     <div key={i} className='calendar-weekdayname'>{weekDayName}</div>
                 ))}
             </div>
             {
-                monthDates(choosedYear, choosedMonth).map && 
-                monthDates(choosedYear, choosedMonth).map((week, i) => (
+                currentMonth.map && 
+                currentMonth.map((week, i) => (
                     <div key={i} className='calendar-week'>
                     {week.map && week.map((day, j)=>(
                         <div key={j} className='calendar-day'>

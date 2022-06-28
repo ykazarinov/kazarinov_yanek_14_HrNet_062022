@@ -11128,14 +11128,70 @@ h1, .h1 {
   color: #74798c;
 }
 
-.select {
+.calsel {
   display: flex;
-  width: 100%;
   flex-direction: column;
   border: solid 2px #74798c;
   border-radius: 5px;
   position: relative;
   background-color: #ffffff;
+  width: 100%;
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}
+.calsel--def-item-cont {
+  display: flex;
+  align-items: stretch;
+}
+.calsel--def-item-cont--input {
+  flex-grow: 2;
+  padding: 0.3rem;
+  color: #282D30;
+  cursor: pointer;
+}
+.calsel--def-item-cont .btn {
+  background-color: transparent;
+  border: 0;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+}
+.calsel ul {
+  position: absolute;
+  top: 2.4rem;
+  left: -1px;
+  border: solid 1px #74798c;
+  border-radius: 5px;
+  width: calc(100% + 2px);
+  padding: 0;
+  background-color: #ffffff;
+  max-height: 30vh;
+  overflow-y: auto;
+  z-index: 12;
+}
+.calsel ul li {
+  list-style: none;
+  width: 100%;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.calsel ul li:hover {
+  background-color: #cccccc;
+}
+.calsel--def-item-cont--input {
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  display: flex;
+  flex-direction: column;
+  border: solid 2px #74798c;
+  border-radius: 5px;
+  position: relative;
+  background-color: #ffffff;
+  width: 100%;
+  font-size: 1.2rem;
   margin-bottom: 1rem;
 }
 .select--def-item-cont {
@@ -11145,7 +11201,6 @@ h1, .h1 {
 .select--def-item-cont--input {
   flex-grow: 2;
   padding: 0.3rem;
-  font-size: 1.2rem;
   color: #282D30;
   cursor: pointer;
 }
@@ -11164,6 +11219,9 @@ h1, .h1 {
   width: calc(100% + 2px);
   padding: 0;
   background-color: #ffffff;
+  max-height: 30vh;
+  overflow-y: auto;
+  z-index: 12;
 }
 .select ul li {
   list-style: none;
@@ -11290,6 +11348,25 @@ main {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+}
+
+.control-elements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.control-left {
+  padding: 0.2rem;
+  margin-right: 0.3rem;
+}
+.control-home {
+  padding: 0.2rem;
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+}
+.control-right {
+  padding: 0.2rem;
+  margin-left: 0.3rem;
 }
 
 /*# sourceMappingURL=style.css.map */

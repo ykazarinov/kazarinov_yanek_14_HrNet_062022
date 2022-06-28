@@ -33,15 +33,16 @@ $font_size: (
     '96px': calc(96rem * $size_index),
     );
 
-.select{
+@mixin default-select {
+   
     display: flex;
-    width: 100%;
+
     flex-direction: column;
     border: solid 2px $grey;
     border-radius: 5px;
     position: relative;
     background-color: $white;
-    margin-bottom: 1rem;
+
     &--def-item-cont{
         display: flex;
         align-items: stretch;
@@ -49,7 +50,7 @@ $font_size: (
         &--input{
           flex-grow: 2;
           padding: .3rem;
-          font-size: 1.2rem;
+          
           color: $dark-grey;
           cursor: pointer;
         }
@@ -71,6 +72,9 @@ $font_size: (
         width: calc(100% + 2px);
         padding: 0;
         background-color: $white;
+        max-height: 30vh;
+        overflow-y: auto;
+        z-index: 12;
         li{
             list-style: none;
             width: 100%;
@@ -81,6 +85,27 @@ $font_size: (
             }
         }
     }
+   
+    }
+.calsel{
+    @include default-select;
+    width: 100%;
+    font-size: .8rem;
+    margin-left: .2rem;
+    margin-right: .2rem;
+    &--def-item-cont{
+        &--input{
+            display: flex;
+            align-items: center
+        }
+    }
+}
+
+.select{
+   @include default-select;
+   width: 100%;
+   font-size: 1.2rem;
+   margin-bottom: 1rem;
 }
 
 input{
@@ -207,5 +232,27 @@ main{
             align-items: center;
             border-radius: 5px;
         }
+    }
+}
+
+.control{
+    &-elements{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-left{
+        padding: .2rem;
+        margin-right: .3rem;
+
+    }
+    &-home{
+        padding: .2rem;
+        margin-right: .3rem;
+        margin-left: .3rem;
+    }
+    &-right{
+        padding: .2rem;
+        margin-left: .3rem;
     }
 }

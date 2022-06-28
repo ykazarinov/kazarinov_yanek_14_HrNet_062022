@@ -31,11 +31,11 @@ export default function Home(){
 
             <div className="address col-6">
                     <label htmlFor="state">State</label>
-                    <Select data={selectList} id='state' selectNumber='1'></Select>
+                    <Select data={selectList} id='state' prefix='select'></Select>
             </div>
             <div className="address col-6">
                     <label htmlFor="state2">State2</label>
-                    <Select data={selectList} id='state2' selectNumber='2'></Select>
+                    <Select data={selectList} id='state2' prefix='select'></Select>
             </div>
             <button>test</button>
         </form>
