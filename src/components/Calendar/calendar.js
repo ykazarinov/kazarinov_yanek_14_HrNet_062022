@@ -1,7 +1,15 @@
 import styled from "styled-components"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarDays, faAngleLeft, faAngleRight, faHouse } from '@fortawesome/free-solid-svg-icons'
+
+import { useSelector, useDispatch } from "react-redux";
+
+import { setActualItem1 } from "../../slices/calendar.slice";
+import { setIsOpen1, setIsOpen2 } from "../../slices/calendar.slice";
+
+
+
 
 import Select from "../Select/select"
 
@@ -89,7 +97,7 @@ const monthDates = ((year, month) => {
 
 
 
-export default function Calendar(){
+export default function Calendar(props){
 
     const currentDay = new Date()
 
@@ -118,22 +126,22 @@ export default function Calendar(){
             yearsNames.push(i)
         }
 
-    const [isOpen, setIsOpen] = useState(false)
+    // const [isOpen, setIsOpen] = useState(false)
 
     const leftDown = (() => {
         
         if(choosedMonth === 1){
             setChoosedMonth(12)
             setChoosedYear(choosedYear - 1)
-            console.log(choosedYear)
-            console.log(choosedMonth)
+
             setCurrentMonth(monthDates(choosedYear, choosedMonth))
+            console.log(currentMonth)
 
         }else{
             setChoosedMonth(choosedMonth - 1)
-            console.log(choosedYear)
-            console.log(choosedMonth)
+
             setCurrentMonth(monthDates(choosedYear, choosedMonth))
+            console.log(currentMonth)
         }
     })
 
@@ -154,13 +162,19 @@ export default function Calendar(){
         }
     })
 
+    const dispatch = useDispatch();
+    const  actualItem1  = useSelector((state) => state.reducer1).actualItem1;
+    const  isOpen  = useSelector((state) => state['reducer' + props.calNum])['isOpen'+props.calNum]
+
+    const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
+
     return <div className="calendar">
         <div className="calendar--def-item-cont">
             <div 
                 className="calendar--def-item-cont--input actual-item-cont"
-                onClick={()=>setIsOpen(trueOrFalse(isOpen))}>
+                onClick={()=>dispatch(setIsOpen())}>
             </div>
-            <div className="btn" onClick={()=>setIsOpen(trueOrFalse(isOpen))}>
+            <div className="btn" onClick={()=>dispatch(setIsOpen())}>
                 <FontAwesomeIcon icon={faCalendarDays} />
             </div>
         </div>

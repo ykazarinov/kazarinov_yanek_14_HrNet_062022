@@ -22,11 +22,11 @@ export default function Home(){
 
             <div className="address col-6">
                     <label htmlFor="birthday">Date of Birth</label>
-                    <Calendar  id='birthday' ></Calendar>
+                    <Calendar  id='birthday' calNum={1} ></Calendar>
             </div>
             <div className="address col-6">
                     <label htmlFor="startday">Start Date</label>
-                    <Calendar data={selectList} id='startday' selectNumber='2'></Calendar>
+                    <Calendar id='startday' calNum={2} selectNumber='2'></Calendar>
             </div>
 
             <div className="address col-6">
