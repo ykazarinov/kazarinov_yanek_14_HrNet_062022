@@ -6,6 +6,7 @@ function createGenericSlice(sliceName) {
 
   const initialState = {
       ['choosedYear' + sliceName]: currentDay.getFullYear(),
+      ['choosedMonth' + sliceName]: currentDay.getMonth() + 1,
       ['isOpen' + sliceName]: false
   };
 
@@ -16,37 +17,54 @@ function createGenericSlice(sliceName) {
 
         setChoosedYear: (state, action) => {
           return { 
-            ['choosedYear' + sliceName]: action.payload,
-            // ['choosedYear' + sliceName]: state['choosedYear' + sliceName] - 1,
-            ['isOpen' + sliceName] : state['isOpen' + sliceName]
+            ['isOpen' + sliceName] : state['isOpen' + sliceName],
+            ['choosedMonth' + sliceName]: state['choosedMonth' + sliceName],
+            ['choosedYear' + sliceName]: action.payload
+          };
+        },
+        setChoosedMonth: (state, action) => {
+          return { 
+            ['isOpen' + sliceName] : state['isOpen' + sliceName],
+            ['choosedMonth' + sliceName]: action.payload,
+            ['choosedYear' + sliceName]: state['choosedYear' + sliceName]
           };
         },
         setIsOpen: (state) => {
           return { 
-            
             ['isOpen' + sliceName] : state['isOpen' + sliceName] === true ? false : true,
+            ['choosedMonth' + sliceName]: state['choosedMonth' + sliceName],
             ['choosedYear' + sliceName]: state['choosedYear' + sliceName]
           };
         },
       },
     });
     const { reducer, actions } = calendarSlice;
-    const { setChoosedYear, setIsOpen } = actions;
-    return {setChoosedYear, setIsOpen, reducer}
+    const { setChoosedYear, choosedMonth, setIsOpen } = actions;
+    return {setChoosedYear, choosedMonth, setIsOpen, reducer}
 
   }
 
   const slice1 = createGenericSlice("1")
   const slice2 = createGenericSlice("2")
 
+  const setChoosedMonth1 = slice1.choosedMonth
   const setChoosedYear1 = slice1.setChoosedYear
   const setIsOpen1 = slice1.setIsOpen
   const calendarReducer1 = slice1.reducer
 
+  const setChoosedMonth2 = slice2.choosedMonth
   const setChoosedYear2 = slice2.setChoosedYear
   const setIsOpen2 = slice2.setIsOpen
   const calendarReducer2 = slice2.reducer
 
-  export {setChoosedYear1, setIsOpen1, calendarReducer1, setChoosedYear2, setIsOpen2, calendarReducer2}
+  export {
+    setChoosedMonth1, 
+    setChoosedYear1, 
+    setIsOpen1, 
+    calendarReducer1, 
+    setChoosedMonth2,
+    setChoosedYear2, 
+    setIsOpen2, 
+    calendarReducer2}
 
   

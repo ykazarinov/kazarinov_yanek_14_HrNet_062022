@@ -5,13 +5,10 @@ import { faCalendarDays, faAngleLeft, faAngleRight, faHouse } from '@fortawesome
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { setChoosedMonth1, setChoosedMonth2 } from "../../slices/calendar.slice";
 import { setChoosedYear1, setChoosedYear2 } from "../../slices/calendar.slice";
 import { setIsOpen1, setIsOpen2 } from "../../slices/calendar.slice";
 
-
-
-
-import Select from "../Select/select"
 
 const OpenCalendarList = styled('div')`
     display: block;`
@@ -104,32 +101,34 @@ export default function Calendar(props){
     const currentDay = new Date()
 
     const dispatch = useDispatch();
+    const  choosedMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedMonth'+props.calNum]
     const  choosedYear  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedYear'+props.calNum]
     const  isOpen  = useSelector((state) => state['calendarReducer' + props.calNum])['isOpen'+props.calNum]
 
     const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
     const setChoosedYear = (()=>{ return props.calNum === 1 ? setChoosedYear1() : setChoosedYear2()})
+    const setChoosedMonth = (()=>{ return props.calNum === 1 ? setChoosedMonth1() : setChoosedMonth2()})
 
     // const [choosedYear, setChoosedYear] = useState(currentDay.getFullYear())
-    const [choosedMonth, setChoosedMonth] = useState(currentDay.getMonth() + 1)
+    // const [choosedMonth, setChoosedMonth] = useState(currentDay.getMonth() + 1)
     const [choosedDay, setChoosedDay] = useState(currentDay.getDate())
 
     const [currentMonth, setCurrentMonth] = useState(monthDates(choosedYear, choosedMonth))
 
     const weekDaysNames = [ 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di']
     const monthNames = [
-        'Janvier',
-        'Février',
-        'Mars',
-        'Avril',
-        'Mai',
-        'Juin',
-        'Juillet',
-        'Août',
-        'Septembre',
-        'Octobre',
-        'Novembre',
-        'Décembre']
+        {index: 1, monthName:'Janvier'},
+        {index: 2, monthName:'Février'},
+        {index: 3, monthName:'Mars'},
+        {index: 4, monthName:'Avril'},
+        {index: 5, monthName:'Mai'},
+        {index: 6, monthName:'Juin'},
+        {index: 7, monthName:'Juillet'},
+        {index: 8, monthName:'Août'},
+        {index: 9, monthName:'Septembre'},
+        {index: 10, monthName:'Octobre'},
+        {index: 11, monthName:'Novembre'},
+        {index: 12, monthName:'Décembre'}]
     const yearsNames = []
         for(let i=currentDay.getFullYear(); i>=1900; i--){
             yearsNames.push(i)
@@ -140,41 +139,43 @@ export default function Calendar(props){
 
 
     const leftDown = (() => {
-        dispatch(yearDecrement())
-        // if(choosedMonth === 1){
-        //     setChoosedMonth(12)
+        
+        if(choosedMonth === 1){
+            dispatch(yearDecrement())
+            dispatch(monthToEnd())
             
-        //     setCurrentMonth(monthDates(choosedYear, choosedMonth))
-        // }else{
-        //     setChoosedMonth(choosedMonth - 1)
-        //     setCurrentMonth(monthDates(choosedYear, choosedMonth))
-        // }
+            
+            // setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        }else{
+            dispatch(monthDecrement())
+            // setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        }
     })
 
     const rightDown = (() => {
-        dispatch(yearExcrement())
-        // if(choosedMonth === 12){
-            
-        //     setChoosedMonth(1)
-        //     setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        
+        if(choosedMonth === 12){
+            dispatch(yearExcrement())
+            dispatch(monthToBegin())
+            // setCurrentMonth(monthDates(choosedYear, choosedMonth))
 
-        // }else{
-        //     setChoosedMonth(choosedMonth + 1)
-        //     setCurrentMonth(monthDates(choosedYear, choosedMonth))
-        // }
+        }else{
+            dispatch(monthExcrement())
+            // setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        }
     })
 
     const yearDecrement = (()=>{
         return {
             type: "calendar"+ props.calNum+"/setChoosedYear",
-            payload: choosedYear-1
+            payload: Number(choosedYear)-1
         }
     })
 
     const yearExcrement = (()=>{
         return {
             type: "calendar"+ props.calNum+"/setChoosedYear",
-            payload: choosedYear+1
+            payload: Number(choosedYear)+1
         }
     })
 
@@ -185,10 +186,45 @@ export default function Calendar(props){
         }
     })
 
+    const monthDecrement = (()=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedMonth",
+            payload: Number(choosedMonth)-1
+        }
+    })
+
+    const monthExcrement = (()=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedMonth",
+            payload: Number(choosedMonth)+1
+        }
+    })
+
+    const monthChoose = ((value)=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedMonth",
+            payload: monthNames.find(mN => mN.monthName === value).index
+        }
+    })
+
+    const monthToBegin = (()=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedMonth",
+            payload: 1
+        }
+    })
+
+    const monthToEnd = (()=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedMonth",
+            payload: 12
+        }
+    })
+
 
 
     return <div className="calendar">
-               
+          
          <div className="calendar--def-item-cont">
              <div 
                 className="calendar--def-item-cont--input actual-item-cont"
@@ -204,23 +240,11 @@ export default function Calendar(props){
                 <div className='control-left' onClick={()=>leftDown()}><FontAwesomeIcon icon={faAngleLeft} /></div>
                 <div className='control-home' ><FontAwesomeIcon icon={faHouse} /></div>
                
-                {/* <Select 
-                    data={monthNames} 
-                    id='month' 
-                    prefix='calsel' 
-                    // calNum={3}
-                    >
-                </Select>
-                <Select 
-                    data={yearsNames} 
-                    id='year' 
-                    prefix='calsel' 
-                    // calNum={4}
-                    defaultValue={choosedYear}>
-                </Select> */}
-                <select>
+                <select 
+                    value={monthNames.find(mN => mN.index === choosedMonth).monthName}
+                    onChange={(e)=>{dispatch(monthChoose(e.target.value))}}>
                     {monthNames.map && monthNames.map((item, index)=>
-                        (<option key={index}>{item}</option>)
+                        (<option key={index}>{item.monthName}</option>)
                     )}
                 </select>
                 <select value={choosedYear} onChange={(e)=>{dispatch(yearChoose(e.target.value))}}>
