@@ -1,37 +1,66 @@
 import styled from "styled-components"
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+
+import { useSelector, useDispatch } from "react-redux";
+
+import {    
+    setActualItem1, 
+    setActualItem2,
+    setIsOpen1, 
+    setIsOpen2,
+} from "../../slices/select.slice";
 
 const OpenSelectList = styled('ul')`
     display: block;`
 const CloseSelectList = styled('ul')`display: none;`
 
-function trueOrFalse(isOpen){
-    return isOpen === true ? false : true
-}
-
-
-
 export default function Select( props ){
 
-    const [actualItem, setActualItem] = useState(props.defaultValue || 'Choose item...')
-    const [isOpen, setIsOpen] = useState(false)
+    const dispatch = useDispatch();
+    const  actualItem  = useSelector((state) => state['selectReducer' + props.calNum])['actualItem'+props.calNum]
+    const  isOpen  = useSelector((state) => state['selectReducer' + props.calNum])['isOpen'+props.calNum]
 
-    useEffect(()=>{
-        setIsOpen(false)
-    }, [])
+    const setIsOpen = (()=>{ 
+        switch(props.calNum){
+            case 1: return setIsOpen1() 
+            case 2: return setIsOpen2() 
+            // case 3: return setIsOpen3() 
+            // case 4: return setIsOpen4() 
+            // case 5: return setIsOpen5() 
+            // case 6: return setIsOpen6() 
+            default: return
+        }
+    })
+
+    const setActualItem = (()=>{ 
+        switch(props.calNum){ 
+            case 1: return setActualItem1() 
+            case 2: return setActualItem2()
+            // case 3: return setActualItem3() 
+            // case 4: return setActualItem4()
+            // case 5: return setActualItem5() 
+            // case 6: return setActualItem6()
+            default: return
+        }
+    })
+
+    const changeItem = ((item)=>{
+        return {
+            type: "select"+ props.calNum+"/setActualItem",
+            payload: item
+        }
+    })
 
     return <div className={props.prefix}>
-        <div className={props.prefix + "--def-item-cont"}
-            onChange={()=>setIsOpen(false)}
-        >
+        <div className={props.prefix + "--def-item-cont"}>
             <div 
                 className={props.prefix + "--def-item-cont--input actual-item-cont"}
-                onClick={()=>setIsOpen(trueOrFalse(isOpen))}
+                onClick={()=>dispatch(setIsOpen())}
                 >{actualItem}
             </div>
-            <div className="btn" onClick={()=>setIsOpen(trueOrFalse(isOpen))}>
+            <div className="btn" onClick={()=>dispatch(setIsOpen())}>
                 <FontAwesomeIcon icon={faAngleDown} />
             </div>
         </div>
@@ -39,8 +68,7 @@ export default function Select( props ){
         {isOpen ?
         <OpenSelectList>
             {props.data.map && props.data.map((item, index)=>
-                (<li key={index} onClick={()=>{setActualItem(item)
-                     setIsOpen(trueOrFalse(isOpen))}}>{item}</li>)
+                (<li key={index} onClick={()=>dispatch(changeItem(item))}>{item}</li>)
             )}
         </OpenSelectList>
         : <CloseSelectList></CloseSelectList>

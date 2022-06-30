@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 function createGenericSlice(sliceName) {
 
+  const currentDay = new Date()
+
   const initialState = {
-      ['actualItem' + sliceName]: 'Choose item...',
+      ['choosedYear' + sliceName]: currentDay.getFullYear(),
       ['isOpen' + sliceName]: false
   };
 
@@ -12,37 +14,39 @@ function createGenericSlice(sliceName) {
       initialState,
       reducers: {
 
-        setActualItem: (state, action) => {
+        setChoosedYear: (state, action) => {
           return { 
-            ['actualItem' + sliceName]: action.payload,
-            ['isOpen' + sliceName] : state['isOpen' + sliceName] === true ? false : true
+            ['choosedYear' + sliceName]: action.payload,
+            // ['choosedYear' + sliceName]: state['choosedYear' + sliceName] - 1,
+            ['isOpen' + sliceName] : state['isOpen' + sliceName]
           };
         },
         setIsOpen: (state) => {
           return { 
-            ['actualItem' + sliceName]: state['actualItem' + sliceName],
-            ['isOpen' + sliceName] : state['isOpen' + sliceName] === true ? false : true
+            
+            ['isOpen' + sliceName] : state['isOpen' + sliceName] === true ? false : true,
+            ['choosedYear' + sliceName]: state['choosedYear' + sliceName]
           };
         },
       },
     });
     const { reducer, actions } = calendarSlice;
-    const { setActualItem, setIsOpen } = actions;
-    return {setActualItem, setIsOpen, reducer}
+    const { setChoosedYear, setIsOpen } = actions;
+    return {setChoosedYear, setIsOpen, reducer}
 
   }
 
   const slice1 = createGenericSlice("1")
   const slice2 = createGenericSlice("2")
 
-  const setActualItem1 = slice1.setActualItem
+  const setChoosedYear1 = slice1.setChoosedYear
   const setIsOpen1 = slice1.setIsOpen
-  const reducer1 = slice1.reducer
+  const calendarReducer1 = slice1.reducer
 
-  const setActualItem2 = slice2.setActualItem
+  const setChoosedYear2 = slice2.setChoosedYear
   const setIsOpen2 = slice2.setIsOpen
-  const reducer2 = slice2.reducer
+  const calendarReducer2 = slice2.reducer
 
-  export {setActualItem1, setIsOpen1, reducer1, setActualItem2, setIsOpen2, reducer2}
+  export {setChoosedYear1, setIsOpen1, calendarReducer1, setChoosedYear2, setIsOpen2, calendarReducer2}
 
   

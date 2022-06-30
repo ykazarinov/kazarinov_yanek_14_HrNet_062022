@@ -5,7 +5,7 @@ import { faCalendarDays, faAngleLeft, faAngleRight, faHouse } from '@fortawesome
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { setActualItem1 } from "../../slices/calendar.slice";
+import { setChoosedYear1, setChoosedYear2 } from "../../slices/calendar.slice";
 import { setIsOpen1, setIsOpen2 } from "../../slices/calendar.slice";
 
 
@@ -17,9 +17,9 @@ const OpenCalendarList = styled('div')`
     display: block;`
 const CloseCalendarList = styled('div')`display: none;`
 
-function trueOrFalse(isOpen){
-    return isOpen === true ? false : true
-}
+// function trueOrFalse(isOpen){
+//     return isOpen === true ? false : true
+// }
 
 // splitting an array into subarrays
 const subarrayCreator = ((myArray, size)=>{
@@ -43,14 +43,16 @@ const emptyDatesBefore = ((year, month) => {
 
 // create array of empty dates after current month
 const emptyDatesAfter = ((lastWeek)=>{
-    let countDaysAfter = 7 - lastWeek.length
+    // console.log(lastWeek.length)
+    // let countDaysAfter = 7 - lastWeek.length
 
-    let emptyDays = []
-    for(let i=0; i< countDaysAfter ; i++){
-        emptyDays.push({})
-    }
+    // let emptyDays = []
+    // for(let i=0; i< countDaysAfter ; i++){
+    //     emptyDays.push({})
+    // }
 
-    return emptyDays
+    // return emptyDays
+    return 2
 
 })
 
@@ -101,7 +103,14 @@ export default function Calendar(props){
 
     const currentDay = new Date()
 
-    const [choosedYear, setChoosedYear] = useState(currentDay.getFullYear())
+    const dispatch = useDispatch();
+    const  choosedYear  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedYear'+props.calNum]
+    const  isOpen  = useSelector((state) => state['calendarReducer' + props.calNum])['isOpen'+props.calNum]
+
+    const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
+    const setChoosedYear = (()=>{ return props.calNum === 1 ? setChoosedYear1() : setChoosedYear2()})
+
+    // const [choosedYear, setChoosedYear] = useState(currentDay.getFullYear())
     const [choosedMonth, setChoosedMonth] = useState(currentDay.getMonth() + 1)
     const [choosedDay, setChoosedDay] = useState(currentDay.getDate())
 
@@ -128,49 +137,60 @@ export default function Calendar(props){
 
     // const [isOpen, setIsOpen] = useState(false)
 
+
+
     const leftDown = (() => {
-        
-        if(choosedMonth === 1){
-            setChoosedMonth(12)
-            setChoosedYear(choosedYear - 1)
-
-            setCurrentMonth(monthDates(choosedYear, choosedMonth))
-            console.log(currentMonth)
-
-        }else{
-            setChoosedMonth(choosedMonth - 1)
-
-            setCurrentMonth(monthDates(choosedYear, choosedMonth))
-            console.log(currentMonth)
-        }
+        dispatch(yearDecrement())
+        // if(choosedMonth === 1){
+        //     setChoosedMonth(12)
+            
+        //     setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        // }else{
+        //     setChoosedMonth(choosedMonth - 1)
+        //     setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        // }
     })
 
     const rightDown = (() => {
-        
-        if(choosedMonth === 12){
-            setChoosedMonth(1)
-            setChoosedYear(choosedYear + 1)
-            console.log(choosedYear)
-            console.log(choosedMonth)
-            setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        dispatch(yearExcrement())
+        // if(choosedMonth === 12){
+            
+        //     setChoosedMonth(1)
+        //     setCurrentMonth(monthDates(choosedYear, choosedMonth))
 
-        }else{
-            setChoosedMonth(choosedMonth + 1)
-            console.log(choosedYear)
-            console.log(choosedMonth)
-            setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        // }else{
+        //     setChoosedMonth(choosedMonth + 1)
+        //     setCurrentMonth(monthDates(choosedYear, choosedMonth))
+        // }
+    })
+
+    const yearDecrement = (()=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedYear",
+            payload: choosedYear-1
         }
     })
 
-    const dispatch = useDispatch();
-    const  actualItem1  = useSelector((state) => state.reducer1).actualItem1;
-    const  isOpen  = useSelector((state) => state['reducer' + props.calNum])['isOpen'+props.calNum]
+    const yearExcrement = (()=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedYear",
+            payload: choosedYear+1
+        }
+    })
 
-    const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
+    const yearChoose = ((value)=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedYear",
+            payload: value
+        }
+    })
+
+
 
     return <div className="calendar">
-        <div className="calendar--def-item-cont">
-            <div 
+               
+         <div className="calendar--def-item-cont">
+             <div 
                 className="calendar--def-item-cont--input actual-item-cont"
                 onClick={()=>dispatch(setIsOpen())}>
             </div>
@@ -183,18 +203,32 @@ export default function Calendar(props){
             <div className='control-elements'>
                 <div className='control-left' onClick={()=>leftDown()}><FontAwesomeIcon icon={faAngleLeft} /></div>
                 <div className='control-home' ><FontAwesomeIcon icon={faHouse} /></div>
-                <Select 
+               
+                {/* <Select 
                     data={monthNames} 
                     id='month' 
                     prefix='calsel' 
-                    defaultValue={monthNames[choosedMonth - 1]}>
+                    // calNum={3}
+                    >
                 </Select>
                 <Select 
                     data={yearsNames} 
                     id='year' 
                     prefix='calsel' 
+                    // calNum={4}
                     defaultValue={choosedYear}>
-                </Select>
+                </Select> */}
+                <select>
+                    {monthNames.map && monthNames.map((item, index)=>
+                        (<option key={index}>{item}</option>)
+                    )}
+                </select>
+                <select value={choosedYear} onChange={(e)=>{dispatch(yearChoose(e.target.value))}}>
+                    {yearsNames.map && yearsNames.map((item, index)=>
+                        (<option key={index} 
+                        >{item}</option>)
+                    )}
+                </select>
                 <div className='control-right' onClick={()=>rightDown()}><FontAwesomeIcon icon={faAngleRight} /></div>
             </div>
             <div className='calendar-weektitles'>
