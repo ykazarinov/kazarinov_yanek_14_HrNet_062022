@@ -1,14 +1,13 @@
 import styled from "styled-components"
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarDays, faAngleLeft, faAngleRight, faHouse } from '@fortawesome/free-solid-svg-icons'
 
 import { useSelector, useDispatch } from "react-redux";
 
 import { setIsOpen1, setIsOpen2 } from "../../slices/calendar.slice";
-import { setChoosedMonth1, setChoosedMonth2 } from "../../slices/calendar.slice";
-import { setChoosedYear1, setChoosedYear2 } from "../../slices/calendar.slice";
 import { setCurrentMonth1, setCurrentMonth2 } from "../../slices/calendar.slice";
+import { setChoosedDay1, setChoosedDay2 } from "../../slices/calendar.slice";
 
 
 const OpenCalendarList = styled('div')`
@@ -25,13 +24,12 @@ export default function Calendar(props){
     const  choosedYear  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedYear'+props.calNum]
     const  isOpen  = useSelector((state) => state['calendarReducer' + props.calNum])['isOpen'+props.calNum]
     const  currentMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['currentMonth'+props.calNum]
+    const  choosedDay = useSelector((state) => state['calendarReducer' + props.calNum])['choosedDay'+props.calNum]
 
     const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
-    const setChoosedYear = (()=>{ return props.calNum === 1 ? setChoosedYear1() : setChoosedYear2()})
-    const setChoosedMonth = (()=>{ return props.calNum === 1 ? setChoosedMonth1() : setChoosedMonth2()})
-
     
     const setCurrentMonth = (()=>{ return props.calNum === 1 ? setCurrentMonth1() : setCurrentMonth2()})
+    const setChoosedDay = (()=>{ return props.calNum === 1 ? setChoosedDay1() : setChoosedDay2()})
 
     // const [choosedDay, setChoosedDay] = useState(currentDay.getDate())
 
@@ -133,12 +131,20 @@ export default function Calendar(props){
         }
     })
 
+    const returnDay = ((myDay) => {
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedDay",
+            payload: myDay
+        }
+    })
+    console.log(choosedDay)
     return <div className="calendar">
           
          <div className="calendar--def-item-cont">
              <div 
                 className="calendar--def-item-cont--input actual-item-cont"
                 onClick={()=>dispatch(setIsOpen())}>
+                    {choosedDay}
             </div>
             <div className="btn" onClick={()=>dispatch(setIsOpen())}>
                 <FontAwesomeIcon icon={faCalendarDays} />
@@ -183,7 +189,7 @@ export default function Calendar(props){
                 currentMonth.map((week, i) => (
                     <div key={i} className='calendar-week'>
                     {week.map && week.map((day, j)=>(
-                        <div key={j} className='calendar-day'>
+                        <div key={j} className='calendar-day' onClick={()=>dispatch(returnDay(day.day))}>
                             {day.day}
                         </div>
                     ))}

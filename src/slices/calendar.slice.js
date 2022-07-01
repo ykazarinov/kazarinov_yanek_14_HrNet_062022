@@ -75,12 +75,18 @@ const monthDates = ((year, month) => {
   return(groupedResult)
 })
 
+const frenchFormatDate = ((myDay, myMonth, myYear) => {
+
+  return myDay + '/' + (myMonth < 10 ? ('0' + myMonth) : myMonth) + '/' + myYear
+})
+
 const currentState = ((state, sliceName) => {
   return{
     ['isOpen' + sliceName] : state['isOpen' + sliceName],
     ['choosedMonth' + sliceName]: state['choosedMonth' + sliceName],
     ['choosedYear' + sliceName]: state['choosedYear' + sliceName],
     ['currentMonth' + sliceName]: state['currentMonth' + sliceName],
+    ['choosedDay' + sliceName]: state['choosedDay' + sliceName]
   }
 })
 
@@ -92,12 +98,22 @@ function createGenericSlice(sliceName) {
     ['choosedYear' + sliceName]: currentDay.getFullYear(),
     ['choosedMonth' + sliceName]: currentDay.getMonth() + 1,
     ['currentMonth' + sliceName]: monthDates(currentDay.getFullYear(), currentDay.getMonth() + 1),
+    ['choosedDay' + sliceName]: frenchFormatDate(
+      currentDay.getDate() < 10 ? ('0' + currentDay.getDate()) : currentDay.getDate(), 
+      currentDay.getMonth() + 1, 
+      currentDay.getFullYear()
+      ), 
   };
 
   const calendarSlice = createSlice({
       name: "calendar" + sliceName,
       initialState,
       reducers: {
+        setIsOpen: (state) => {
+          const defaultCurrentState = currentState(state, sliceName)
+          defaultCurrentState['isOpen' + sliceName] = state['isOpen' + sliceName] === true ? false : true
+          return  defaultCurrentState
+        },
         setChoosedYear: (state, action) => {
           const defaultCurrentState = currentState(state, sliceName)
           defaultCurrentState['choosedYear' + sliceName] = action.payload
@@ -110,34 +126,44 @@ function createGenericSlice(sliceName) {
         },
         setCurrentMonth: (state) => {
           const defaultCurrentState = currentState(state, sliceName)
-          defaultCurrentState['currentMonth' + sliceName] = monthDates(state['choosedYear' + sliceName], state['choosedMonth' + sliceName])
+          defaultCurrentState['currentMonth' + sliceName] = monthDates(
+            state['choosedYear' + sliceName], 
+            state['choosedMonth' + sliceName]
+          )
           return  defaultCurrentState
         },
-        setIsOpen: (state) => {
+        setChoosedDay: (state, action) => {
           const defaultCurrentState = currentState(state, sliceName)
-          defaultCurrentState['isOpen' + sliceName] = state['isOpen' + sliceName] === true ? false : true
+          defaultCurrentState['choosedDay' + sliceName] = frenchFormatDate(
+            action.payload, 
+            state['choosedMonth' + sliceName], 
+            state['choosedYear' + sliceName]
+          )
           return  defaultCurrentState
         },
+
       },
     });
     const { reducer, actions } = calendarSlice;
-    const {setIsOpen, setChoosedYear, choosedMonth, setCurrentMonth,  } = actions;
-    return {setIsOpen, setChoosedYear, choosedMonth, setCurrentMonth, reducer}
+    const {setIsOpen, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay } = actions;
+    return {setIsOpen, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, reducer}
   }
 
   const slice1 = createGenericSlice("1")
   const slice2 = createGenericSlice("2")
 
   const setIsOpen1 = slice1.setIsOpen
-  const setChoosedMonth1 = slice1.choosedMonth
+  const setChoosedMonth1 = slice1.setChoosedMonth
   const setChoosedYear1 = slice1.setChoosedYear
   const setCurrentMonth1 = slice1.setCurrentMonth
+  const setChoosedDay1 = slice1.setChoosedDay
   const calendarReducer1 = slice1.reducer
 
   const setIsOpen2 = slice2.setIsOpen
-  const setChoosedMonth2 = slice2.choosedMonth
+  const setChoosedMonth2 = slice2.setChoosedMonth
   const setChoosedYear2 = slice2.setChoosedYear
   const setCurrentMonth2 = slice2.setCurrentMonth
+  const setChoosedDay2 = slice2.setChoosedDay
   const calendarReducer2 = slice2.reducer
 
   export {
@@ -145,11 +171,13 @@ function createGenericSlice(sliceName) {
     setChoosedMonth1, 
     setChoosedYear1, 
     setCurrentMonth1,
+    setChoosedDay1,
     calendarReducer1,
     setIsOpen2,  
     setChoosedMonth2,
     setChoosedYear2, 
     setCurrentMonth2,
+    setChoosedDay2,
     calendarReducer2}
 
   
