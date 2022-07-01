@@ -37,7 +37,6 @@ const emptyDatesAfter = ((lastWeek)=>{
 
 // create array of array (weeks) of objects (days) with dates of given month of given year
 const monthDates = ((year, month) => {
-
   var myDate = new Date(year, month-1, 1)
   var myMonth = myDate.getMonth() + 1
   var end = new Date(myDate.getFullYear(), myMonth, 0).getDate(); 
@@ -76,61 +75,54 @@ const monthDates = ((year, month) => {
   return(groupedResult)
 })
 
+const currentState = ((state, sliceName) => {
+  return{
+    ['isOpen' + sliceName] : state['isOpen' + sliceName],
+    ['choosedMonth' + sliceName]: state['choosedMonth' + sliceName],
+    ['choosedYear' + sliceName]: state['choosedYear' + sliceName],
+    ['currentMonth' + sliceName]: state['currentMonth' + sliceName],
+  }
+})
+
 function createGenericSlice(sliceName) {
 
   const currentDay = new Date()
-
   const initialState = {
     ['isOpen' + sliceName]: false,
     ['choosedYear' + sliceName]: currentDay.getFullYear(),
     ['choosedMonth' + sliceName]: currentDay.getMonth() + 1,
     ['currentMonth' + sliceName]: monthDates(currentDay.getFullYear(), currentDay.getMonth() + 1),
-      
   };
 
   const calendarSlice = createSlice({
       name: "calendar" + sliceName,
       initialState,
       reducers: {
-
         setChoosedYear: (state, action) => {
-          return { 
-            ['isOpen' + sliceName] : state['isOpen' + sliceName],
-            ['choosedMonth' + sliceName]: state['choosedMonth' + sliceName],
-            ['choosedYear' + sliceName]: action.payload,
-            ['currentMonth' + sliceName]: state['currentMonth' + sliceName],
-          };
+          const defaultCurrentState = currentState(state, sliceName)
+          defaultCurrentState['choosedYear' + sliceName] = action.payload
+          return  defaultCurrentState            
         },
         setChoosedMonth: (state, action) => {
-          return { 
-            ['isOpen' + sliceName] : state['isOpen' + sliceName],
-            ['choosedMonth' + sliceName]: action.payload,
-            ['choosedYear' + sliceName]: state['choosedYear' + sliceName],
-            ['currentMonth' + sliceName]: state['currentMonth' + sliceName],
-          };
+          const defaultCurrentState = currentState(state, sliceName)
+          defaultCurrentState['choosedMonth' + sliceName] = action.payload
+          return  defaultCurrentState
         },
-        setCurrentMonth: (state, action) => {
-          return { 
-            ['isOpen' + sliceName] : state['isOpen' + sliceName],
-            ['choosedMonth' + sliceName]: state['choosedMonth' + sliceName],
-            ['choosedYear' + sliceName]: state['choosedYear' + sliceName],
-            ['currentMonth' + sliceName]: monthDates(state['choosedYear' + sliceName], state['choosedMonth' + sliceName]),
-          };
+        setCurrentMonth: (state) => {
+          const defaultCurrentState = currentState(state, sliceName)
+          defaultCurrentState['currentMonth' + sliceName] = monthDates(state['choosedYear' + sliceName], state['choosedMonth' + sliceName])
+          return  defaultCurrentState
         },
         setIsOpen: (state) => {
-          return { 
-            ['isOpen' + sliceName] : state['isOpen' + sliceName] === true ? false : true,
-            ['choosedMonth' + sliceName]: state['choosedMonth' + sliceName],
-            ['choosedYear' + sliceName]: state['choosedYear' + sliceName],
-            ['currentMonth' + sliceName]: state['currentMonth' + sliceName],
-          };
+          const defaultCurrentState = currentState(state, sliceName)
+          defaultCurrentState['isOpen' + sliceName] = state['isOpen' + sliceName] === true ? false : true
+          return  defaultCurrentState
         },
       },
     });
     const { reducer, actions } = calendarSlice;
     const {setIsOpen, setChoosedYear, choosedMonth, setCurrentMonth,  } = actions;
     return {setIsOpen, setChoosedYear, choosedMonth, setCurrentMonth, reducer}
-
   }
 
   const slice1 = createGenericSlice("1")
