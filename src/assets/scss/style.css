@@ -11967,19 +11967,98 @@ h1, .h1 {
   color: #74798c;
 }
 
-.select {
+.calsel {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  border: solid 1px #74798c;
+  border: solid 2px #74798c;
   border-radius: 5px;
   position: relative;
   background-color: #ffffff;
+  width: 100%;
+  font-size: .8rem;
+  margin-left: .2rem;
+  margin-right: .2rem;
+}
+
+.calsel--def-item-cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+
+.calsel--def-item-cont--input {
+  -webkit-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+  padding: .3rem;
+  color: #282D30;
+  cursor: pointer;
+}
+
+.calsel--def-item-cont .btn {
+  background-color: transparent;
+  border: 0;
+  padding-left: .7rem;
+  padding-right: .7rem;
+}
+
+.calsel ul {
+  position: absolute;
+  top: 2.4rem;
+  left: -1px;
+  border: solid 1px #74798c;
+  border-radius: 5px;
+  width: calc(100% + 2px);
+  padding: 0;
+  background-color: #ffffff;
+  max-height: 30vh;
+  overflow-y: auto;
+  z-index: 12;
+}
+
+.calsel ul li {
+  list-style: none;
+  width: 100%;
+  cursor: pointer;
+  padding: .5rem;
+}
+
+.calsel ul li:hover {
+  background-color: #cccccc;
+}
+
+.calsel--def-item-cont--input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: solid 2px #74798c;
+  border-radius: 5px;
+  position: relative;
+  background-color: #ffffff;
+  width: 100%;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .select--def-item-cont {
@@ -11996,12 +12075,11 @@ h1, .h1 {
       -ms-flex-positive: 2;
           flex-grow: 2;
   padding: .3rem;
-  font-size: 1.2rem;
   color: #282D30;
   cursor: pointer;
 }
 
-.select--def-item-cont button {
+.select--def-item-cont .btn {
   background-color: transparent;
   border: 0;
   padding-left: .7rem;
@@ -12017,6 +12095,9 @@ h1, .h1 {
   width: calc(100% + 2px);
   padding: 0;
   background-color: #ffffff;
+  max-height: 30vh;
+  overflow-y: auto;
+  z-index: 12;
 }
 
 .select ul li {
@@ -12035,7 +12116,7 @@ input {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  border: solid 1px #74798c;
+  border: solid 2px #74798c;
   border-radius: 5px;
   padding: .3rem;
   font-size: 1.2rem;
@@ -12044,9 +12125,194 @@ input {
 }
 
 header {
-  background-color: #146ebe;
+  background-color: #74798c;
   padding: .5rem;
   color: #ffffff;
+  min-height: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding-left: .5rem;
+  padding-right: .5rem;
+  border-radius: 5px;
+}
+
+header .logo a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+header .logo a span {
+  font-weight: normal;
+}
+
+footer {
+  background-color: #74798c;
+  padding: .5rem;
+  color: #ffffff;
+  height: 3rem;
+}
+
+main {
+  min-height: calc(100vh - 6rem);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.calendar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: solid 2px #74798c;
+  border-radius: 5px;
+  position: relative;
+  background-color: #ffffff;
   margin-bottom: 1rem;
+}
+
+.calendar--def-item-cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+}
+
+.calendar--def-item-cont--input {
+  -webkit-box-flex: 2;
+      -ms-flex-positive: 2;
+          flex-grow: 2;
+  padding: .3rem;
+  font-size: 1.2rem;
+  color: #282D30;
+  cursor: pointer;
+}
+
+.calendar--def-item-cont .btn {
+  background-color: transparent;
+  border: 0;
+  padding-left: .7rem;
+  padding-right: .7rem;
+}
+
+.calendar .calendar-body {
+  position: absolute;
+  top: 2.4rem;
+  left: -1px;
+  border: solid 1px #74798c;
+  border-radius: 5px;
+  width: calc(100% + 2px);
+  padding: 0;
+  background-color: #ffffff;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: .5rem;
+}
+
+.calendar .calendar-week {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.calendar .calendar-day {
+  width: 2rem;
+  height: 2rem;
+  margin: .2rem;
+  background-color: #cccccc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+}
+
+.calendar .calendar-day:hover {
+  cursor: pointer;
+}
+
+.calendar .calendar-day.active {
+  background-color: #282D30;
+  color: #ffffff;
+}
+
+.calendar .calendar-weektitles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.calendar .calendar-weekdayname {
+  width: 2rem;
+  height: 2rem;
+  margin: .2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+}
+
+.control-elements {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.control-left {
+  padding: .2rem;
+  margin-right: .3rem;
+}
+
+.control-home {
+  padding: .2rem;
+  margin-right: .3rem;
+  margin-left: .3rem;
+}
+
+.control-right {
+  padding: .2rem;
+  margin-left: .3rem;
 }
 /*# sourceMappingURL=style.css.map */

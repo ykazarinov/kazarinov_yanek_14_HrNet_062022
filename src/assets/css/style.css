@@ -11336,6 +11336,13 @@ main {
   align-items: center;
   border-radius: 5px;
 }
+.calendar .calendar-day:hover {
+  cursor: pointer;
+}
+.calendar .calendar-day.active {
+  background-color: #282D30;
+  color: #ffffff;
+}
 .calendar .calendar-weektitles {
   display: flex;
   justify-content: center;

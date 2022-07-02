@@ -215,6 +215,13 @@ main{
             justify-content: center;
             align-items: center;
             border-radius: 5px;
+            &:hover{
+                cursor: pointer;
+            }
+            &.active{
+                background-color: $dark-grey;
+                color: $white;
+            }
 
         }
         &-weektitles{
