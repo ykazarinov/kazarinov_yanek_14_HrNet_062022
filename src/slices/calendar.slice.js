@@ -98,8 +98,7 @@ function createGenericSlice(sliceName) {
     ['currentMonth' + sliceName]: monthDates(currentDay.getFullYear(), currentDay.getMonth() + 1),
     ['beforeMonth' + sliceName]: monthDates(currentDay.getFullYear(), currentDay.getMonth()),
     ['afterMonth' + sliceName]: monthDates(currentDay.getFullYear(), currentDay.getMonth() + 2),
-    ['choosedDay' + sliceName]: 
-      currentDay.getDate() < 10 ? ('0' + currentDay.getDate()) : currentDay.getDate()
+    ['choosedDay' + sliceName]: currentDay.getDate()
   };
 
   const calendarSlice = createSlice({
@@ -119,6 +118,9 @@ function createGenericSlice(sliceName) {
         setChoosedMonth: (state, action) => {
           const defaultCurrentState = currentState(state, sliceName)
           defaultCurrentState['choosedMonth' + sliceName] = action.payload
+
+
+          
           return  defaultCurrentState
         },
         setCurrentMonth: (state) => {
@@ -127,6 +129,9 @@ function createGenericSlice(sliceName) {
             state['choosedYear' + sliceName], 
             state['choosedMonth' + sliceName]
           )
+
+          // console.log(defaultCurrentState['currentMonth' + sliceName])
+
           return  defaultCurrentState
         },
         setBeforeMonth: (state) => {
@@ -147,7 +152,9 @@ function createGenericSlice(sliceName) {
         },
         setChoosedDay: (state, action) => {
           const defaultCurrentState = currentState(state, sliceName)
-          defaultCurrentState['choosedDay' + sliceName] = action.payload
+          String(action.payload).substring(0,1) === '0' || String(action.payload).length > 1 
+            ? defaultCurrentState['choosedDay' + sliceName] = action.payload
+            : defaultCurrentState['choosedDay' + sliceName] = '0' + action.payload
           return  defaultCurrentState
         },
 

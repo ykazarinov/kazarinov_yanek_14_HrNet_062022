@@ -10,6 +10,7 @@ import { setCurrentMonth1, setCurrentMonth2 } from "../../slices/calendar.slice"
 import { setChoosedDay1, setChoosedDay2 } from "../../slices/calendar.slice";
 import { setBeforeMonth1, setBeforeMonth2 } from "../../slices/calendar.slice";
 import { setAfterMonth1, setAfterMonth2 } from "../../slices/calendar.slice";
+import { useEffect } from "react";
 
 const OpenCalendarList = styled('div')`
     display: block;`
@@ -18,9 +19,18 @@ const CloseCalendarList = styled('div')`display: none;`
 
 export default function Calendar(props){
 
+
+
     const currentDay = new Date()
 
     const dispatch = useDispatch();
+
+    const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
+    const setCurrentMonth = (()=>{ return props.calNum === 1 ? setCurrentMonth1() : setCurrentMonth2()})
+    const setBeforeMonth = (()=>{ return props.calNum === 1 ? setBeforeMonth1() : setBeforeMonth2()})
+    const setAfterMonth = (()=>{ return props.calNum === 1 ? setAfterMonth1() : setAfterMonth2()})
+    const setChoosedDay = (()=>{ return props.calNum === 1 ? setChoosedDay1() : setChoosedDay2()})
+
     const  choosedMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedMonth'+props.calNum]
     const  choosedYear  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedYear'+props.calNum]
     const  isOpen  = useSelector((state) => state['calendarReducer' + props.calNum])['isOpen'+props.calNum]
@@ -29,12 +39,7 @@ export default function Calendar(props){
     const  afterMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['afterMonth'+props.calNum]
     const  choosedDay = useSelector((state) => state['calendarReducer' + props.calNum])['choosedDay'+props.calNum]
 
-    const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
-    
-    const setCurrentMonth = (()=>{ return props.calNum === 1 ? setCurrentMonth1() : setCurrentMonth2()})
-    const setBeforeMonth = (()=>{ return props.calNum === 1 ? setBeforeMonth1() : setBeforeMonth2()})
-    const setAfterMonth = (()=>{ return props.calNum === 1 ? setAfterMonth1() : setAfterMonth2()})
-    const setChoosedDay = (()=>{ return props.calNum === 1 ? setChoosedDay1() : setChoosedDay2()})
+
 
     // const [choosedDay, setChoosedDay] = useState(currentDay.getDate())
 
@@ -57,44 +62,7 @@ export default function Calendar(props){
             yearsNames.push(i)
         }
 
-    const leftDown = (() => {
-        
-        if(choosedMonth === 1){
-            dispatch(yearDecrement())
-            dispatch(monthToEnd())
-            dispatch(setCurrentMonth())
-            dispatch(setBeforeMonth())
-            dispatch(setAfterMonth())
-            
 
-        }else{
-            dispatch(monthDecrement())
-            dispatch(setCurrentMonth())
-            dispatch(setBeforeMonth())
-            dispatch(setAfterMonth())
-            
-        }
-        dispatch(returnDay(exeptionDate(choosedDay, beforeMonth)))
-
-    })
-
-    const rightDown = (() => {
-
-        if(choosedMonth === 12){
-            dispatch(yearExcrement())
-            dispatch(monthToBegin())
-            dispatch(setCurrentMonth())
-            dispatch(setBeforeMonth())
-            dispatch(setAfterMonth())
-        }else{
-            dispatch(monthExcrement())
-            dispatch(setCurrentMonth())
-            dispatch(setBeforeMonth())
-            dispatch(setAfterMonth())
-        }
-        dispatch(returnDay(exeptionDate(choosedDay, afterMonth)))
-        
-    })
 
     const yearDecrement = (()=>{
         return {
@@ -168,18 +136,72 @@ export default function Calendar(props){
         let realDate = myIndex != -1 ? 
         myMonth[myMonth.length - 1][myIndex - 1] :
         myMonth[myMonth.length - 1][myMonth[myMonth.length - 1].length - 1]
-        // console.log(Number(myDay), Number(myMonth), Number(realDate.day), Number(realDate.month))
         if(Number(myDay) > Number(realDate.day)){
-
             return Number(realDate.day) 
-            
-   
         }else{
-
             return Number(myDay)
-          
         }
+    })
 
+    const leftDown = (() => {
+        
+        if(choosedMonth === 1){
+            dispatch(yearDecrement())
+            dispatch(monthToEnd())
+        }else{
+            dispatch(monthDecrement())
+        }
+        dispatch(setCurrentMonth())
+        dispatch(setBeforeMonth())
+        dispatch(setAfterMonth())
+        // dispatch(returnDay(exeptionDate(choosedDay, beforeMonth)))
+
+    })
+
+    const rightDown = (() => {
+
+        if(choosedMonth === 12){
+            dispatch(yearExcrement())
+            dispatch(monthToBegin())
+        }else{
+            dispatch(monthExcrement())
+        }
+        dispatch(setCurrentMonth())
+        dispatch(setBeforeMonth())
+        dispatch(setAfterMonth())
+        // dispatch(returnDay(exeptionDate(choosedDay, afterMonth)))
+        
+    })
+
+    
+    useEffect(()=>{
+        dispatch(returnDay(exeptionDate(choosedDay, currentMonth)))
+    }, [currentMonth])
+
+    const monthSelectDown = ((newMonth) =>{
+        let newMonthIndex = monthNames.find(mN => mN.monthName === newMonth).index
+        dispatch(monthChoose(newMonth))
+        
+       
+        dispatch(setCurrentMonth())
+        dispatch(setBeforeMonth())
+        dispatch(setAfterMonth())
+        
+        
+        // if(newMonthIndex < choosedMonth){
+            
+                // dispatch(returnDay(exeptionDate(choosedDay, currentMonth)))
+            
+            
+        // }
+        
+    })
+
+    const yearSelectDown = ((newYear) => {
+        dispatch(yearChoose(newYear))
+        dispatch(setCurrentMonth())
+        dispatch(setBeforeMonth())
+        dispatch(setAfterMonth())
     })
     
 
@@ -199,23 +221,15 @@ export default function Calendar(props){
         <OpenCalendarList className='calendar-body'>
             <div className='control-elements'>
                 <div className='control-left' onClick={()=>{
-                    
                     leftDown()
-                     
-                    // console.log(choosedDay, choosedMonth)
-                    // dispatch(returnDay(exeptionDate(choosedDay, choosedMonth, currentMonth)))
-                    // dispatch(returnDay(12))
                     }}><FontAwesomeIcon icon={faAngleLeft} /></div>
                 <div className='control-home' ><FontAwesomeIcon icon={faHouse} /></div>
                
                 <select 
                     value={monthNames.find(mN => mN.index === choosedMonth).monthName}
                     onChange={(e)=>{
-                        dispatch(monthChoose(e.target.value))
-                        dispatch(setCurrentMonth())
-                        dispatch(setBeforeMonth())
-                        dispatch(setAfterMonth())
-                        }}>
+                        monthSelectDown(e.target.value)
+                    }}>
                     {monthNames.map && monthNames.map((item, index)=>
                         (<option key={index}>{item.monthName}</option>)
                     )}
@@ -223,17 +237,16 @@ export default function Calendar(props){
                 <select 
                     value={choosedYear} 
                     onChange={(e)=>{
-                        dispatch(yearChoose(e.target.value))
-                        dispatch(setCurrentMonth())
-                        dispatch(setBeforeMonth())
-                        dispatch(setAfterMonth())
-                        }}>
+                        yearSelectDown(e.target.value)
+                    }}>
                     {yearsNames.map && yearsNames.map((item, index)=>
                         (<option key={index} 
                         >{item}</option>)
                     )}
                 </select>
-                <div className='control-right' onClick={()=>rightDown()}><FontAwesomeIcon icon={faAngleRight} /></div>
+                <div className='control-right' onClick={()=>
+                    rightDown()
+                    }><FontAwesomeIcon icon={faAngleRight} /></div>
             </div>
             <div className='calendar-weektitles'>
                 {weekDaysNames.map && weekDaysNames.map((weekDayName, i) => (
