@@ -54,11 +54,13 @@ $font_size: (
           color: $dark-grey;
           cursor: pointer;
         }
-        .btn{
+        .select-btn{
             background-color: transparent;
             border: 0;
             padding-left: .7rem;
             padding-right: .7rem; 
+            display: flex;
+            align-items: center;
             
         }
     }
@@ -176,11 +178,13 @@ main{
           color: $dark-grey;
           cursor: pointer;
         }
-        .btn{
+        .select-btn{
             background-color: transparent;
             border: 0;
             padding-left: .7rem;
             padding-right: .7rem; 
+            display: flex;
+            align-items: center;
             
         }
     }
@@ -262,4 +266,37 @@ main{
         padding: .2rem;
         margin-left: .3rem;
     }
+}
+
+fieldset.scheduler-border {
+    border: 1px solid $grey;
+    padding: 1rem;
+    margin: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    -webkit-box-shadow: none;
+    box-shadow:  none;
+    border-radius: 5px;
+    position: relative;
+
+}
+
+legend.scheduler-border {
+       border-bottom:none;
+    position: absolute;
+    left: 10px;
+    top: -.8rem;
+    font-size: 1rem;
+    background-color: $light-bg;
+    width: auto;
+
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+}
+.btn{
+    margin-left: .5rem;
+    margin-right: .5rem;
 }

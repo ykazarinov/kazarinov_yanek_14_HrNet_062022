@@ -215,7 +215,7 @@ export default function Calendar(props){
                 onClick={()=>dispatch(setIsOpen())}>
                     {frenchFormatDate(choosedDay, choosedMonth, choosedYear)}
             </div>
-            <div className="btn" onClick={()=>dispatch(setIsOpen())}>
+            <div className="select-btn" onClick={()=>dispatch(setIsOpen())}>
                 <FontAwesomeIcon icon={faCalendarDays} />
             </div>
         </div>

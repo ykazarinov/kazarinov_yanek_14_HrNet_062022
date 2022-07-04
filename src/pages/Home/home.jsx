@@ -46,22 +46,43 @@ export default function Home(){
                             
                     </div>
 
+                    <fieldset className="scheduler-border col-12">
+                        <legend className="scheduler-border">Address</legend>
+                        <div className="row">
+                            <div className="col-6">
+                                <label htmlFor='street'>Street</label>
+                                <input id="street" />
+                            </div>
+                            <div className="col-6">
+                                <label htmlFor='city'>City</label>
+                                <input id="city" />
+                            </div>
+                            <div className="address col-6">
+                                    <label htmlFor="state">State</label>
+                                    <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect1())}>
+                                        <Select data={selectList} calNum={1} id='state' prefix='select'></Select>
+                                    </OutsideAlerter>
+                            </div>
+                            <div className="col-6">
+                                <label htmlFor='zip'>Zip Code</label>
+                                <input id="zip" type='number'/>
+                            </div>
+                        </div>
+                    </fieldset> 
                     <div className="address col-6">
-                            <label htmlFor="state">State</label>
-                            <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect1())}>
-                                <Select data={selectList} calNum={1} id='state' prefix='select'></Select>
-                            </OutsideAlerter>
+                        <label htmlFor="department">Department</label>
+                        <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect2())}>
+                            <Select data={selectList} calNum={2} id='department' prefix='select'></Select>
+                        </OutsideAlerter>
                     </div>
-                    <div className="address col-6">
-                            <label htmlFor="state2">State2</label>
-                            <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect2())}>
-                                <Select data={selectList} calNum={2} id='state2' prefix='select'></Select>
-                            </OutsideAlerter>
+                    <div className="col-12 button-container">
+                        <button type="button" class="btn btn-primary btn-lg col-3">Save</button>
+                        <button type="button" class="btn btn-dark btn-lg col-3">Cancel</button>
                     </div>
                 </div>
             </div>
             <div className="col-2"></div>
-            <button>test</button>
+            
         </form>
             
         </main>
