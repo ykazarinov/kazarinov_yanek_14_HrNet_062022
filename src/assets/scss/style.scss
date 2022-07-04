@@ -48,11 +48,12 @@ $font_size: (
         align-items: stretch;
         
         &--input{
-          flex-grow: 2;
+        //   flex-grow: 2;
           padding: .3rem;
-          
+         
           color: $dark-grey;
           cursor: pointer;
+          width: calc(100% - 37px);
         }
         .select-btn{
             background-color: transparent;
@@ -61,6 +62,9 @@ $font_size: (
             padding-right: .7rem; 
             display: flex;
             align-items: center;
+            &:hover{
+                cursor: pointer;
+            }
             
         }
     }
@@ -111,6 +115,12 @@ $font_size: (
 }
 
 input{
+    border: 0;
+
+    
+}
+
+.input-standart{
     display: flex;
     width: 100%;
     border: solid 2px $grey;
@@ -172,7 +182,8 @@ main{
         align-items: stretch;
         
         &--input{
-          flex-grow: 2;
+        //   flex-grow: 2;
+        width: calc(100% - 37px);
           padding: .3rem;
           font-size: 1.2rem;
           color: $dark-grey;
@@ -185,6 +196,9 @@ main{
             padding-right: .7rem; 
             display: flex;
             align-items: center;
+            &:hover{
+                cursor: pointer;
+            }
             
         }
     }

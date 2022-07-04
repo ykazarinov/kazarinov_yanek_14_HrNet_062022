@@ -25,11 +25,11 @@ export default function Home(){
                 <div className="row">
                     <div className="col-6">
                         <label htmlFor='firstName'>First Name</label>
-                        <input id="firstName" />
+                        <input className='input-standart' id="firstName" />
                     </div>
                     <div className="col-6">
                         <label htmlFor='lastName'>Last Name</label>
-                        <input id="lastName" />
+                        <input className='input-standart' id="lastName" />
                     </div>
 
                     <div className="address col-6">
@@ -51,11 +51,11 @@ export default function Home(){
                         <div className="row">
                             <div className="col-6">
                                 <label htmlFor='street'>Street</label>
-                                <input id="street" />
+                                <input className='input-standart' id="street" />
                             </div>
                             <div className="col-6">
                                 <label htmlFor='city'>City</label>
-                                <input id="city" />
+                                <input className='input-standart' id="city" />
                             </div>
                             <div className="address col-6">
                                     <label htmlFor="state">State</label>
@@ -65,7 +65,7 @@ export default function Home(){
                             </div>
                             <div className="col-6">
                                 <label htmlFor='zip'>Zip Code</label>
-                                <input id="zip" type='number'/>
+                                <input className='input-standart' id="zip" type='number'/>
                             </div>
                         </div>
                     </fieldset> 
@@ -76,8 +76,8 @@ export default function Home(){
                         </OutsideAlerter>
                     </div>
                     <div className="col-12 button-container">
-                        <button type="button" class="btn btn-primary btn-lg col-3">Save</button>
-                        <button type="button" class="btn btn-dark btn-lg col-3">Cancel</button>
+                        <button type="button" className="btn btn-primary btn-lg col-3">Save</button>
+                        <button type="button" className="btn btn-dark btn-lg col-3">Cancel</button>
                     </div>
                 </div>
             </div>

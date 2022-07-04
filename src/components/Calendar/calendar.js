@@ -210,11 +210,13 @@ export default function Calendar(props){
     return <div className="calendar">
           
          <div className="calendar--def-item-cont">
-             <div 
+             <input type='text'
                 className="calendar--def-item-cont--input actual-item-cont"
-                onClick={()=>dispatch(setIsOpen())}>
-                    {frenchFormatDate(choosedDay, choosedMonth, choosedYear)}
-            </div>
+                onClick={()=>dispatch(setIsOpen())} 
+                value={frenchFormatDate(choosedDay, choosedMonth, choosedYear)}
+                readOnly />
+                    
+            
             <div className="select-btn" onClick={()=>dispatch(setIsOpen())}>
                 <FontAwesomeIcon icon={faCalendarDays} />
             </div>

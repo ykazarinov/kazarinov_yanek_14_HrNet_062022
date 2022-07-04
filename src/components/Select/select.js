@@ -47,12 +47,14 @@ export default function Select( props ){
 
     return <div className={props.prefix}>
         <div className={props.prefix + "--def-item-cont"}>
-            <div 
+            <input 
                 className={props.prefix + "--def-item-cont--input actual-item-cont"}
                 onClick={()=>dispatch(setIsOpen())}
-                >{actualItem}
-            </div>
-            <div className="btn" onClick={()=>dispatch(setIsOpen())}>
+                value={actualItem}
+                readOnly
+                />
+            
+            <div className="select-btn" onClick={()=>dispatch(setIsOpen())}>
                 <FontAwesomeIcon icon={faAngleDown} />
             </div>
         </div>

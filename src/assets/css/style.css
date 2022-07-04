@@ -11145,10 +11145,10 @@ h1, .h1 {
   align-items: stretch;
 }
 .calsel--def-item-cont--input {
-  flex-grow: 2;
   padding: 0.3rem;
   color: #282D30;
   cursor: pointer;
+  width: calc(100% - 37px);
 }
 .calsel--def-item-cont .select-btn {
   background-color: transparent;
@@ -11157,6 +11157,9 @@ h1, .h1 {
   padding-right: 0.7rem;
   display: flex;
   align-items: center;
+}
+.calsel--def-item-cont .select-btn:hover {
+  cursor: pointer;
 }
 .calsel ul {
   position: absolute;
@@ -11201,10 +11204,10 @@ h1, .h1 {
   align-items: stretch;
 }
 .select--def-item-cont--input {
-  flex-grow: 2;
   padding: 0.3rem;
   color: #282D30;
   cursor: pointer;
+  width: calc(100% - 37px);
 }
 .select--def-item-cont .select-btn {
   background-color: transparent;
@@ -11213,6 +11216,9 @@ h1, .h1 {
   padding-right: 0.7rem;
   display: flex;
   align-items: center;
+}
+.select--def-item-cont .select-btn:hover {
+  cursor: pointer;
 }
 .select ul {
   position: absolute;
@@ -11238,6 +11244,10 @@ h1, .h1 {
 }
 
 input {
+  border: 0;
+}
+
+.input-standart {
   display: flex;
   width: 100%;
   border: solid 2px #74798c;
@@ -11299,7 +11309,7 @@ main {
   align-items: stretch;
 }
 .calendar--def-item-cont--input {
-  flex-grow: 2;
+  width: calc(100% - 37px);
   padding: 0.3rem;
   font-size: 1.2rem;
   color: #282D30;
@@ -11312,6 +11322,9 @@ main {
   padding-right: 0.7rem;
   display: flex;
   align-items: center;
+}
+.calendar--def-item-cont .select-btn:hover {
+  cursor: pointer;
 }
 .calendar .calendar-body {
   position: absolute;
