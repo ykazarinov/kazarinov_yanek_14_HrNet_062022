@@ -10,6 +10,7 @@ import { setCurrentMonth1, setCurrentMonth2 } from "../../slices/calendar.slice"
 import { setChoosedDay1, setChoosedDay2 } from "../../slices/calendar.slice";
 import { setBeforeMonth1, setBeforeMonth2 } from "../../slices/calendar.slice";
 import { setAfterMonth1, setAfterMonth2 } from "../../slices/calendar.slice";
+import { setClose1, setClose2 } from "../../slices/calendar.slice";
 import { useEffect } from "react";
 
 const OpenCalendarList = styled('div')`
@@ -26,6 +27,7 @@ export default function Calendar(props){
     const dispatch = useDispatch();
 
     const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
+    const setClose = (()=>{ return props.calNum === 1 ? setClose1() : setClose2()})
     const setCurrentMonth = (()=>{ return props.calNum === 1 ? setCurrentMonth1() : setCurrentMonth2()})
     const setBeforeMonth = (()=>{ return props.calNum === 1 ? setBeforeMonth1() : setBeforeMonth2()})
     const setAfterMonth = (()=>{ return props.calNum === 1 ? setAfterMonth1() : setAfterMonth2()})
@@ -261,7 +263,10 @@ export default function Calendar(props){
                         <div 
                             key={j} 
                             className={day.day == choosedDay ? 'calendar-day active' : 'calendar-day' }
-                            onClick={()=>dispatch(returnDay(day.day))}
+                            onClick={()=>{
+                                dispatch(returnDay(day.day)) 
+                                dispatch(setClose())
+                            }}
                             
                         >
                             {day.day}

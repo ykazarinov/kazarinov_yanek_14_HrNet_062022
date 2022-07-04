@@ -26,10 +26,6 @@ export default function Select( props ){
         switch(props.calNum){
             case 1: return setIsOpen1() 
             case 2: return setIsOpen2() 
-            // case 3: return setIsOpen3() 
-            // case 4: return setIsOpen4() 
-            // case 5: return setIsOpen5() 
-            // case 6: return setIsOpen6() 
             default: return
         }
     })
@@ -38,10 +34,6 @@ export default function Select( props ){
         switch(props.calNum){ 
             case 1: return setActualItem1() 
             case 2: return setActualItem2()
-            // case 3: return setActualItem3() 
-            // case 4: return setActualItem4()
-            // case 5: return setActualItem5() 
-            // case 6: return setActualItem6()
             default: return
         }
     })
