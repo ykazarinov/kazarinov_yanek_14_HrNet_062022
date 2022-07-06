@@ -102,6 +102,13 @@ export default function Calendar(props){
         }
     })
 
+    const monthChooseNumber = ((value)=>{
+        return {
+            type: "calendar"+ props.calNum+"/setChoosedMonth",
+            payload: value
+        }
+    })
+
     const exeptionMonth = ((value)=>{
         return{
             type: "calendar"+ props.calNum+"/setChoosedMonth",
@@ -128,6 +135,14 @@ export default function Calendar(props){
             type: "calendar"+ props.calNum+"/setChoosedDay",
             payload: myDay
         }
+    })
+
+    const home = (()=>{
+        let date = new Date()
+        dispatch(returnDay(date.getDate()))
+        dispatch(yearChoose(date.getFullYear()))
+        dispatch(monthChooseNumber(date.getMonth() + 1))
+        dispatch(setCurrentMonth())
     })
 
     const frenchFormatDate = ((myDay, myMonth, myYear) => {
@@ -221,7 +236,7 @@ export default function Calendar(props){
                 <div className='control-left' onClick={()=>{
                     leftDown()
                     }}><FontAwesomeIcon icon={faAngleLeft} /></div>
-                <div className='control-home' ><FontAwesomeIcon icon={faHouse} /></div>
+                <div className='control-home' onClick={()=>home()} ><FontAwesomeIcon icon={faHouse} /></div>
                
                 <select 
                     value={monthNames.find(mN => mN.index === choosedMonth).monthName}
@@ -265,7 +280,6 @@ export default function Calendar(props){
                                 
                         }
                             onClick={()=>{
-                                // console.log(currentMonth[i][j].month)
                                 dispatch(returnDay(day.day)) 
                                 dispatch(exeptionMonth(currentMonth[i][j].month))
                                 dispatch(setCurrentMonth())

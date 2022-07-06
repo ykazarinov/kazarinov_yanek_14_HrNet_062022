@@ -12,7 +12,6 @@ const subarrayCreator = ((myArray, size)=>{
 const createArrayOfDates = ((year, month)=>{
   var myDate = new Date(year, month, 1)
   var myMonth = myDate.getMonth() != 0 ? myDate.getMonth() : 12
-  console.log(myMonth)
   var end = new Date(myDate.getFullYear(), myMonth, 0).getDate(); 
   var result = [];
   let firstDayOfCurrentMonth
@@ -149,8 +148,6 @@ function createGenericSlice(sliceName) {
             state['choosedYear' + sliceName], 
             state['choosedMonth' + sliceName]
           )
-
-          //  console.log(state['choosedMonth' + sliceName])
 
           return  defaultCurrentState
         },
