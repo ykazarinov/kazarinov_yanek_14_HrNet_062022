@@ -8,8 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsOpen1, setIsOpen2 } from "../../slices/calendar.slice";
 import { setCurrentMonth1, setCurrentMonth2 } from "../../slices/calendar.slice";
 import { setChoosedDay1, setChoosedDay2 } from "../../slices/calendar.slice";
-import { setBeforeMonth1, setBeforeMonth2 } from "../../slices/calendar.slice";
-import { setAfterMonth1, setAfterMonth2 } from "../../slices/calendar.slice";
 import { setClose1, setClose2 } from "../../slices/calendar.slice";
 import { useEffect } from "react";
 
@@ -29,16 +27,12 @@ export default function Calendar(props){
     const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
     const setClose = (()=>{ return props.calNum === 1 ? setClose1() : setClose2()})
     const setCurrentMonth = (()=>{ return props.calNum === 1 ? setCurrentMonth1() : setCurrentMonth2()})
-    const setBeforeMonth = (()=>{ return props.calNum === 1 ? setBeforeMonth1() : setBeforeMonth2()})
-    const setAfterMonth = (()=>{ return props.calNum === 1 ? setAfterMonth1() : setAfterMonth2()})
     const setChoosedDay = (()=>{ return props.calNum === 1 ? setChoosedDay1() : setChoosedDay2()})
 
     const  choosedMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedMonth'+props.calNum]
     const  choosedYear  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedYear'+props.calNum]
     const  isOpen  = useSelector((state) => state['calendarReducer' + props.calNum])['isOpen'+props.calNum]
     const  currentMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['currentMonth'+props.calNum]
-    const  beforeMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['beforeMonth'+props.calNum]
-    const  afterMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['afterMonth'+props.calNum]
     const  choosedDay = useSelector((state) => state['calendarReducer' + props.calNum])['choosedDay'+props.calNum]
 
 
@@ -108,6 +102,13 @@ export default function Calendar(props){
         }
     })
 
+    const exeptionMonth = ((value)=>{
+        return{
+            type: "calendar"+ props.calNum+"/setChoosedMonth",
+            payload: Number(value)
+        }
+    })
+
     const monthToBegin = (()=>{
         return {
             type: "calendar"+ props.calNum+"/setChoosedMonth",
@@ -133,15 +134,17 @@ export default function Calendar(props){
         return myDay + '/' + (myMonth < 10 ? ('0' + myMonth) : myMonth) + '/' + myYear
     })
 
-    const exeptionDate = ((myDay, myMonth)=>{
-        let myIndex = myMonth[myMonth.length - 1].map(obj => Object.keys(obj).length == 0).indexOf(true)
-        let realDate = myIndex != -1 ? 
-        myMonth[myMonth.length - 1][myIndex - 1] :
-        myMonth[myMonth.length - 1][myMonth[myMonth.length - 1].length - 1]
-        if(Number(myDay) > Number(realDate.day)){
-            return Number(realDate.day) 
+    const exeptionDate = ((myChoosedDay, myChoosedMonth, myCurrentMonth)=>{
+      
+        let indexOfLastWeek = myCurrentMonth.length -1
+        let lastWeekCurrentMonth = myCurrentMonth[indexOfLastWeek].filter(obj => Number(obj.month) === Number(myChoosedMonth))
+        let lastDate = lastWeekCurrentMonth[lastWeekCurrentMonth.length - 1]
+              
+        if(Number(myChoosedMonth) === Number(lastDate.month) &&
+            Number(myChoosedDay) > Number(lastDate.day)){
+            return Number(lastDate.day) 
         }else{
-            return Number(myDay)
+            return Number(myChoosedDay)
         }
     })
 
@@ -154,9 +157,8 @@ export default function Calendar(props){
             dispatch(monthDecrement())
         }
         dispatch(setCurrentMonth())
-        dispatch(setBeforeMonth())
-        dispatch(setAfterMonth())
-        // dispatch(returnDay(exeptionDate(choosedDay, beforeMonth)))
+
+      
 
     })
 
@@ -169,16 +171,17 @@ export default function Calendar(props){
             dispatch(monthExcrement())
         }
         dispatch(setCurrentMonth())
-        dispatch(setBeforeMonth())
-        dispatch(setAfterMonth())
-        // dispatch(returnDay(exeptionDate(choosedDay, afterMonth)))
+
+        
         
     })
 
     
     useEffect(()=>{
-        dispatch(returnDay(exeptionDate(choosedDay, currentMonth)))
+        dispatch(returnDay(exeptionDate(choosedDay, choosedMonth, currentMonth)))
     }, [currentMonth])
+
+
 
     const monthSelectDown = ((newMonth) =>{
         let newMonthIndex = monthNames.find(mN => mN.monthName === newMonth).index
@@ -186,24 +189,15 @@ export default function Calendar(props){
         
        
         dispatch(setCurrentMonth())
-        dispatch(setBeforeMonth())
-        dispatch(setAfterMonth())
+
         
-        
-        // if(newMonthIndex < choosedMonth){
-            
-                // dispatch(returnDay(exeptionDate(choosedDay, currentMonth)))
-            
-            
-        // }
-        
+       
     })
 
     const yearSelectDown = ((newYear) => {
         dispatch(yearChoose(newYear))
         dispatch(setCurrentMonth())
-        dispatch(setBeforeMonth())
-        dispatch(setAfterMonth())
+
     })
     
 
@@ -264,9 +258,17 @@ export default function Calendar(props){
                     {week.map && week.map((day, j)=>(
                         <div 
                             key={j} 
-                            className={day.day == choosedDay ? 'calendar-day active' : 'calendar-day' }
+                            className={
+                                day.day == choosedDay && Number(day.month) === Number(choosedMonth) ? 'calendar-day active' : // if 
+                                day.day != choosedDay && Number(day.month) === Number(choosedMonth) ? 'calendar-day'  : // else if 
+                                'calendar-day disactive' // else if
+                                
+                        }
                             onClick={()=>{
+                                // console.log(currentMonth[i][j].month)
                                 dispatch(returnDay(day.day)) 
+                                dispatch(exeptionMonth(currentMonth[i][j].month))
+                                dispatch(setCurrentMonth())
                                 dispatch(setClose())
                             }}
                             

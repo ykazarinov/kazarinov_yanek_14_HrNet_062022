@@ -11362,6 +11362,10 @@ main {
   background-color: #282D30;
   color: #ffffff;
 }
+.calendar .calendar-day.disactive {
+  color: #74798c;
+  background-color: #f0f1f3;
+}
 .calendar .calendar-weektitles {
   display: flex;
   justify-content: center;

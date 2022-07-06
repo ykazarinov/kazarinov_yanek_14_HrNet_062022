@@ -240,6 +240,11 @@ main{
                 background-color: $dark-grey;
                 color: $white;
             }
+            &.disactive{
+                color: $grey;
+                background-color: $light-bg
+
+            }
 
         }
         &-weektitles{

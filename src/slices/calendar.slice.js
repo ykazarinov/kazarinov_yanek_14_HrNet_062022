@@ -9,69 +9,88 @@ const subarrayCreator = ((myArray, size)=>{
   return (subarray)
 })
 
-// create array of empty dates before current month
-const emptyDatesBefore = ((year, month) => {
-  
-  let firstWeekDay = new Date(year, month-1, 1).getDay()
-  let countDaysBefore = firstWeekDay === 0 ? firstWeekDay+7 : firstWeekDay
-  let emptyDays = []
-  for(let i=1; i< countDaysBefore ; i++){
-      emptyDays.push({})
-  }
-  return emptyDays
-})
-
-// create array of empty dates after current month
-const emptyDatesAfter = ((lastWeek)=>{
-  let countDaysAfter = 7 - lastWeek.length
-  let emptyDays = []
-  for(let i=0; i< countDaysAfter ; i++){
-      emptyDays.push({})
-  }
-
-  return emptyDays
-  
-
-})
-
-// create array of array (weeks) of objects (days) with dates of given month of given year
-const monthDates = ((year, month) => {
-  var myDate = new Date(year, month-1, 1)
-  var myMonth = myDate.getMonth() + 1
+const createArrayOfDates = ((year, month)=>{
+  var myDate = new Date(year, month, 1)
+  var myMonth = myDate.getMonth() != 0 ? myDate.getMonth() : 12
+  console.log(myMonth)
   var end = new Date(myDate.getFullYear(), myMonth, 0).getDate(); 
   var result = [];
   let firstDayOfCurrentMonth
-
   // 1. create array of dates
   for(let i = 1; i <= end; i++){
-      firstDayOfCurrentMonth = new Date(new Date().setDate(i));
-      result.push(
-      {
-          day: i < 10 ? '0'+ i : String(i),
-          weekDay: firstDayOfCurrentMonth.getDay(),
-          month: myMonth < 10 ? '0' + myMonth : myMonth,
-          year: myDate.getFullYear()
-      })
+    firstDayOfCurrentMonth = new Date(new Date().setDate(i));
+    result.push(
+    {
+        day: i < 10 ? '0'+ i : String(i),
+        weekDay: firstDayOfCurrentMonth.getDay(),
+        month: myMonth < 10 ? '0' + myMonth : myMonth,
+        year: myDate.getFullYear()
+    })
   }
 
-  // 2. create array of empty dates before
-  let emptyDaysBefore = emptyDatesBefore(year, month)
+  return result
+})
+
+// create array of empty dates before current month
+const datesBefore = ((year, month) => {
+  let firstWeekDay = new Date(year, month-1, 1).getDay()
+  let countDaysBefore = firstWeekDay === 0 ? firstWeekDay+7 : firstWeekDay
+  let lastDaysOfThePreviousMonth = []
+  
+  let result = createArrayOfDates(year, month>1 ? month-1 : 12)
+  
+  let beforeDates = result.slice(-countDaysBefore)
+
+    for(let i=countDaysBefore-1; i>=1  ; i--){
+      lastDaysOfThePreviousMonth.push(beforeDates[i])
+  }
+  
+  return lastDaysOfThePreviousMonth
+})
+
+// create array of empty dates after current month
+const datesAfter = ((lastWeek, year, month)=>{
+  let countDaysAfter = 7 - lastWeek.length
+  let firstDaysOfNextMonth = []
+  let result = createArrayOfDates(year, month<12 ? month + 1: 1)
+  
+  let afterDates = result.slice(0, countDaysAfter)
+  for(let i=0; i< countDaysAfter ; i++){
+    firstDaysOfNextMonth.push(afterDates[i])
+  }
+  return firstDaysOfNextMonth
+
+})
+
+
+
+// create array of array (weeks) of objects (days) with dates of given month of given year
+const monthDates = ((year, month) => {
+    // 1. create array of main dates of month
+    let result = createArrayOfDates(year, Number(month) != 0 ? month : 12)
+    
  
-  // 2.1 and add this dates before main array
-  for(let i = 0; i< emptyDaysBefore.length; i++){
-      result.unshift(emptyDaysBefore[i])
-  }
+    // 2. create array of last days of the previous month
+    let daysBefore = datesBefore(year, month)
+  
+    // 2.1 and add this dates before main array
+    for(let i = 0; i< daysBefore.length; i++){
+        result.unshift(daysBefore[i])
+    }
 
-  // 3. create array of empty dates after
-  let groupedResult = subarrayCreator(result, 7)
-  let emptyDaysAfter = emptyDatesAfter(groupedResult[[groupedResult.length - 1]])
-  // 3.1 and add this dates after main array
-  for(let i = 0; i< emptyDaysAfter.length; i++){
-      result.push(emptyDaysAfter[i])
-  }
-  // 4. grouping dates by week
-  groupedResult = subarrayCreator(result, 7)
-  return(groupedResult)
+    // 3. create array of first days of next month
+    let groupedResult = subarrayCreator(result, 7)
+    let emptyDaysAfter = datesAfter(groupedResult[[groupedResult.length - 1]], year, month)
+    
+    // 3.1 and add this dates after main array
+    for(let i = 0; i< emptyDaysAfter.length; i++){
+        result.push(emptyDaysAfter[i])
+    }
+    // 4. grouping dates by weeks
+    groupedResult = subarrayCreator(result, 7)
+
+    return(groupedResult)
+ 
 })
 
 
@@ -82,8 +101,6 @@ const currentState = ((state, sliceName) => {
     ['choosedMonth' + sliceName]: state['choosedMonth' + sliceName],
     ['choosedYear' + sliceName]: state['choosedYear' + sliceName],
     ['currentMonth' + sliceName]: state['currentMonth' + sliceName],
-    ['beforeMonth' + sliceName]: state['beforeMonth' + sliceName],
-    ['afterMonth' + sliceName]: state['afterMonth' + sliceName],
     ['choosedDay' + sliceName]: state['choosedDay' + sliceName]
   }
 })
@@ -96,8 +113,6 @@ function createGenericSlice(sliceName) {
     ['choosedYear' + sliceName]: currentDay.getFullYear(),
     ['choosedMonth' + sliceName]: currentDay.getMonth() + 1,
     ['currentMonth' + sliceName]: monthDates(currentDay.getFullYear(), currentDay.getMonth() + 1),
-    ['beforeMonth' + sliceName]: monthDates(currentDay.getFullYear(), currentDay.getMonth()),
-    ['afterMonth' + sliceName]: monthDates(currentDay.getFullYear(), currentDay.getMonth() + 2),
     ['choosedDay' + sliceName]: currentDay.getDate()
   };
 
@@ -135,26 +150,11 @@ function createGenericSlice(sliceName) {
             state['choosedMonth' + sliceName]
           )
 
-          // console.log(defaultCurrentState['currentMonth' + sliceName])
+          //  console.log(state['choosedMonth' + sliceName])
 
           return  defaultCurrentState
         },
-        setBeforeMonth: (state) => {
-          const defaultCurrentState = currentState(state, sliceName)
-          defaultCurrentState['beforeMonth' + sliceName] = monthDates(
-            state['choosedYear' + sliceName], 
-            state['choosedMonth' + sliceName] - 1
-          )
-          return  defaultCurrentState
-        },
-        setAfterMonth: (state) => {
-          const defaultCurrentState = currentState(state, sliceName)
-          defaultCurrentState['afterMonth' + sliceName] = monthDates(
-            state['choosedYear' + sliceName], 
-            state['choosedMonth' + sliceName] + 1
-          )
-          return  defaultCurrentState
-        },
+       
         setChoosedDay: (state, action) => {
           const defaultCurrentState = currentState(state, sliceName)
           String(action.payload).substring(0,1) === '0' || String(action.payload).length > 1 
@@ -166,8 +166,8 @@ function createGenericSlice(sliceName) {
       },
     });
     const { reducer, actions } = calendarSlice;
-    const {setIsOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setBeforeMonth, setAfterMonth, setChoosedDay } = actions;
-    return {setIsOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setBeforeMonth, setAfterMonth, setChoosedDay, reducer}
+    const {setIsOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay } = actions;
+    return {setIsOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, reducer}
   }
 
   const slice1 = createGenericSlice("1")
@@ -178,8 +178,6 @@ function createGenericSlice(sliceName) {
   const setChoosedMonth1 = slice1.setChoosedMonth
   const setChoosedYear1 = slice1.setChoosedYear
   const setCurrentMonth1 = slice1.setCurrentMonth
-  const setBeforeMonth1 = slice1.setBeforeMonth
-  const setAfterMonth1 = slice1.setAfterMonth
   const setChoosedDay1 = slice1.setChoosedDay
   const calendarReducer1 = slice1.reducer
 
@@ -188,8 +186,6 @@ function createGenericSlice(sliceName) {
   const setChoosedMonth2 = slice2.setChoosedMonth
   const setChoosedYear2 = slice2.setChoosedYear
   const setCurrentMonth2 = slice2.setCurrentMonth
-  const setBeforeMonth2 = slice2.setBeforeMonth
-  const setAfterMonth2 = slice2.setAfterMonth
   const setChoosedDay2 = slice2.setChoosedDay
   const calendarReducer2 = slice2.reducer
 
@@ -199,8 +195,6 @@ function createGenericSlice(sliceName) {
     setChoosedMonth1, 
     setChoosedYear1, 
     setCurrentMonth1,
-    setBeforeMonth1,
-    setAfterMonth1,
     setChoosedDay1,
     calendarReducer1,
     setIsOpen2,
@@ -208,8 +202,6 @@ function createGenericSlice(sliceName) {
     setChoosedMonth2,
     setChoosedYear2, 
     setCurrentMonth2,
-    setBeforeMonth2,
-    setAfterMonth2,
     setChoosedDay2,
     calendarReducer2}
 

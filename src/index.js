@@ -9,7 +9,7 @@ import store from './store'
 import './assets/css/style.css';
 
 import Home from './pages/Home/home';
-import Users from './pages/Users/users';
+import Employees from './pages/Employees/employees';
 import Error from './pages/Error/error';
 
 import Header from './components/Header/header'
@@ -22,7 +22,7 @@ ReactDOM.render(
       <Header />
         <Routes>
           <Route exact path="/"  element={<Home />} />
-          <Route exact path="/users" element={<Users />} />
+          <Route exact path="/employees" element={<Employees />} />
           <Route path='*' element={<Error />} />
         </Routes>
         <Footer />
