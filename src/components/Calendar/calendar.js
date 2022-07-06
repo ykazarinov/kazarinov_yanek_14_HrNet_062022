@@ -281,6 +281,7 @@ export default function Calendar(props){
                         }
                             onClick={()=>{
                                 dispatch(returnDay(day.day)) 
+                                dispatch(yearChoose(day.year))
                                 dispatch(exeptionMonth(currentMonth[i][j].month))
                                 dispatch(setCurrentMonth())
                                 dispatch(setClose())

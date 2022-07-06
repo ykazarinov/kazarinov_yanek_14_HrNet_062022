@@ -23,7 +23,7 @@ const createArrayOfDates = ((year, month)=>{
         day: i < 10 ? '0'+ i : String(i),
         weekDay: firstDayOfCurrentMonth.getDay(),
         month: myMonth < 10 ? '0' + myMonth : myMonth,
-        year: myDate.getFullYear()
+        year: myMonth === 12 ? myDate.getFullYear()-1 : myDate.getFullYear()
     })
   }
 
@@ -36,7 +36,7 @@ const datesBefore = ((year, month) => {
   let countDaysBefore = firstWeekDay === 0 ? firstWeekDay+7 : firstWeekDay
   let lastDaysOfThePreviousMonth = []
   
-  let result = createArrayOfDates(year, month>1 ? month-1 : 12)
+  let result = createArrayOfDates(month===1? year-1 : year, month>1 ? month-1 : 12)
   
   let beforeDates = result.slice(-countDaysBefore)
 
@@ -51,7 +51,7 @@ const datesBefore = ((year, month) => {
 const datesAfter = ((lastWeek, year, month)=>{
   let countDaysAfter = 7 - lastWeek.length
   let firstDaysOfNextMonth = []
-  let result = createArrayOfDates(year, month<12 ? month + 1: 1)
+  let result = createArrayOfDates(month===12? year+1 : year, month<12 ? month + 1: 1)
   
   let afterDates = result.slice(0, countDaysAfter)
   for(let i=0; i< countDaysAfter ; i++){
