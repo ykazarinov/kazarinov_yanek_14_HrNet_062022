@@ -37,6 +37,7 @@ export default function Home(){
                             <OutsideAlerter myDispatch={()=>dispatch(setClose1())}>
                                 <Calendar  id='birthday' calNum={1} ></Calendar>
                             </OutsideAlerter>
+                            
                     </div>
                     <div className="address col-6">
                             <label htmlFor="startday">Start Date</label>
