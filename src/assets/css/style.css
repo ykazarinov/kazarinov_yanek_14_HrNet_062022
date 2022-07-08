@@ -11398,6 +11398,9 @@ main {
   padding: 0.2rem;
   margin-left: 0.3rem;
 }
+.control-right.desactive {
+  color: #cccccc;
+}
 
 fieldset.scheduler-border {
   border: 1px solid #74798c;

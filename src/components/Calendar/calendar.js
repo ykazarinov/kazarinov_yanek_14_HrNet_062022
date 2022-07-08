@@ -188,14 +188,17 @@ export default function Calendar(props){
     })
 
     const rightDown = (() => {
-
-        if(Number(choosedMonth) === 12){
-            dispatch(yearExcrement())
-            dispatch(monthToBegin())
-        }else{
-            dispatch(monthExcrement())
+        if(!isFutureDate(choosedDay, choosedMonth+1, choosedYear)){
+            if(Number(choosedMonth) === 12){
+                dispatch(yearExcrement())
+                dispatch(monthToBegin())
+            }else{
+                dispatch(monthExcrement())
+            }
+            dispatch(setCurrentMonth())
         }
-        dispatch(setCurrentMonth())
+
+        
     })
 
 
@@ -264,10 +267,15 @@ export default function Calendar(props){
                     
                     const str = e.target.value
                     const myMask = str.match(/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/)
-                    if(!myMask){
+                    if(myMask === null ||
+                        isFutureDate(
+                            Number(e.target.value.substr(0,2)), 
+                            Number(e.target.value.substr(3,2)),
+                            Number(e.target.value.substr(6,4))
+                        ) ){
                         // let myDate = new Date()
                         let myDay = globalCurrentDay.getDate()
-                        let myMonth = globalCurrentDay.getMonth()
+                        let myMonth = globalCurrentDay.getMonth() +1
                         let myYear = globalCurrentDay.getFullYear()
                         dispatch(returnDay(myDay)) 
                         dispatch(monthChooseNumber(myMonth))
@@ -282,7 +290,13 @@ export default function Calendar(props){
                     const str = e.target.value
                     const myMask = str.match(/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/)
                     dispatch(inputDateFromCalendar(e.target.value))
-                    if(myMask){
+                    if(myMask  && 
+                        !isFutureDate(
+                            Number(e.target.value.substr(0,2)), 
+                            Number(e.target.value.substr(3,2)),
+                            Number(e.target.value.substr(6,4))
+                        ) 
+                        ){
 
                         let day = e.target.value.substr(0, 2)
                         let month = Number(e.target.value.substr(3, 2))
@@ -305,11 +319,18 @@ export default function Calendar(props){
                         if(e.keyCode === 13){
                             
                             const myMask = myStr.match(/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/)
-                            if(myMask === null){
+
+                            if(myMask === null ||
+                                isFutureDate(
+                                    Number(e.target.value.substr(0,2)), 
+                                    Number(e.target.value.substr(3,2)),
+                                    Number(e.target.value.substr(6,4))
+                                ) 
+                                ){
                                 // let date = new Date()
                                 dispatch(inputDateFromCalendar(frenchFormatDate(
                                     globalCurrentDay.getDate(), 
-                                    Number(globalCurrentDay.getMonth()), 
+                                    Number(globalCurrentDay.getMonth()) + 1, 
                                     globalCurrentDay.getFullYear()
                                     )))
                                 dispatch(setClose())
@@ -379,9 +400,17 @@ export default function Calendar(props){
                         >{item}</option>)
                     )}
                 </select>
-                <div className='control-right' onClick={()=>
-                    rightDown()
-                    }><FontAwesomeIcon icon={faAngleRight} /></div>
+                <div 
+                    className={
+                        !isFutureDate(choosedDay, choosedMonth+1, choosedYear) ?
+                       'control-right'  :
+                       'control-right desactive'
+                    }
+                    onClick={()=>
+                        rightDown()
+                    }
+                >
+                    <FontAwesomeIcon icon={faAngleRight} /></div>
             </div>
             <div className='calendar-weektitles'>
                 {weekDaysNames.map && weekDaysNames.map((weekDayName, i) => (

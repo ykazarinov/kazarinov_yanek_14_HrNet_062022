@@ -284,6 +284,9 @@ main{
     &-right{
         padding: .2rem;
         margin-left: .3rem;
+        &.desactive{
+            color: $light-grey;
+        }
     }
 }
 
