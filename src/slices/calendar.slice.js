@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import{today} from '../app.config'
+import {conf} from '../app.config.js'
 
 // splitting an array into subarrays
 const subarrayCreator = ((myArray, size)=>{
@@ -106,8 +108,12 @@ const currentState = ((state, sliceName) => {
 })
 
 function createGenericSlice(sliceName) {
-
-  const currentDay = new Date()
+  let currentDay
+  sliceName == 1
+    ? currentDay = new Date(today.getFullYear() - conf.employeeMinAge, today.getMonth(), today.getDate())
+    : currentDay = today
+  console.log(currentDay.getFullYear())
+  
   const initialState = {
     ['isOpen' + sliceName]: false,
     ['choosedYear' + sliceName]: currentDay.getFullYear(),
@@ -129,6 +135,11 @@ function createGenericSlice(sliceName) {
         setClose: (state) => {
           const defaultCurrentState = currentState(state, sliceName)
           defaultCurrentState['isOpen' + sliceName] = false
+          return  defaultCurrentState
+        },
+        setOpen: (state) => {
+          const defaultCurrentState = currentState(state, sliceName)
+          defaultCurrentState['isOpen' + sliceName] = true
           return  defaultCurrentState
         },
         setChoosedYear: (state, action) => {
@@ -171,14 +182,15 @@ function createGenericSlice(sliceName) {
       },
     });
     const { reducer, actions } = calendarSlice;
-    const {setIsOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, setInputDate } = actions;
-    return {setIsOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, setInputDate, reducer}
+    const {setIsOpen, setOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, setInputDate } = actions;
+    return {setIsOpen, setOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, setInputDate, reducer}
   }
 
   const slice1 = createGenericSlice("1")
   const slice2 = createGenericSlice("2")
 
   const setIsOpen1 = slice1.setIsOpen
+  const setOpen1 = slice1.setOpen
   const setClose1 = slice1.setClose
   const setChoosedMonth1 = slice1.setChoosedMonth
   const setChoosedYear1 = slice1.setChoosedYear
@@ -188,6 +200,7 @@ function createGenericSlice(sliceName) {
   const calendarReducer1 = slice1.reducer
 
   const setIsOpen2 = slice2.setIsOpen
+  const setOpen2 = slice2.setOpen
   const setClose2 = slice2.setClose
   const setChoosedMonth2 = slice2.setChoosedMonth
   const setChoosedYear2 = slice2.setChoosedYear
@@ -198,6 +211,7 @@ function createGenericSlice(sliceName) {
 
   export {
     setIsOpen1,
+    setOpen1,
     setClose1,
     setChoosedMonth1, 
     setChoosedYear1, 
@@ -206,6 +220,7 @@ function createGenericSlice(sliceName) {
     setInputDate1,
     calendarReducer1,
     setIsOpen2,
+    setOpen2,
     setClose2,  
     setChoosedMonth2,
     setChoosedYear2, 

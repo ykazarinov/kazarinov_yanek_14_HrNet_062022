@@ -7,10 +7,11 @@ import { useDispatch } from "react-redux";
 import { setClose1, setClose2 } from "../../slices/calendar.slice";
 import { setCloseSelect1, setCloseSelect2 } from "../../slices/select.slice";
 
+
+
 const selectList = ['Choose item...', 'item 1', 'item 2', 'item 3']
 
 export default function Home(){
-
     const dispatch = useDispatch();
     return <main className="container">
         <div className="row">
@@ -35,14 +36,14 @@ export default function Home(){
                     <div className="address col-6">
                             <label htmlFor="birthday">Date of Birth</label>
                             <OutsideAlerter myDispatch={()=>dispatch(setClose1())}>
-                                <Calendar  id='birthday' calNum={1} ></Calendar>
+                                <Calendar  id='birthday' calNum={1}></Calendar>
                             </OutsideAlerter>
                             
                     </div>
                     <div className="address col-6">
                             <label htmlFor="startday">Start Date</label>
                             <OutsideAlerter myDispatch={()=>dispatch(setClose2())}>
-                                <Calendar id='startday' calNum={2} selectNumber='2'></Calendar>
+                                <Calendar id='startday' calNum={2}></Calendar>
                             </OutsideAlerter>
                             
                     </div>

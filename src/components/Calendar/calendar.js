@@ -6,12 +6,15 @@ import { faCalendarDays, faAngleLeft, faAngleRight, faHouse } from '@fortawesome
 import { useSelector, useDispatch } from "react-redux";
 
 import { setIsOpen1, setIsOpen2 } from "../../slices/calendar.slice";
+import { setOpen1, setOpen2 } from "../../slices/calendar.slice";
 import { setCurrentMonth1, setCurrentMonth2 } from "../../slices/calendar.slice";
 import { setChoosedDay1, setChoosedDay2 } from "../../slices/calendar.slice";
 import { setClose1, setClose2 } from "../../slices/calendar.slice";
 import { setInputDate1, setInputDate2 } from "../../slices/calendar.slice";
 import { useEffect } from "react";
 
+import{today} from '../../app.config'
+import {conf} from '../../app.config.js'
 
 const OpenCalendarList = styled('div')`
     display: block;`
@@ -19,12 +22,19 @@ const CloseCalendarList = styled('div')`display: none;`
 
 
 export default function Calendar(props){
+    
+    
+    let globalCurrentDay
 
-    const currentDay = new Date()
+    props.calNum === 1
+        ? globalCurrentDay = new Date(today.getFullYear() - conf.employeeMinAge, today.getMonth(), today.getDate())
+        : globalCurrentDay = today
+
 
     const dispatch = useDispatch();
 
     const setIsOpen = (()=>{ return props.calNum === 1 ? setIsOpen1() : setIsOpen2()})
+    const setOpen = (()=>{ return props.calNum === 1 ? setOpen1() : setOpen2()})
     const setClose = (()=>{ return props.calNum === 1 ? setClose1() : setClose2()})
     const setCurrentMonth = (()=>{ return props.calNum === 1 ? setCurrentMonth1() : setCurrentMonth2()})
     const setChoosedDay = (()=>{ return props.calNum === 1 ? setChoosedDay1() : setChoosedDay2()})
@@ -33,12 +43,10 @@ export default function Calendar(props){
     const  choosedMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedMonth'+props.calNum]
     const  choosedYear  = useSelector((state) => state['calendarReducer' + props.calNum])['choosedYear'+props.calNum]
     const  isOpen  = useSelector((state) => state['calendarReducer' + props.calNum])['isOpen'+props.calNum]
+    const  open  = useSelector((state) => state['calendarReducer' + props.calNum])['open'+props.calNum]
     const  currentMonth  = useSelector((state) => state['calendarReducer' + props.calNum])['currentMonth'+props.calNum]
     const  choosedDay = useSelector((state) => state['calendarReducer' + props.calNum])['choosedDay'+props.calNum]
     const  inputDate = useSelector((state) => state['calendarReducer' + props.calNum])['inputDate'+props.calNum]
-
-
-    // const [choosedDay, setChoosedDay] = useState(currentDay.getDate())
 
     const weekDaysNames = [ 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di']
     const monthNames = [
@@ -55,7 +63,7 @@ export default function Calendar(props){
         {index: 11, monthName:'Novembre'},
         {index: 12, monthName:'Décembre'}]
     const yearsNames = []
-        for(let i=currentDay.getFullYear(); i>=1900; i--){
+        for(let i=globalCurrentDay.getFullYear(); i>=1900; i--){
             yearsNames.push(i)
         }
 
@@ -137,11 +145,9 @@ export default function Calendar(props){
     })
 
     const home = (()=>{
-        let date = new Date()
-        console.log(date.getMonth() + 1)
-        dispatch(returnDay(date.getDate()))
-        dispatch(yearChoose(date.getFullYear()))
-        dispatch(monthChooseNumber(date.getMonth() + 1))
+        dispatch(returnDay(globalCurrentDay.getDate()))
+        dispatch(yearChoose(globalCurrentDay.getFullYear()))
+        dispatch(monthChooseNumber(globalCurrentDay.getMonth() + 1))
         dispatch(setCurrentMonth())
     })
 
@@ -153,9 +159,7 @@ export default function Calendar(props){
     })
 
     const frenchFormatDate = ((myDay, myMonth, myYear) => {
-        
-         return myDay + '/' + (myMonth < 10 ? ('0' + myMonth) : myMonth) + '/' + myYear
-        // return myYear + '-' + (myMonth < 10 ? ('0' + myMonth) : myMonth) + '-' + myDay
+        return (myDay < 10 ? ('0' + myDay): myDay) + '/' + (myMonth < 10 ? ('0' + myMonth) : myMonth) + '/' + myYear
     })
 
     const exeptionDate = ((myChoosedDay, myChoosedMonth, myCurrentMonth)=>{
@@ -181,14 +185,6 @@ export default function Calendar(props){
             dispatch(monthDecrement())
         }
         dispatch(setCurrentMonth())
-
-
-        // dispatch(inputDateFromCalendar(frenchFormatDate(
-        //     exeptionDate(choosedDay, choosedMonth<12?choosedMonth+1:1, currentMonth),
-        //     choosedMonth>1?choosedMonth-1:12, 
-        //     choosedMonth>1?choosedYear:choosedYear-1
-        //     )))
-
     })
 
     const rightDown = (() => {
@@ -200,31 +196,28 @@ export default function Calendar(props){
             dispatch(monthExcrement())
         }
         dispatch(setCurrentMonth())
-
-
-        // dispatch(inputDateFromCalendar(frenchFormatDate(
-        //     exeptionDate(choosedDay, choosedMonth<12?choosedMonth+1:1, currentMonth), 
-        //     choosedMonth<12?choosedMonth+1:1, 
-        //     choosedMonth<12?choosedYear:choosedYear+1
-        //     )))
     })
+
+
 
     
     useEffect(()=>{
         dispatch(returnDay(exeptionDate(choosedDay, choosedMonth, currentMonth)))
-        // dispatch(inputDateFromCalendar(choosedDay, choosedMonth, choosedYear))
        
     }, [currentMonth])
 
-    useEffect(()=>{
-        dispatch(inputDateFromCalendar(frenchFormatDate(
-            exeptionDate(choosedDay, choosedMonth, currentMonth),
-            choosedMonth,
-            choosedYear
-        )))
-       
-    }, [currentMonth, choosedDay, choosedMonth, choosedYear])
 
+    useEffect(()=>{
+        if(inputDate !== ''){
+            dispatch(inputDateFromCalendar(frenchFormatDate(
+                exeptionDate(choosedDay, choosedMonth, currentMonth),
+                choosedMonth,
+                choosedYear
+            )))
+        }
+        
+       
+    }, [currentMonth])
 
 
     const monthSelectDown = ((newMonth) =>{
@@ -239,6 +232,23 @@ export default function Calendar(props){
 
     })
 
+    const isFutureDate = ((day, month, year)=>{
+        // let realDate
+        // let today = new Date()
+
+        // if(props.employeeMinAge){
+        //     realDate = new Date(today.getFullYear() - props.employeeMinAge, today.getMonth(), today.getDate())
+            
+        // }else{
+        //     realDate = new Date()
+        // }
+
+        let myDate = new Date(year, Number(month)-1, Number(day))
+        return myDate > globalCurrentDay ?
+            true :
+            false
+    })
+
     
 
     return <div className="calendar">
@@ -246,17 +256,19 @@ export default function Calendar(props){
         <div className="calendar--def-item-cont">
             <input type='text'
                 className="calendar--def-item-cont--input actual-item-cont"
-                onClick={()=>dispatch(setIsOpen())} 
+                onClick={()=>dispatch(setOpen())} 
                 maxLength='10'
                 value={inputDate}
+                onFocus={()=> dispatch(setOpen())}
                 onBlur={(e)=>{
+                    
                     const str = e.target.value
                     const myMask = str.match(/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/)
                     if(!myMask){
-                        let myDate = new Date()
-                        let myDay = myDate.getDate()
-                        let myMonth = myDate.getMonth()
-                        let myYear = myDate.getFullYear()
+                        // let myDate = new Date()
+                        let myDay = globalCurrentDay.getDate()
+                        let myMonth = globalCurrentDay.getMonth()
+                        let myYear = globalCurrentDay.getFullYear()
                         dispatch(returnDay(myDay)) 
                         dispatch(monthChooseNumber(myMonth))
                         dispatch(yearChoose(myYear))
@@ -281,54 +293,58 @@ export default function Calendar(props){
                         dispatch(yearChoose(year))
                         dispatch(setCurrentMonth())
                         dispatch(inputDateFromCalendar(frenchFormatDate(day, month, year)))
-                         e.target.value = inputDate
-                        
+                        e.target.value = inputDate
                     }
                 }}
                 onKeyUp={
                     (e)=>{
                         let myStr = e.target.value
-                       
-                        // e.target.value = myStr.replace(/[^0-9/]/g,'')
-                        // ket 'Enter'
+                        // prohibition to enter any characters except numbers and slash
+                        e.target.value = myStr.replace(/[^0-9/]/g,'')
+                        // key 'Enter'
                         if(e.keyCode === 13){
                             
                             const myMask = myStr.match(/^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/)
-                            if(!myMask){
-                                // e.target.value = inputDate
-                                // dispatch(setClose())
+                            if(myMask === null){
+                                // let date = new Date()
+                                dispatch(inputDateFromCalendar(frenchFormatDate(
+                                    globalCurrentDay.getDate(), 
+                                    Number(globalCurrentDay.getMonth()), 
+                                    globalCurrentDay.getFullYear()
+                                    )))
+                                dispatch(setClose())
                             }
                             dispatch(setClose())
                         }
                         // key '/'
-                        // if(e.keyCode === 190){
-                        //     let previousValue = e.target.value
-                           
-                        //       e.target.value = previousValue
-                            
-                        //       // reassign so that it works again next time
-                        //       previousValue = e.target.value
-                           
-                        // }
+                        if(e.keyCode === 190){
+                            let previousValue = e.target.value
+                            e.target.value = previousValue
+                            // reassign so that it works again next time
+                            previousValue = e.target.value
+                        }
+
+                        // add '/' after day
                         if(e.target.value.substr(1,1)  && !e.target.value.substr(2,1) && e.keyCode !== 8)
                             {
-                                console.log('1', e.target.value)
                                 e.target.value = myStr + '/'
                                 dispatch(inputDateFromCalendar(e.target.value))
                             }
+
+                        // add '/' after month
                         if(e.target.value.substr(4,1) && !e.target.value.substr(5,1) && e.keyCode !== 8)
                             {
-                                console.log('2', e.target.value)
                                 e.target.value = myStr + '/'
                                 dispatch(inputDateFromCalendar(e.target.value))
                             }
+
+                        // delete '/' when you delete symbols
                         if(myStr.slice(-1) === '/'){
                             e.target.value = myStr.substr(0, myStr.length - 1)
                         }
                     }
                 }
-              
-                 />
+            />
                     
             
             <div className="select-btn" onClick={()=>dispatch(setIsOpen())}>
@@ -380,18 +396,22 @@ export default function Calendar(props){
                         <div 
                             key={j} 
                             className={
+                                isFutureDate(Number(day.day), Number(day.month), day.year) ? 'calendar-day disactive':
                                 day.day == choosedDay && Number(day.month) === Number(choosedMonth) ? 'calendar-day active' : // if 
                                 day.day != choosedDay && Number(day.month) === Number(choosedMonth) ? 'calendar-day'  : // else if 
                                 'calendar-day disactive' // else if
                                 
                         }
                             onClick={()=>{
-                                dispatch(returnDay(day.day)) 
-                                dispatch(yearChoose(day.year))
-                                dispatch(exeptionMonth(currentMonth[i][j].month))
-                                dispatch(setCurrentMonth())
-                                dispatch(inputDateFromCalendar(frenchFormatDate(day.day, Number(day.month), day.year)))
-                                dispatch(setClose())
+                               
+                                if(!isFutureDate(day.day, day.month, day.year)){
+                                    dispatch(returnDay(day.day)) 
+                                    dispatch(yearChoose(day.year))
+                                    dispatch(exeptionMonth(currentMonth[i][j].month))
+                                    dispatch(setCurrentMonth())
+                                    dispatch(inputDateFromCalendar(frenchFormatDate(day.day, Number(day.month), day.year)))
+                                    dispatch(setClose())
+                                }
                             }}
                             
                         >

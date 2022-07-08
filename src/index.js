@@ -8,6 +8,7 @@ import store from './store'
 
 import './assets/css/style.css';
 
+
 import Home from './pages/Home/home';
 import Employees from './pages/Employees/employees';
 import Error from './pages/Error/error';
