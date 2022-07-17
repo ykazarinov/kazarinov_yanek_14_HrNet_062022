@@ -11265,6 +11265,9 @@ header {
   min-height: 3rem;
   display: flex;
 }
+header .logo-cont {
+  display: flex;
+}
 header .logo {
   font-size: 1.5rem;
   font-weight: bold;
@@ -11279,6 +11282,16 @@ header .logo a {
 }
 header .logo a span {
   font-weight: normal;
+}
+header .lang-cont {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+header .lang-cont .langselect {
+  padding: 0.2rem;
+  margin-left: 0.3rem;
+  border-radius: 5px;
 }
 
 footer {

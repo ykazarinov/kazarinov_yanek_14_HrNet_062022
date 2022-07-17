@@ -112,7 +112,6 @@ function createGenericSlice(sliceName) {
   sliceName == 1
     ? currentDay = new Date(today.getFullYear() - conf.employeeMinAge, today.getMonth(), today.getDate())
     : currentDay = today
-  console.log(currentDay.getFullYear())
   
   const initialState = {
     ['isOpen' + sliceName]: false,

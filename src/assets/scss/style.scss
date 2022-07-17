@@ -137,6 +137,10 @@ header{
     color: $white;
     min-height: 3rem;
     display: flex;
+    .logo-cont{
+        display: flex;
+
+    }
     .logo{
         font-size: 1.5rem;
         font-weight: bold;
@@ -151,6 +155,18 @@ header{
                 font-weight: normal;
             }
         }
+    }
+    .lang-cont{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .langselect{
+            padding: .2rem;
+            margin-left: .3rem;
+            border-radius: 5px;
+
+        }
+
     }
 }
 
