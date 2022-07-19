@@ -11214,11 +11214,13 @@ footer.theme-light {
   color: gray;
 }
 .theme-light .calsel ul, .theme-light .select ul {
-  border: solid 1px #74798c;
-  background-color: #ffffff;
+  border: solid 1px #b3b3b3;
+  background-color: white;
+  color: black;
 }
 .theme-light .calsel ul li:hover, .theme-light .select ul li:hover {
-  background-color: #cccccc;
+  background-color: #183153;
+  color: white;
 }
 .theme-light .input-standart {
   border: solid 1px #b3b3b3;
@@ -11365,11 +11367,13 @@ footer.theme-dark {
   color: #b3b3b3;
 }
 .theme-dark .calsel ul, .theme-dark .select ul {
-  border: solid 1px #74798c;
-  background-color: #ffffff;
+  border: solid 1px transparent;
+  background-color: #4d4d4d;
+  color: white;
 }
 .theme-dark .calsel ul li:hover, .theme-dark .select ul li:hover {
-  background-color: #cccccc;
+  background-color: black;
+  color: white;
 }
 .theme-dark .input-standart {
   border: solid 1px transparent;

@@ -169,11 +169,13 @@ $themes: (
                 }
             }
             ul{
-                border: solid 1px $grey;
-                background-color: $white;
+                border: solid 1px $borderInput;
+                background-color: $bgInput;
+                color: $textContrast;
                 li{
                     &:hover{
-                        background-color: $light-grey;
+                        background-color: $bgPlus;
+                        color: $textInvers;
                     }
                 }
             }
