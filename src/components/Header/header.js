@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faIdCard } from '@fortawesome/free-solid-svg-icons'
 import LangSelect from '../LangSelect/langselect'
-
+import { useSelector } from "react-redux";
 
 export default function Headers(){
+    const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
     return (
-        <header>
+        <header className={currentTheme}>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-4 logo-cont">

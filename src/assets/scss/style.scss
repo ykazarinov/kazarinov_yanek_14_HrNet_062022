@@ -1,6 +1,12 @@
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap');
 
+
+// $themes: (
+//   theme-light: #ffffff,
+//   theme-dark: #000000
+// ) !default;
+
 $black: #020203;
 $white: #ffffff;
 $red: #E60000;
@@ -10,13 +16,250 @@ $light-grey: #cccccc;
 $light-bg: #f0f1f3;
 $blue: #146ebe;
 
-body{
-    background-color: $light-bg;
+$themes: (
+    'theme-light': (
+        'bgContrast': white,
+        'bgNormal': white,
+        'bgPlus' : #183153,
+        'textContrast': black,
+        'textNormal': lighten(black,50%),
+        'textInvers': white,
+        'switchColor' : white,
+        'switchToggleColor': #0fbeff,
+        'switchIconColor': #ffc000,
+        'bgInput': white,
+        'borderInput': darken(white, 30%),
+
+
+
+        // 'borderColor': 
+    
+    ),
+    'theme-dark': (
+        'bgContrast': black,
+        'bgNormal': lighten(black,10%),
+        'bgPlus': black,
+        'textContrast': white,
+        'textNormal': darken(white, 30%),
+        'textInvers': white,
+        'switchColor' : darken(white, 80%),
+        'switchToggleColor': #0fbeff,
+        'switchIconColor': #ffc000,
+        'bgInput': darken(white, 70%),
+        'borderInput': transparent,
+
+
+    ),
+);
+
+@mixin theme($name, $colorArray) {
+    $bgContrast: map-get($colorArray, 'bgContrast');
+    $bgNormal: map-get($colorArray, 'bgNormal');
+    $bgPlus: map-get($colorArray, 'bgPlus');
+    $textContrast: map-get($colorArray, 'textContrast');
+    $textNormal: map-get($colorArray, 'textNormal');
+    $textInvers: map-get($colorArray , 'textInvers' );
+    $switchColor: map-get($colorArray , 'switchColor' );
+    $switchToggleColor: map-get($colorArray , 'switchToggleColor' );
+    $switchIconColor: map-get($colorArray , 'switchIconColor' );
+    $bgInput: map-get($colorArray , 'bgInput' );
+    $borderInput: map-get($colorArray , 'borderInput' );
+
+
+    header.#{$name}{
+        background-color: $bgContrast;
+        color: $textContrast;
+        .logo{
+            background-color: $bgPlus;
+        }
+        label{
+            color: $textNormal;
+        }
+        .langselect{
+            background-color: $bgInput;
+            color: $textContrast;
+            border: solid 1px $borderInput;
+        }
+    }
+    footer.#{$name}{
+        background-color: $bgPlus;
+        color: $textContrast;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    .#{$name}{
+        background-color: $bgNormal;
+        h1{
+            color: $textNormal;
+        }
+
+        label{
+            color: $textContrast;
+        }
+
+        .switch{
+            $borderWidth : 3px;
+            background-color: $switchColor;
+            padding: $borderWidth;
+            border-radius: calc((1.5rem + $borderWidth*2) / 2);
+            position: relative;
+            display: flex;
+            width: calc(3rem + $borderWidth*2);
+            color: $switchIconColor;
+            input{
+                display: none;
+            }
+            @keyframes toggleanim {
+                0% {
+                    transform: translate(0);
+                    animation-timing-function: ease-out;
+                }
+                
+                100% { 
+                    transform: translate(1.5rem); 
+                }
+            }
+            @keyframes toggleanimback {
+                0% {
+                    transform: translate(1.5rem);
+                    animation-timing-function: ease-out;
+                }
+                
+                100% { 
+                    transform: translate(0); 
+                }
+            }
+            .toggle{
+                position: absolute;
+                left: $borderWidth;
+                top: $borderWidth;
+                background-color: $switchToggleColor;
+                width: 1.5rem;
+                height: 1.5rem;
+                border-radius: .75rem;
+                animation: toggleanimback both .3s ease-in;
+                
+                &.active{
+
+                    
+                    animation: toggleanim both .3s ease-in;
+                }
+            }
+            .icon{
+                width: 1.5rem;
+                height: 1.5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+        }
+        .calsel, .select{
+            background-color: $bgInput;
+            border: solid 1px $borderInput;
+            &--def-item-cont{
+                &--input{
+                    color: $textContrast;
+                    background-color: $bgInput;
+                }
+                .select-btn{
+                    background-color: transparent;
+                    color: $textNormal;
+                }
+            }
+            ul{
+                border: solid 1px $grey;
+                background-color: $white;
+                li{
+                    &:hover{
+                        background-color: $light-grey;
+                    }
+                }
+            }
+        }
+        .input-standart{
+            border: solid 1px $borderInput;
+            background-color: $bgInput;
+            color: $textContrast;
+        }
+        .calendar{
+            border: solid 1px $borderInput;
+            background-color: $bgInput;
+            
+            &--def-item-cont{
+                &--input{
+                    color: $textNormal;
+                    background-color: $bgInput;
+                    color: $textContrast;
+                }
+                .select-btn{
+                    background-color: $bgInput;
+                    color: $textNormal;
+                }
+            }
+            &-body{
+                border: solid 1px $borderInput;
+                background-color: $bgInput;
+                color: $textContrast;
+                .control-elements{
+                    select{
+                        background-color: $bgNormal;
+                        color: $textContrast;
+                        border: solid 1px $borderInput;
+                    }
+                }
+            }
+            &-day{
+                background-color: $bgInput;
+                &.active{
+                    background-color: $bgPlus;
+                    color: $textInvers;
+                }
+                &.disactive{
+                    color: $textNormal;
+                    background-color: $bgInput;
+    
+                }
+    
+            }
+            .control{
+                &-right{
+                    &.desactive{
+                        color: $light-grey;
+                    }
+                }
+            }
+        }
+        fieldset.scheduler-border{
+            border: 1px solid $bgInput;
+        }
+        legend.scheduler-border{
+            background-color: $bgNormal;
+            color: $textContrast;
+        }
+        
+
+    }
+
+  }
+
+  @each $theme, $color in $themes {
+    @include theme($theme, $color);
+  }
+
+
+
+
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h1{
     text-align: center;
-    color: $grey;
 }
 
 $size_index: 0.0625;
@@ -33,15 +276,16 @@ $font_size: (
     '96px': calc(96rem * $size_index),
     );
 
+
+
 @mixin default-select {
-   
+
     display: flex;
 
     flex-direction: column;
-    border: solid 2px $grey;
+    
     border-radius: 5px;
     position: relative;
-    background-color: $white;
 
     &--def-item-cont{
         display: flex;
@@ -50,13 +294,14 @@ $font_size: (
         &--input{
         //   flex-grow: 2;
           padding: .3rem;
+          border-radius: 5px;
          
-          color: $dark-grey;
+          
           cursor: pointer;
           width: calc(100% - 37px);
         }
         .select-btn{
-            background-color: transparent;
+            
             border: 0;
             padding-left: .7rem;
             padding-right: .7rem; 
@@ -73,11 +318,11 @@ $font_size: (
         position: absolute;
         top: 2.4rem;
         left: -1px;
-        border: solid 1px $grey;
+        
         border-radius: 5px;
         width: calc(100% + 2px);
         padding: 0;
-        background-color: $white;
+        
         max-height: 30vh;
         overflow-y: auto;
         z-index: 12;
@@ -86,15 +331,16 @@ $font_size: (
             width: 100%;
             cursor: pointer;
             padding: .5rem;
-            &:hover{
-                background-color: $light-grey;
-            }
+            
         }
     }
    
-    }
+}
 .calsel{
     @include default-select;
+
+    
+
     width: 100%;
     font-size: .8rem;
     margin-left: .2rem;
@@ -109,6 +355,10 @@ $font_size: (
 
 .select{
    @include default-select;
+
+//    background-color: $white;
+//    border: solid 2px $grey;
+
    width: 100%;
    font-size: 1.2rem;
    margin-bottom: 1rem;
@@ -123,7 +373,7 @@ input{
 .input-standart{
     display: flex;
     width: 100%;
-    border: solid 2px $grey;
+
     border-radius: 5px;
     padding: .3rem;
     font-size: 1.2rem;
@@ -132,9 +382,9 @@ input{
 }
 
 header{
-    background-color: $grey;
+   
     padding: .5rem;
-    color: $white;
+   
     min-height: 3rem;
     display: flex;
     .logo-cont{
@@ -144,7 +394,7 @@ header{
     .logo{
         font-size: 1.5rem;
         font-weight: bold;
-        background-color: rgba(0,0,0, .2);
+
         padding-left: .5rem;
         padding-right: .5rem;
         border-radius: 5px;
@@ -170,13 +420,7 @@ header{
     }
 }
 
-footer{
-    background-color: $grey;
-    padding: .5rem;
-    color: $white;
 
-    height: 3rem;
-}
 
 main{
     min-height: calc(100vh - 6rem);
@@ -188,30 +432,33 @@ main{
     display: flex;
     width: 100%;
     flex-direction: column;
-    border: solid 2px $grey;
+
     border-radius: 5px;
     position: relative;
-    background-color: $white;
+
     margin-bottom: 1rem;
     &--def-item-cont{
         display: flex;
         align-items: stretch;
         
+        
         &--input{
         //   flex-grow: 2;
-        width: calc(100% - 37px);
-          padding: .3rem;
-          font-size: 1.2rem;
-          color: $dark-grey;
+            width: calc(100% - 37px);
+            padding: .3rem;
+            font-size: 1.2rem;
+            border-radius: 5px;
+
           cursor: pointer;
         }
         .select-btn{
-            background-color: transparent;
+           
             border: 0;
             padding-left: .7rem;
             padding-right: .7rem; 
             display: flex;
             align-items: center;
+            border-radius: 5px;
             &:hover{
                 cursor: pointer;
             }
@@ -224,11 +471,11 @@ main{
             position: absolute;
             top: 2.4rem;
             left: -1px;
-            border: solid 1px $grey;
+
             border-radius: 5px;
             width: calc(100% + 2px);
             padding: 0;
-            background-color: $white;
+            
             z-index: 10;
             display: flex;
             flex-direction: column;
@@ -244,7 +491,7 @@ main{
             width: 2rem;
             height: 2rem;
             margin: .2rem;
-            background-color: $light-grey;
+            
             display: flex;
             justify-content: center;
             align-items: center;
@@ -252,16 +499,7 @@ main{
             &:hover{
                 cursor: pointer;
             }
-            &.active{
-                background-color: $dark-grey;
-                color: $white;
-            }
-            &.disactive{
-                color: $grey;
-                background-color: $light-bg
-
-            }
-
+           
         }
         &-weektitles{
             display: flex;
@@ -300,14 +538,12 @@ main{
     &-right{
         padding: .2rem;
         margin-left: .3rem;
-        &.desactive{
-            color: $light-grey;
-        }
+       
     }
 }
 
 fieldset.scheduler-border {
-    border: 1px solid $grey;
+    
     padding: 1rem;
     margin: 0;
     margin-top: 1rem;
@@ -325,7 +561,7 @@ legend.scheduler-border {
     left: 10px;
     top: -.8rem;
     font-size: 1rem;
-    background-color: $light-bg;
+
     width: auto;
 
 }

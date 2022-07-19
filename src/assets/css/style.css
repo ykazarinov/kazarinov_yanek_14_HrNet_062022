@@ -11119,22 +11119,323 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-body {
-  background-color: #f0f1f3;
+header.theme-light {
+  background-color: white;
+  color: black;
+}
+header.theme-light .logo {
+  background-color: #183153;
+}
+header.theme-light label {
+  color: gray;
+}
+header.theme-light .langselect {
+  background-color: white;
+  color: black;
+  border: solid 1px #b3b3b3;
+}
+
+footer.theme-light {
+  background-color: #183153;
+  color: black;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.theme-light {
+  background-color: white;
+}
+.theme-light h1, .theme-light .h1 {
+  color: gray;
+}
+.theme-light label {
+  color: black;
+}
+.theme-light .switch {
+  background-color: white;
+  padding: 3px;
+  border-radius: calc((1.5rem + 6px) / 2);
+  position: relative;
+  display: flex;
+  width: calc(3rem + 6px);
+  color: #ffc000;
+}
+.theme-light .switch input {
+  display: none;
+}
+@keyframes toggleanim {
+  0% {
+    transform: translate(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translate(1.5rem);
+  }
+}
+@keyframes toggleanimback {
+  0% {
+    transform: translate(1.5rem);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+.theme-light .switch .toggle {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  background-color: #0fbeff;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.75rem;
+  animation: toggleanimback both 0.3s ease-in;
+}
+.theme-light .switch .toggle.active {
+  animation: toggleanim both 0.3s ease-in;
+}
+.theme-light .switch .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.theme-light .calsel, .theme-light .select {
+  background-color: white;
+  border: solid 1px #b3b3b3;
+}
+.theme-light .calsel--def-item-cont--input, .theme-light .select--def-item-cont--input {
+  color: black;
+  background-color: white;
+}
+.theme-light .calsel--def-item-cont .select-btn, .theme-light .select--def-item-cont .select-btn {
+  background-color: transparent;
+  color: gray;
+}
+.theme-light .calsel ul, .theme-light .select ul {
+  border: solid 1px #74798c;
+  background-color: #ffffff;
+}
+.theme-light .calsel ul li:hover, .theme-light .select ul li:hover {
+  background-color: #cccccc;
+}
+.theme-light .input-standart {
+  border: solid 1px #b3b3b3;
+  background-color: white;
+  color: black;
+}
+.theme-light .calendar {
+  border: solid 1px #b3b3b3;
+  background-color: white;
+}
+.theme-light .calendar--def-item-cont--input {
+  color: gray;
+  background-color: white;
+  color: black;
+}
+.theme-light .calendar--def-item-cont .select-btn {
+  background-color: white;
+  color: gray;
+}
+.theme-light .calendar-body {
+  border: solid 1px #b3b3b3;
+  background-color: white;
+  color: black;
+}
+.theme-light .calendar-body .control-elements select {
+  background-color: white;
+  color: black;
+  border: solid 1px #b3b3b3;
+}
+.theme-light .calendar-day {
+  background-color: white;
+}
+.theme-light .calendar-day.active {
+  background-color: #183153;
+  color: white;
+}
+.theme-light .calendar-day.disactive {
+  color: gray;
+  background-color: white;
+}
+.theme-light .calendar .control-right.desactive {
+  color: #cccccc;
+}
+.theme-light fieldset.scheduler-border {
+  border: 1px solid white;
+}
+.theme-light legend.scheduler-border {
+  background-color: white;
+  color: black;
+}
+
+header.theme-dark {
+  background-color: black;
+  color: white;
+}
+header.theme-dark .logo {
+  background-color: black;
+}
+header.theme-dark label {
+  color: #b3b3b3;
+}
+header.theme-dark .langselect {
+  background-color: #4d4d4d;
+  color: white;
+  border: solid 1px transparent;
+}
+
+footer.theme-dark {
+  background-color: black;
+  color: white;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.theme-dark {
+  background-color: #1a1a1a;
+}
+.theme-dark h1, .theme-dark .h1 {
+  color: #b3b3b3;
+}
+.theme-dark label {
+  color: white;
+}
+.theme-dark .switch {
+  background-color: #333333;
+  padding: 3px;
+  border-radius: calc((1.5rem + 6px) / 2);
+  position: relative;
+  display: flex;
+  width: calc(3rem + 6px);
+  color: #ffc000;
+}
+.theme-dark .switch input {
+  display: none;
+}
+@keyframes toggleanim {
+  0% {
+    transform: translate(0);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translate(1.5rem);
+  }
+}
+@keyframes toggleanimback {
+  0% {
+    transform: translate(1.5rem);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+.theme-dark .switch .toggle {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  background-color: #0fbeff;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.75rem;
+  animation: toggleanimback both 0.3s ease-in;
+}
+.theme-dark .switch .toggle.active {
+  animation: toggleanim both 0.3s ease-in;
+}
+.theme-dark .switch .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.theme-dark .calsel, .theme-dark .select {
+  background-color: #4d4d4d;
+  border: solid 1px transparent;
+}
+.theme-dark .calsel--def-item-cont--input, .theme-dark .select--def-item-cont--input {
+  color: white;
+  background-color: #4d4d4d;
+}
+.theme-dark .calsel--def-item-cont .select-btn, .theme-dark .select--def-item-cont .select-btn {
+  background-color: transparent;
+  color: #b3b3b3;
+}
+.theme-dark .calsel ul, .theme-dark .select ul {
+  border: solid 1px #74798c;
+  background-color: #ffffff;
+}
+.theme-dark .calsel ul li:hover, .theme-dark .select ul li:hover {
+  background-color: #cccccc;
+}
+.theme-dark .input-standart {
+  border: solid 1px transparent;
+  background-color: #4d4d4d;
+  color: white;
+}
+.theme-dark .calendar {
+  border: solid 1px transparent;
+  background-color: #4d4d4d;
+}
+.theme-dark .calendar--def-item-cont--input {
+  color: #b3b3b3;
+  background-color: #4d4d4d;
+  color: white;
+}
+.theme-dark .calendar--def-item-cont .select-btn {
+  background-color: #4d4d4d;
+  color: #b3b3b3;
+}
+.theme-dark .calendar-body {
+  border: solid 1px transparent;
+  background-color: #4d4d4d;
+  color: white;
+}
+.theme-dark .calendar-body .control-elements select {
+  background-color: #1a1a1a;
+  color: white;
+  border: solid 1px transparent;
+}
+.theme-dark .calendar-day {
+  background-color: #4d4d4d;
+}
+.theme-dark .calendar-day.active {
+  background-color: black;
+  color: white;
+}
+.theme-dark .calendar-day.disactive {
+  color: #b3b3b3;
+  background-color: #4d4d4d;
+}
+.theme-dark .calendar .control-right.desactive {
+  color: #cccccc;
+}
+.theme-dark fieldset.scheduler-border {
+  border: 1px solid #4d4d4d;
+}
+.theme-dark legend.scheduler-border {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1, .h1 {
   text-align: center;
-  color: #74798c;
 }
 
 .calsel {
   display: flex;
   flex-direction: column;
-  border: solid 2px #74798c;
   border-radius: 5px;
   position: relative;
-  background-color: #ffffff;
   width: 100%;
   font-size: 0.8rem;
   margin-left: 0.2rem;
@@ -11146,12 +11447,11 @@ h1, .h1 {
 }
 .calsel--def-item-cont--input {
   padding: 0.3rem;
-  color: #282D30;
+  border-radius: 5px;
   cursor: pointer;
   width: calc(100% - 37px);
 }
 .calsel--def-item-cont .select-btn {
-  background-color: transparent;
   border: 0;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
@@ -11165,11 +11465,9 @@ h1, .h1 {
   position: absolute;
   top: 2.4rem;
   left: -1px;
-  border: solid 1px #74798c;
   border-radius: 5px;
   width: calc(100% + 2px);
   padding: 0;
-  background-color: #ffffff;
   max-height: 30vh;
   overflow-y: auto;
   z-index: 12;
@@ -11180,9 +11478,6 @@ h1, .h1 {
   cursor: pointer;
   padding: 0.5rem;
 }
-.calsel ul li:hover {
-  background-color: #cccccc;
-}
 .calsel--def-item-cont--input {
   display: flex;
   align-items: center;
@@ -11191,10 +11486,8 @@ h1, .h1 {
 .select {
   display: flex;
   flex-direction: column;
-  border: solid 2px #74798c;
   border-radius: 5px;
   position: relative;
-  background-color: #ffffff;
   width: 100%;
   font-size: 1.2rem;
   margin-bottom: 1rem;
@@ -11205,12 +11498,11 @@ h1, .h1 {
 }
 .select--def-item-cont--input {
   padding: 0.3rem;
-  color: #282D30;
+  border-radius: 5px;
   cursor: pointer;
   width: calc(100% - 37px);
 }
 .select--def-item-cont .select-btn {
-  background-color: transparent;
   border: 0;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
@@ -11224,11 +11516,9 @@ h1, .h1 {
   position: absolute;
   top: 2.4rem;
   left: -1px;
-  border: solid 1px #74798c;
   border-radius: 5px;
   width: calc(100% + 2px);
   padding: 0;
-  background-color: #ffffff;
   max-height: 30vh;
   overflow-y: auto;
   z-index: 12;
@@ -11239,9 +11529,6 @@ h1, .h1 {
   cursor: pointer;
   padding: 0.5rem;
 }
-.select ul li:hover {
-  background-color: #cccccc;
-}
 
 input {
   border: 0;
@@ -11250,7 +11537,6 @@ input {
 .input-standart {
   display: flex;
   width: 100%;
-  border: solid 2px #74798c;
   border-radius: 5px;
   padding: 0.3rem;
   font-size: 1.2rem;
@@ -11259,9 +11545,7 @@ input {
 }
 
 header {
-  background-color: #74798c;
   padding: 0.5rem;
-  color: #ffffff;
   min-height: 3rem;
   display: flex;
 }
@@ -11271,7 +11555,6 @@ header .logo-cont {
 header .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.2);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   border-radius: 5px;
@@ -11294,13 +11577,6 @@ header .lang-cont .langselect {
   border-radius: 5px;
 }
 
-footer {
-  background-color: #74798c;
-  padding: 0.5rem;
-  color: #ffffff;
-  height: 3rem;
-}
-
 main {
   min-height: calc(100vh - 6rem);
   padding-top: 1rem;
@@ -11311,10 +11587,8 @@ main {
   display: flex;
   width: 100%;
   flex-direction: column;
-  border: solid 2px #74798c;
   border-radius: 5px;
   position: relative;
-  background-color: #ffffff;
   margin-bottom: 1rem;
 }
 .calendar--def-item-cont {
@@ -11325,16 +11599,16 @@ main {
   width: calc(100% - 37px);
   padding: 0.3rem;
   font-size: 1.2rem;
-  color: #282D30;
+  border-radius: 5px;
   cursor: pointer;
 }
 .calendar--def-item-cont .select-btn {
-  background-color: transparent;
   border: 0;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
   display: flex;
   align-items: center;
+  border-radius: 5px;
 }
 .calendar--def-item-cont .select-btn:hover {
   cursor: pointer;
@@ -11343,11 +11617,9 @@ main {
   position: absolute;
   top: 2.4rem;
   left: -1px;
-  border: solid 1px #74798c;
   border-radius: 5px;
   width: calc(100% + 2px);
   padding: 0;
-  background-color: #ffffff;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -11362,7 +11634,6 @@ main {
   width: 2rem;
   height: 2rem;
   margin: 0.2rem;
-  background-color: #cccccc;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11370,14 +11641,6 @@ main {
 }
 .calendar .calendar-day:hover {
   cursor: pointer;
-}
-.calendar .calendar-day.active {
-  background-color: #282D30;
-  color: #ffffff;
-}
-.calendar .calendar-day.disactive {
-  color: #74798c;
-  background-color: #f0f1f3;
 }
 .calendar .calendar-weektitles {
   display: flex;
@@ -11411,12 +11674,8 @@ main {
   padding: 0.2rem;
   margin-left: 0.3rem;
 }
-.control-right.desactive {
-  color: #cccccc;
-}
 
 fieldset.scheduler-border {
-  border: 1px solid #74798c;
   padding: 1rem;
   margin: 0;
   margin-top: 1rem;
@@ -11433,7 +11692,6 @@ legend.scheduler-border {
   left: 10px;
   top: -0.8rem;
   font-size: 1rem;
-  background-color: #f0f1f3;
   width: auto;
 }
 
