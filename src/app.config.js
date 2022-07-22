@@ -1,11 +1,16 @@
 const today = new Date()
 const conf = {employeeMinAge: 18,};
 const transcription = [
-    {   lang: 'En',
+    {   lang: 'English',
         data : {
-            header : [
+            footer : [
                 'Choose language',
             ],
+            header : [
+                'Sign In',
+                'Sign out'
+            ],
+
             addemployee: [
                 'Create Employee',
                 'First Name',
@@ -30,10 +35,14 @@ const transcription = [
             ]
         }
     },
-    {   lang: 'Fr',
+    {   lang: 'Français',
         data : {
-            header: [
+            footer: [
                 'Choisissez la langue',
+            ],
+            header: [
+                'Connexion',
+                'Déconnexion'
             ],
             addemployee: [
                 'Créer un employé',

@@ -2,6 +2,8 @@ import Select from "../../components/Select/select"
 import Calendar from "../../components/Calendar/calendar"
 import OutsideAlerter from "../../components/OutsideAlerter/outsidealerter";
 
+import { Navigate } from 'react-router-dom';
+
 import { setClose1, setClose2 } from "../../slices/calendar.slice";
 import { setCloseSelect1, setCloseSelect2 } from "../../slices/select.slice";
 
@@ -16,6 +18,11 @@ export default function Home(){
     const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
 
     const langData = transcription.find(lng => lng.lang === currentLang).data.addemployee
+    const { isLoggedIn } = useSelector((state) => state.auth);
+
+    if (!isLoggedIn) {
+        return <Navigate to="/" />;
+      }
 
     return <main className={currentTheme}>
         <div className="container">

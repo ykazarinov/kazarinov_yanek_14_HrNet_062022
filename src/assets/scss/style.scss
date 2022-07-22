@@ -21,6 +21,7 @@ $themes: (
         'bgContrast': white,
         'bgNormal': white,
         'bgPlus' : #183153,
+        'bgPlus2' : #68b441,
         'textContrast': black,
         'textNormal': lighten(black,50%),
         'textInvers': white,
@@ -28,12 +29,14 @@ $themes: (
         'switchIconColor': #ffc000,
         'bgInput': white,
         'borderInput': darken(white, 30%),
+
     
     ),
     'theme-dark': (
         'bgContrast': black,
         'bgNormal': lighten(black,10%),
         'bgPlus': black,
+        'bgPlus2' : #68b441,
         'textContrast': white,
         'textNormal': darken(white, 30%),
         'textInvers': white,
@@ -50,6 +53,7 @@ $themes: (
     $bgContrast: map-get($colorArray, 'bgContrast');
     $bgNormal: map-get($colorArray, 'bgNormal');
     $bgPlus: map-get($colorArray, 'bgPlus');
+    $bgPlus2: map-get($colorArray, 'bgPlus2');
     $textContrast: map-get($colorArray, 'textContrast');
     $textNormal: map-get($colorArray, 'textNormal');
     $textInvers: map-get($colorArray , 'textInvers' );
@@ -73,12 +77,46 @@ $themes: (
             color: $textContrast;
             border: solid 1px $borderInput;
         }
+
+        .authcont{
+            &-user-icon{
+                background-color: $bgPlus2;
+                color: $textInvers;
+            }
+            &-text{
+                color: $textNormal;
+            }
+        }
+            
+        .user-icon{
+            color: $bgPlus2;
+        }
     }
     footer.#{$name}{
         background-color: $bgPlus;
-        color: $textContrast;
+        
         padding-top: 3rem;
         padding-bottom: 3rem;
+        .lang-cont{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            color: $textInvers;
+            label{
+                color: $textInvers;
+            }
+            .lang-icon{
+                margin-right: .5rem;
+            }
+            .langselect{
+                padding: .2rem;
+                margin-left: .3rem;
+                border-radius: 5px;
+               
+    
+            }
+    
+        }
     }
 
     .#{$name}{
@@ -401,18 +439,7 @@ header{
             }
         }
     }
-    .lang-cont{
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        .langselect{
-            padding: .2rem;
-            margin-left: .3rem;
-            border-radius: 5px;
-
-        }
-
-    }
+    
 }
 
 
@@ -575,4 +602,43 @@ legend.scheduler-border {
     input{
         margin-right: .5rem;
     }
+}
+
+.authcont{
+    display: flex;
+    &-text{
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    &-user-icon{
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 1.625rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-right: .5rem;
+        
+    
+    }
+    .user-icon{
+        font-size: 2.2rem;
+        margin-right: .5rem;
+        line-height: 2.2rem;
+        
+    }
+
+}
+
+.flex-right{
+    display: flex;
+    justify-content: flex-end;
 }

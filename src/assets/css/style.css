@@ -10774,12 +10774,38 @@ header.theme-light .langselect {
   color: black;
   border: solid 1px #b3b3b3;
 }
+header.theme-light .authcont-user-icon {
+  background-color: #68b441;
+  color: white;
+}
+header.theme-light .authcont-text {
+  color: gray;
+}
+header.theme-light .user-icon {
+  color: #68b441;
+}
 
 footer.theme-light {
   background-color: #183153;
-  color: black;
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+footer.theme-light .lang-cont {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+}
+footer.theme-light .lang-cont label {
+  color: white;
+}
+footer.theme-light .lang-cont .lang-icon {
+  margin-right: 0.5rem;
+}
+footer.theme-light .lang-cont .langselect {
+  padding: 0.2rem;
+  margin-left: 0.3rem;
+  border-radius: 5px;
 }
 
 .theme-light {
@@ -10927,12 +10953,38 @@ header.theme-dark .langselect {
   color: white;
   border: solid 1px transparent;
 }
+header.theme-dark .authcont-user-icon {
+  background-color: #68b441;
+  color: white;
+}
+header.theme-dark .authcont-text {
+  color: #b3b3b3;
+}
+header.theme-dark .user-icon {
+  color: #68b441;
+}
 
 footer.theme-dark {
   background-color: black;
-  color: white;
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+footer.theme-dark .lang-cont {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+}
+footer.theme-dark .lang-cont label {
+  color: white;
+}
+footer.theme-dark .lang-cont .lang-icon {
+  margin-right: 0.5rem;
+}
+footer.theme-dark .lang-cont .langselect {
+  padding: 0.2rem;
+  margin-left: 0.3rem;
+  border-radius: 5px;
 }
 
 .theme-dark {
@@ -11210,16 +11262,6 @@ header .logo a {
 header .logo a span {
   font-weight: normal;
 }
-header .lang-cont {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-header .lang-cont .langselect {
-  padding: 0.2rem;
-  margin-left: 0.3rem;
-  border-radius: 5px;
-}
 
 main {
   min-height: calc(100vh - 10rem - 18px);
@@ -11354,6 +11396,41 @@ legend.scheduler-border {
 }
 .input-remember input {
   margin-right: 0.5rem;
+}
+
+.authcont {
+  display: flex;
+}
+.authcont-text {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+.authcont-user-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 1.625rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 0.5rem;
+}
+.authcont .user-icon {
+  font-size: 2.2rem;
+  margin-right: 0.5rem;
+  line-height: 2.2rem;
+}
+
+.flex-right {
+  display: flex;
+  justify-content: flex-end;
 }
 
 /*# sourceMappingURL=style.css.map */

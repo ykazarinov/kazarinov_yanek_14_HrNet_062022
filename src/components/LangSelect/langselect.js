@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 export default function LangSelect(){
     const dispatch = useDispatch();
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
-    const langData = transcription.find(lng => lng.lang === currentLang).data.header
+    const langData = transcription.find(lng => lng.lang === currentLang).data.footer
 
     const changeLang = ((choosedLang)=>{
         return {
