@@ -6,27 +6,22 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import {Provider} from 'react-redux'
 import store from './store'
 
+import MainLayoutRoutes from "./Layouts/MainLayuotRoutes"
+
 import './assets/css/style.css';
 
 
-import Home from './pages/Home/home';
-import Employees from './pages/Employees/employees';
-import Error from './pages/Error/error';
 
-import Header from './components/Header/header'
-import Footer from './components/Footer/footer'
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
     <Router>
-      <Header />
-        <Routes>
-          <Route exact path="/"  element={<Home />} />
-          <Route exact path="/employees" element={<Employees />} />
-          <Route path='*' element={<Error />} />
-        </Routes>
-        <Footer />
+      <Routes>
+          
+          <Route path="*" element={<MainLayoutRoutes />} />
+      </Routes>
     </Router>
     </Provider>
   </React.StrictMode>,

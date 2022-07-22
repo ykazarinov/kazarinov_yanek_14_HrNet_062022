@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 export default function LangSelect(){
     const dispatch = useDispatch();
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
+    const langData = transcription.find(lng => lng.lang === currentLang).data.header
 
     const changeLang = ((choosedLang)=>{
         return {
@@ -19,7 +20,7 @@ export default function LangSelect(){
         <React.StrictMode>
             <label htmlFor="langselect">
                 {
-                    transcription.find(lng => lng.lang === currentLang).data[0]
+                    langData[0]
                 }
             </label>
             <select 

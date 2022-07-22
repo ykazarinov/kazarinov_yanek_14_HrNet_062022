@@ -25,14 +25,9 @@ $themes: (
         'textNormal': lighten(black,50%),
         'textInvers': white,
         'switchColor' : white,
-        'switchToggleColor': #0fbeff,
         'switchIconColor': #ffc000,
         'bgInput': white,
         'borderInput': darken(white, 30%),
-
-
-
-        // 'borderColor': 
     
     ),
     'theme-dark': (
@@ -43,7 +38,6 @@ $themes: (
         'textNormal': darken(white, 30%),
         'textInvers': white,
         'switchColor' : darken(white, 80%),
-        'switchToggleColor': #0fbeff,
         'switchIconColor': #ffc000,
         'bgInput': darken(white, 70%),
         'borderInput': transparent,
@@ -60,7 +54,6 @@ $themes: (
     $textNormal: map-get($colorArray, 'textNormal');
     $textInvers: map-get($colorArray , 'textInvers' );
     $switchColor: map-get($colorArray , 'switchColor' );
-    $switchToggleColor: map-get($colorArray , 'switchToggleColor' );
     $switchIconColor: map-get($colorArray , 'switchIconColor' );
     $bgInput: map-get($colorArray , 'bgInput' );
     $borderInput: map-get($colorArray , 'borderInput' );
@@ -134,7 +127,7 @@ $themes: (
                 position: absolute;
                 left: $borderWidth;
                 top: $borderWidth;
-                background-color: $switchToggleColor;
+                background-color: $bgPlus;
                 width: 1.5rem;
                 height: 1.5rem;
                 border-radius: .75rem;
@@ -425,7 +418,7 @@ header{
 
 
 main{
-    min-height: calc(100vh - 6rem);
+    min-height: calc(100vh - 10rem - 18px);
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
@@ -575,4 +568,11 @@ legend.scheduler-border {
 .btn{
     margin-left: .5rem;
     margin-right: .5rem;
+}
+
+.input-remember{
+    margin-bottom: 1rem;
+    input{
+        margin-right: .5rem;
+    }
 }
