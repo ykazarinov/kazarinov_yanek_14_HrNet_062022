@@ -4,6 +4,7 @@ import { transcription } from '../../app.config';
 import { useSelector, useDispatch } from "react-redux";
 
 
+
 export default function LangSelect(){
     const dispatch = useDispatch();
     const  currentLang  = useSelector((state) => state['lang'].actualLang)

@@ -13,6 +13,8 @@ import { setClose1, setClose2 } from "../../slices/calendar.slice";
 import { setInputDate1, setInputDate2 } from "../../slices/calendar.slice";
 import { useEffect } from "react";
 
+import { Field } from "formik";
+
 import{today} from '../../app.config'
 import {conf} from '../../app.config.js'
 
@@ -257,7 +259,7 @@ export default function Calendar(props){
     return <div className="calendar">
           
         <div className="calendar--def-item-cont">
-            <input type='text'
+            <Field type='text'
                 className="calendar--def-item-cont--input actual-item-cont"
                 onClick={()=>dispatch(setOpen())} 
                 maxLength='10'

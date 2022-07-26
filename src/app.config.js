@@ -24,7 +24,10 @@ const transcription = [
                 'Zip Code',
                 'Department',
                 'Save',
-                'Cancel'
+                'Cancel',
+                'Email',
+                'Phone',
+                'Photo'
             ],
             signin: [
                 'Sign In',
@@ -57,7 +60,10 @@ const transcription = [
                 'Code postal',
                 'Département',
                 'Sauvegarder',
-                'Annuler'
+                'Annuler',
+                'E-mail',
+                'Téléphone',
+                'Photo'
             ],
             signin: [
                 'S\'identifier',

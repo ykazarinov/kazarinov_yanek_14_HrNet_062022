@@ -6,6 +6,7 @@ import langReducer from "./slices/lang.slice"
 import themeReducer from "./slices/theme.slice"
 import authReducer from "./slices/auth";
 import messageReducer from "./slices/message";
+import newEmployeeReducer from "./slices/employee.slice";
 
 const reducer = {
   calendarReducer1: calendarReducer1,
@@ -16,6 +17,7 @@ const reducer = {
   theme: themeReducer,
   auth: authReducer,
   message: messageReducer,
+  newEmployee: newEmployeeReducer,
 
   
 }
