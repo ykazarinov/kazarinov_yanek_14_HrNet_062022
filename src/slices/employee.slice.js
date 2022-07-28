@@ -58,6 +58,7 @@ export const setEmployee = createAsyncThunk(
 )
 
 const initialState = {
+    inputValues: {},
     entities: null,
     loading: false,
 }
@@ -67,7 +68,9 @@ const initialState = {
 const newEmployeeSlice = createSlice({
     name: "newEmployee",
     initialState,
-    reducers: {},
+    reducers: {
+
+    },
     extraReducers: {
     
     [setEmployee.fulfilled]: (state, action) => {
@@ -84,4 +87,6 @@ const newEmployeeSlice = createSlice({
   },
 });
 const { reducer } = newEmployeeSlice;
+
 export default reducer;
+

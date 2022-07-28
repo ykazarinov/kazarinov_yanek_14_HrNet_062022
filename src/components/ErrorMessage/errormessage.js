@@ -7,13 +7,7 @@ export default function ErrorMessage(props) {
             
                 <div className="form-group">
                     <div className="alert alert-danger" role="alert">
-                        { 
-                        message.find(mes => mes.param ===  props.myParam).msg} 
-                        {/* { console.log(message.find(mes => String(mes.param) ===  String(props.myParam)).msg)} */}
-                    
-                
-                    
-                
+                        {message.find(mes => mes.param ===  props.myParam).msg} 
                     </div>
                 </div>
         : ''}  

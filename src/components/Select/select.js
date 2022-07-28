@@ -5,7 +5,7 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { Field} from "formik";
+// import { Field} from "formik";
 
 import {    
     setActualItem1, 
@@ -49,7 +49,9 @@ export default function Select( props ){
 
     return <div className={props.prefix}>
         <div className={props.prefix + "--def-item-cont"}>
-            <Field 
+            <input 
+                name={props.fieldName}
+                id={props.fieldName}
                 className={props.prefix + "--def-item-cont--input actual-item-cont"}
                 onClick={()=>dispatch(setIsOpen())}
                 value={actualItem}

@@ -3,8 +3,6 @@ import Calendar from "../../components/Calendar/calendar"
 import OutsideAlerter from "../../components/OutsideAlerter/outsidealerter";
 import ErrorMessage from "../../components/ErrorMessage/errormessage"
 
-import { Formik, Field, Form } from "formik";
-import * as Yup from "yup";
 import { Navigate } from 'react-router-dom';
 
 import { setClose1, setClose2 } from "../../slices/calendar.slice";
@@ -14,7 +12,8 @@ import { setEmployee } from "../../slices/employee.slice";
 import { transcription } from '../../app.config';
 import { useSelector, useDispatch } from "react-redux";
 
-const selectList = ['Choose item...', 'item 1', 'item 2', 'item 3']
+const stateList = ['Choose item...', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
+const depList = ['Choose item...', '62de9795bbd221693ca401d4', 'item 2', 'item 3']
 
 export default function Home(){
     const dispatch = useDispatch();
@@ -40,54 +39,57 @@ export default function Home(){
         zipcode: "",
         department: ""
       };
-      const validationSchema = Yup.object().shape({
-        
-        // firstName: Yup.string(Array.isArray(message)?
-        //     message.find(mes => mes.param === 'firstName').msg 
-        //     : ''           
-        //     ),
-        // lastName: Yup.string().required("This field is required!"),
-        // email: Yup.string().required("This field is required!"),
-        // birthday: Yup.string().required("This field is required!"),
-        // startday: Yup.string().required("This field is required!"),
-        
-      });
-      const submitEmployee = (formValue) => {
-        const { 
-            photo, 
-            firstName, 
-            lastName, 
-            email,
-            phone,
-            birthday,
-            startday,
-            street,
-            city,
-            state,
-            zipcode,
-            department,
-        } = formValue;
-    
-        dispatch(setEmployee({ photo, 
-            firstName, 
-            lastName, 
-            email,
-            phone,
-            birthday,
-            startday,
-            street,
-            city,
-            state,
-            zipcode,
-            department, }))
+      
+      const changeDateFormatToBackEnd = (dateIn) =>{
+        let day = dateIn.substr(0, 2)
+        // console.log(day)
+        let month = dateIn.substr(3, 2)
+        // console.log(month)
+        let year = dateIn.substr(6, 4)
+        // console.log(year)
+        return year + '-' + month + '-' + day
+      }
 
-           
-       
+      const handleSubmit = (e) => {
+        e.preventDefault();
+
+        let formValues = {}
+
+        // let values = e.target.innerHTML
+
+        // e.target && e.target.map((elem, index)=>(
+        //     [index] = elem.value
+        // ))
+         formValues = { 
+            photo: e.target.elements.photo.value, 
+            firstName: e.target.elements.firstName.value, 
+            lastName: e.target.elements.lastName.value, 
+            email: e.target.elements.email.value, 
+            phone: e.target.elements.phone.value, 
+            birthday: changeDateFormatToBackEnd(e.target.elements.birthday.value), 
+            startday: changeDateFormatToBackEnd(e.target.elements.startday.value), 
+            street: e.target.elements.street.value, 
+            city: e.target.elements.city.value, 
+            state: e.target.elements.state.value, 
+            zipcode: e.target.elements.zipcode.value, 
+            department: e.target.elements.department.value, 
+            
+        }
+
+        // var copyObj = Object.assign({}, formValue);
+        // copyObj.birthday = changeDateFormatToBackEnd(formValue.birthday)
+        // copyObj.startday = changeDateFormatToBackEnd(formValue.startday)
+
+        console.log(formValues)
+        dispatch(setEmployee( formValues ))
+
       };
 
     if (!isLoggedIn) {
         return <Navigate to="/" />;
       }
+
+
 
     return <main className={currentTheme}>
         <div className="container">
@@ -96,18 +98,19 @@ export default function Home(){
                     <h1>{langData[0]}</h1>
                 </div>
             </div>
-            <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={submitEmployee}
-                >
-            <Form className="row">
+            <form className="row" onSubmit={handleSubmit}>
                 <div className="col-2"></div>
                 <div className="col-8">
                     <div className="row">
                         <div className="col-12">
                             <label htmlFor='photo'>{langData[15]}</label>
-                            <Field name='photo' type='file' className='input-standart' id="photo" />
+                            <input 
+                                name='photo' 
+                                type='file' 
+                                className='input-standart' 
+                                id="photo"
+                                
+                            />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="photo"></ErrorMessage>
                             )}
@@ -116,14 +119,24 @@ export default function Home(){
                         </div>
                         <div className="col-6">
                             <label htmlFor='firstName'>{langData[1]}</label>
-                            <Field name='firstName' className='input-standart' id="firstName" />
+                            <input 
+                                name='firstName' 
+                                className='input-standart' 
+                                id="firstName" 
+                                
+                            />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="firstName"></ErrorMessage>
                             )}
                         </div>
                         <div className="col-6">
                             <label htmlFor='lastName'>{langData[2]}</label>
-                            <Field name='lastName' className='input-standart' id="lastName" />
+                            <input 
+                                name='lastName' 
+                                className='input-standart' 
+                                id="lastName"
+                                
+                            />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="lastName"></ErrorMessage>
                             )}
@@ -131,14 +144,14 @@ export default function Home(){
 
                         <div className="col-6">
                             <label htmlFor='email'>{langData[13]}</label>
-                            <Field name='email' type='email' className='input-standart' id="email" />
+                            <input name='email' type='email' className='input-standart' id="email" />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="email"></ErrorMessage>
                             )}
                         </div>
                         <div className="col-6">
                             <label htmlFor='phone'>{langData[14]}</label>
-                            <Field name='phone' type='phone' className='input-standart' id="phone" />
+                            <input name='phone' type='phone' className='input-standart' id="phone" />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="phone"></ErrorMessage>
                             )}
@@ -147,7 +160,7 @@ export default function Home(){
                         <div className="address col-6">
                                 <label htmlFor="birthday">{langData[3]}</label>
                                 <OutsideAlerter myDispatch={()=>dispatch(setClose1())}>
-                                    <Calendar name='birthday' id='birthday' calNum={1}></Calendar>
+                                    <Calendar fieldName='birthday' calNum={1}></Calendar>
                                 </OutsideAlerter>
                                 {Array.isArray(message) && (
                                     <ErrorMessage myParam="birthday"></ErrorMessage>
@@ -158,7 +171,7 @@ export default function Home(){
                         <div className="address col-6">
                                 <label htmlFor="startday">{langData[4]}</label>
                                 <OutsideAlerter myDispatch={()=>dispatch(setClose2())}>
-                                    <Calendar name='startday' id='startday' calNum={2}></Calendar>
+                                    <Calendar fieldName='startday' calNum={2}></Calendar>
                                 </OutsideAlerter>
                                 {Array.isArray(message) && (
                                     <ErrorMessage myParam="startday"></ErrorMessage>
@@ -172,14 +185,14 @@ export default function Home(){
                             <div className="row">
                                 <div className="col-6">
                                     <label htmlFor='street'>{langData[6]}</label>
-                                    <Field name='street' className='input-standart' id="street" />
+                                    <input name='street' className='input-standart' id="street" />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="street"></ErrorMessage>
                                     )}
                                 </div>
                                 <div className="col-6">
                                     <label htmlFor='city'>{langData[7]}</label>
-                                    <Field name='city' className='input-standart' id="city" />
+                                    <input name='city' className='input-standart' id="city" />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="city"></ErrorMessage>
                                     )}
@@ -187,7 +200,7 @@ export default function Home(){
                                 <div className="address col-6">
                                         <label htmlFor="state">{langData[8]}</label>
                                         <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect1())}>
-                                            <Select name='state' data={selectList} calNum={1} id='state' prefix='select'></Select>
+                                            <Select fieldName='state' data={stateList} calNum={1} prefix='select'></Select>
                                         </OutsideAlerter>
                                         {Array.isArray(message) && (
                                             <ErrorMessage myParam="state"></ErrorMessage>
@@ -196,7 +209,7 @@ export default function Home(){
                                 </div>
                                 <div className="col-6">
                                     <label htmlFor='zipcode'>{langData[9]}</label>
-                                    <Field name='zipcode' className='input-standart' id="zipcode" type='number'/>
+                                    <input name='zipcode' className='input-standart' id="zipcode" type='number'/>
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="zipcode"></ErrorMessage>
                                     )}
@@ -206,7 +219,7 @@ export default function Home(){
                         <div className="address col-6">
                             <label htmlFor="department">{langData[10]}</label>
                             <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect2())}>
-                                <Select name='department' data={selectList} calNum={2} id='department' prefix='select'></Select>
+                                <Select fieldName='department' data={depList} calNum={2} prefix='select'></Select>
                             </OutsideAlerter>
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="department"></ErrorMessage>
@@ -221,8 +234,7 @@ export default function Home(){
                 </div>
                 <div className="col-2"></div>
                 
-            </Form>
-            </Formik>
+            </form>
         </div>    
     </main>
         
