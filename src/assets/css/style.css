@@ -11256,7 +11256,7 @@ header .logo {
   border-radius: 5px;
 }
 header .logo a {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
 }
 header .logo a span {
@@ -11431,6 +11431,19 @@ legend.scheduler-border {
 .flex-right {
   display: flex;
   justify-content: flex-end;
+}
+
+.table-cont th {
+  padding: 0.5rem;
+}
+.table-cont tbody {
+  font-size: 0.8rem;
+}
+.table-cont tbody .dark {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.table-cont tbody .light {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -7,14 +7,14 @@
 //   theme-dark: #000000
 // ) !default;
 
-$black: #020203;
-$white: #ffffff;
-$red: #E60000;
+
 $dark-grey: #282D30;
-$grey: #74798c;
 $light-grey: #cccccc;
-$light-bg: #f0f1f3;
-$blue: #146ebe;
+$lighter: rgba(255, 255, 255, .2);
+$darker: rgba(0, 0, 0, .2);
+
+
+
 
 $themes: (
     'theme-light': (
@@ -641,4 +641,20 @@ legend.scheduler-border {
 .flex-right{
     display: flex;
     justify-content: flex-end;
+}
+
+.table-cont{
+    th{
+        padding: .5rem;
+    }
+    tbody{
+        font-size: .8rem;
+        .dark{
+            background-color: $darker;
+        }
+        .light{
+            background-color: $lighter;
+        }
+    }
+    
 }

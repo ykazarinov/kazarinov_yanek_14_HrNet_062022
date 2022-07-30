@@ -1,39 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
-import editService from "../services/edit.service";
+import getAllEmployeesService from "../services/getAllEmployees.service";
 
 // createAsyncThunk for middleware for update data of User's Profil 
-export const setEmployee = createAsyncThunk(
-    'newEmployee/setEmployee',
-    async ({  
-        photo, 
-        firstName, 
-        lastName, 
-        email,
-        phone,
-        birthday,
-        startday,
-        street,
-        city,
-        state,
-        zipcode,
-        department,
-     }, thunkAPI) => {
+export const getAllEmployees = createAsyncThunk(
+    'allEmployees/getAllEmployees',
+    async (thunkAPI) => {
         try {
-            const data = await editService.postEmployee(
-                photo, 
-                firstName, 
-                lastName, 
-                email,
-                phone,
-                birthday,
-                startday,
-                street,
-                city,
-                state,
-                zipcode,
-                department,)
-            return { user: data }
+            const data = await getAllEmployeesService()
+            return  data 
         } catch (err) {
 
             let message
@@ -58,16 +33,15 @@ export const setEmployee = createAsyncThunk(
 )
 
 const initialState = {
-    inputValues: {},
-    entities: null,
+    employeesState: null,
     loading: false,
     success: false
 }
 
 // slice, which content reducers and actions for data of the User's Profil and status of loading 
 // after the updating
-const newEmployeeSlice = createSlice({
-    name: "newEmployee",
+const allEmployeesSlice = createSlice({
+    name: "allEmployees",
     initialState,
     reducers: {
         setSuccessFalse: (state, action) => {
@@ -76,21 +50,21 @@ const newEmployeeSlice = createSlice({
     },
     extraReducers: {
     
-    [setEmployee.fulfilled]: (state, action) => {
+    [getAllEmployees.fulfilled]: (state, action) => {
         state.loading = false
-        state.entities = action.payload.entities
+        state.employeesState = action.payload
         state.success = true
     },
-    [setEmployee.rejected]: (state) => {
+    [getAllEmployees.rejected]: (state) => {
         state.loading = false
     },
-    [setEmployee.pending]: (state) => {
+    [getAllEmployees.pending]: (state) => {
         state.loading = true
     },
 
   },
 });
-const { reducer, actions } = newEmployeeSlice;
-export const { setSuccessFalse, } = actions
+const { reducer } = allEmployeesSlice;
+
 export default reducer;
 

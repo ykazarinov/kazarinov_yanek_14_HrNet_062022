@@ -12,8 +12,8 @@ import { setEmployee } from "../../slices/employee.slice";
 import { transcription } from '../../app.config';
 import { useSelector, useDispatch } from "react-redux";
 
-const stateList = ['Choose item...', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
-const depList = ['Choose item...', '62de9795bbd221693ca401d4', 'item 2', 'item 3']
+const stateList = ['', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
+const depList = ['', '62de9795bbd221693ca401d4', 'item 2', 'item 3']
 
 export default function Home(){
     const dispatch = useDispatch();
@@ -24,43 +24,20 @@ export default function Home(){
 
     const langData = transcription.find(lng => lng.lang === currentLang).data.addemployee
     const { isLoggedIn } = useSelector((state) => state.auth);
+    const { success } = useSelector((state) => state.newEmployee);
 
-    const initialValues = {
-        photo: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        birthday: "",
-        startday: "",
-        street: "",
-        city: "",
-        state: "",
-        zipcode: "",
-        department: ""
-      };
-      
-      const changeDateFormatToBackEnd = (dateIn) =>{
+    const changeDateFormatToBackEnd = (dateIn) =>{
         let day = dateIn.substr(0, 2)
-        // console.log(day)
         let month = dateIn.substr(3, 2)
-        // console.log(month)
         let year = dateIn.substr(6, 4)
-        // console.log(year)
         return year + '-' + month + '-' + day
-      }
+    }
 
-      const handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
         let formValues = {}
 
-        // let values = e.target.innerHTML
-
-        // e.target && e.target.map((elem, index)=>(
-        //     [index] = elem.value
-        // ))
-         formValues = { 
+        formValues = { 
             photo: e.target.elements.photo.value, 
             firstName: e.target.elements.firstName.value, 
             lastName: e.target.elements.lastName.value, 
@@ -75,19 +52,19 @@ export default function Home(){
             department: e.target.elements.department.value, 
             
         }
-
-        // var copyObj = Object.assign({}, formValue);
-        // copyObj.birthday = changeDateFormatToBackEnd(formValue.birthday)
-        // copyObj.startday = changeDateFormatToBackEnd(formValue.startday)
-
         console.log(formValues)
         dispatch(setEmployee( formValues ))
 
-      };
+        
+    };
 
     if (!isLoggedIn) {
         return <Navigate to="/" />;
-      }
+    }
+
+    if(success){
+        return <Navigate to="/employees" />;
+    }
 
 
 
