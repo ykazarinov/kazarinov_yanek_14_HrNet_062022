@@ -10,8 +10,9 @@
 
 $dark-grey: #282D30;
 $light-grey: #cccccc;
-$lighter: rgba(255, 255, 255, .2);
-$darker: rgba(0, 0, 0, .2);
+$lighter: rgba(255, 255, 255, .1);
+$darker: rgba(0, 0, 0, .1);
+$darker2: rgba(0, 0, 0, .3);
 
 
 
@@ -644,8 +645,14 @@ legend.scheduler-border {
 }
 
 .table-cont{
+    margin-bottom: 2rem;
     th{
         padding: .5rem;
+        max-width: 8.3vw;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
         &.title{
             white-space: nowrap;
             vertical-align: middle;
@@ -659,6 +666,17 @@ legend.scheduler-border {
         }
     }
     tbody{
+        border-top: solid 1px $dark-grey;
+        border-bottom: solid 1px $dark-grey;
+        td{
+            max-width: 8.3vw;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding: .3rem;
+            text-align: left;
+            border-bottom: solid 1px $darker2;
+        }
         font-size: .8rem;
         .dark{
             background-color: $darker;

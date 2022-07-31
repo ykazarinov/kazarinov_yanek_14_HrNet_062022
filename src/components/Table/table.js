@@ -49,7 +49,7 @@ export default function Table(props){
                             objKey === 'updatedAt' ||
                             objKey === '__v' ?
                             null : 
-                            <th key={index} className='title'>
+                            <th key={index} className='title' title={objKey}>
                                 {objKey}
                                 {
                                     sort === objKey && sortDirection === 'ascending' ?
@@ -80,7 +80,15 @@ export default function Table(props){
                              myKey === 'createdAt' ||
                              myKey === 'updatedAt' ||
                              myKey === '__v' ?
-                             null : <td key={`val`+index}>
+                             null : <td key={`val`+index}
+                             title={
+                                Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
+                                    Object.values(emplObj)[index][0].stateName :
+                                Array.isArray(Object.values(emplObj)[index]) && myKey === 'department' ? 
+                                    Object.values(emplObj)[index][0].departmentName :
+                                String(Object.values(emplObj)[index])
+                             }
+                             >
                                 {
                                 Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
                                     Object.values(emplObj)[index][0].stateName :

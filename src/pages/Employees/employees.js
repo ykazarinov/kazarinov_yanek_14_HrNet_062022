@@ -10,7 +10,7 @@ export default function Employees(){
     const dispatch = useDispatch();
 
     const {employeesState} = useSelector((state)=>state.allEmployees)
-   
+    const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
     useEffect(()=>{
         dispatch(setSuccessFalse())
         dispatch(getAllEmployees())
@@ -23,13 +23,16 @@ export default function Employees(){
     if (!isLoggedIn) {
         return <Navigate to="/" />;
     }
+    
 
-    return <div className="container">
-            <div className="row">
-                <div className="col-12">
-                    <h1>Current Employees</h1>
-                    <Table data={employeesState}>Table</Table>
-                </div>
-            </div> 
+    return <div className={currentTheme}>
+        <div className='container'>
+                <div className="row">
+                    <div className="col-12">
+                        <h1>Current Employees</h1>
+                        <Table data={employeesState}>Table</Table>
+                    </div>
+                </div> 
+            </div>
         </div>
 }

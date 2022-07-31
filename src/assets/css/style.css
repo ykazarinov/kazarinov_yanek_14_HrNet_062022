@@ -11433,8 +11433,16 @@ legend.scheduler-border {
   justify-content: flex-end;
 }
 
+.table-cont {
+  margin-bottom: 2rem;
+}
 .table-cont th {
   padding: 0.5rem;
+  max-width: 8.3vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
 }
 .table-cont th.title {
   white-space: nowrap;
@@ -11448,13 +11456,24 @@ legend.scheduler-border {
   margin-left: 0.4rem;
 }
 .table-cont tbody {
+  border-top: solid 1px #282D30;
+  border-bottom: solid 1px #282D30;
   font-size: 0.8rem;
 }
+.table-cont tbody td {
+  max-width: 8.3vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0.3rem;
+  text-align: left;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+}
 .table-cont tbody .dark {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .table-cont tbody .light {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /*# sourceMappingURL=style.css.map */
