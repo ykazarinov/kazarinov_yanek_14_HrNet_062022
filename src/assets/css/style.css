@@ -11436,6 +11436,17 @@ legend.scheduler-border {
 .table-cont th {
   padding: 0.5rem;
 }
+.table-cont th.title {
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.table-cont th.title:hover {
+  cursor: pointer;
+}
+.table-cont th .arrow {
+  font-size: 0.6rem;
+  margin-left: 0.4rem;
+}
 .table-cont tbody {
   font-size: 0.8rem;
 }

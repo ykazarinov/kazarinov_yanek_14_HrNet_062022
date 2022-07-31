@@ -646,6 +646,17 @@ legend.scheduler-border {
 .table-cont{
     th{
         padding: .5rem;
+        &.title{
+            white-space: nowrap;
+            vertical-align: middle;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+        .arrow{
+            font-size: .6rem;
+            margin-left: .4rem;
+        }
     }
     tbody{
         font-size: .8rem;

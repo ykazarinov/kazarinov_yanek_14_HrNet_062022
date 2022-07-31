@@ -14,12 +14,6 @@ export default function Employees(){
     useEffect(()=>{
         dispatch(setSuccessFalse())
         dispatch(getAllEmployees())
-        
-       
-        
-        
-           
-        
     }, [])
 
 
@@ -28,38 +22,8 @@ export default function Employees(){
     const { isLoggedIn } = useSelector((state) => state.auth);
     if (!isLoggedIn) {
         return <Navigate to="/" />;
-      }
+    }
 
-    let testData = [
-        {
-            "photo": "",
-            "firstName": "sgf",
-            "lastName": "dfsf",
-            "email": "sdfsdf@rgffg.rtt",
-            "phone": "",
-            "birthday": "2004-07-02",
-            "startday": "2022-07-07",
-            "street": "",
-            "city": "",
-            "state": "62de4f9df5885a099d8dd473",
-            "zipcode": "",
-            "department": "62de9795bbd221693ca401d4"
-        },
-        {
-            "photo": "",
-            "firstName": "sgf",
-            "lastName": "dfsf",
-            "email": "sdfsdf@rgffg.rtt",
-            "phone": "",
-            "birthday": "2004-07-02",
-            "startday": "2022-07-07",
-            "street": "",
-            "city": "",
-            "state": "62de4f9df5885a099d8dd473",
-            "zipcode": "",
-            "department": "62de9795bbd221693ca401d4"
-        }
-    ] 
     return <div className="container">
             <div className="row">
                 <div className="col-12">

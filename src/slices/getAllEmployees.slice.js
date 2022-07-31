@@ -35,7 +35,8 @@ export const getAllEmployees = createAsyncThunk(
 const initialState = {
     employeesState: null,
     loading: false,
-    success: false
+    sort: 'createdAt',
+    sortDirection: 'descending'
 }
 
 // slice, which content reducers and actions for data of the User's Profil and status of loading 
@@ -44,9 +45,15 @@ const allEmployeesSlice = createSlice({
     name: "allEmployees",
     initialState,
     reducers: {
-        setSuccessFalse: (state, action) => {
-            state.success = false
+        setSort: (state, action) => {
+            state.sort = action.payload
         },
+        setSortDirection: (state) => {
+            state.sortDirection === 'ascending' ?  
+            state.sortDirection = 'descending' :
+            state.sortDirection = 'ascending'
+        },
+
     },
     extraReducers: {
     
@@ -64,7 +71,7 @@ const allEmployeesSlice = createSlice({
 
   },
 });
-const { reducer } = allEmployeesSlice;
-
+const { reducer, actions } = allEmployeesSlice;
+export const { setSort, setSortDirection } = actions
 export default reducer;
 
