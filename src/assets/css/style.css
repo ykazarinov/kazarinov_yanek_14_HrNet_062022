@@ -10817,6 +10817,12 @@ footer.theme-light .lang-cont .langselect {
 .theme-light label {
   color: black;
 }
+.theme-light .color-blue {
+  color: white;
+}
+.theme-light .color-red {
+  color: white;
+}
 .theme-light .switch {
   background-color: white;
   padding: 3px;
@@ -10937,6 +10943,14 @@ footer.theme-light .lang-cont .langselect {
   background-color: white;
   color: black;
 }
+.theme-light .table-cont thead {
+  color: black;
+}
+.theme-light .table-cont tbody {
+  color: #4d4d4d;
+  border-top: #4d4d4d solid 1px;
+  border-bottom: #4d4d4d solid 1px;
+}
 
 header.theme-dark {
   background-color: black;
@@ -10995,6 +11009,12 @@ footer.theme-dark .lang-cont .langselect {
 }
 .theme-dark label {
   color: white;
+}
+.theme-dark .color-blue {
+  color: #0d6efd;
+}
+.theme-dark .color-red {
+  color: #dc3545;
 }
 .theme-dark .switch {
   background-color: #333333;
@@ -11115,6 +11135,14 @@ footer.theme-dark .lang-cont .langselect {
 .theme-dark legend.scheduler-border {
   background-color: #1a1a1a;
   color: white;
+}
+.theme-dark .table-cont thead {
+  color: white;
+}
+.theme-dark .table-cont tbody {
+  color: #b3b3b3;
+  border-top: #b3b3b3 solid 1px;
+  border-bottom: #b3b3b3 solid 1px;
 }
 
 .flex-center {
@@ -11435,39 +11463,49 @@ legend.scheduler-border {
 
 .table-cont {
   margin-bottom: 2rem;
+  max-width: 720px;
+  overflow: scroll;
 }
 .table-cont th {
   padding: 0.5rem;
-  max-width: 8.3vw;
-  overflow: hidden;
+  max-width: 7vw;
+}
+.table-cont th .title {
+  display: flex;
+  align-items: center;
+}
+.table-cont th .title .text {
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: center;
+  overflow: hidden;
 }
-.table-cont th.title {
-  white-space: nowrap;
-  vertical-align: middle;
+.table-cont th .title .arrow-cont {
+  width: 14px;
 }
-.table-cont th.title:hover {
+.table-cont th .title:hover {
   cursor: pointer;
 }
 .table-cont th .arrow {
-  font-size: 0.6rem;
-  margin-left: 0.4rem;
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
 }
 .table-cont tbody {
-  border-top: solid 1px #282D30;
-  border-bottom: solid 1px #282D30;
   font-size: 0.8rem;
 }
 .table-cont tbody td {
-  max-width: 8.3vw;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   padding: 0.3rem;
   text-align: left;
   border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+}
+.table-cont tbody td.data {
+  max-width: 7vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.table-cont tbody td .but-cont {
+  display: flex;
 }
 .table-cont tbody .dark {
   background-color: rgba(0, 0, 0, 0.1);

@@ -35,9 +35,7 @@ export default function Headers(){
                                 <FontAwesomeIcon icon={faIdCard} /> HR<span>Net</span>
                             </Link>
                         </div>
-                        <Link to="/addemployee">
-                                    Add employee
-                        </Link>
+                       
                     </div>
                 
                     

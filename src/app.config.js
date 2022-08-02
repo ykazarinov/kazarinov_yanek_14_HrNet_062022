@@ -35,7 +35,23 @@ const transcription = [
                 'Password',
                 'Remember me',
                 'Sign In'
-            ]
+            ],
+            employees: [
+                'Employees',
+                {
+                'photo': 'Photo',
+                'firstName': 'First name',
+                'lastName': 'Last name',
+                'email': 'Email',
+                'phone': 'Phone',
+                'birthday': 'Birthday',
+                'startday': 'Startday',
+                'street': 'Street',
+                'city': 'City',
+                'state': 'State',
+                'zipcode': 'Zip code',
+                'department': 'Department'
+            }]
         }
     },
     {   lang: 'Français',
@@ -71,7 +87,23 @@ const transcription = [
                 'Mot de passe',
                 'Souviens-toi de moi',
                 'S\'identifier'
-            ]
+            ],
+            employees: [
+                'Des employés',
+                {
+                'photo': 'Photo',
+                'firstName': 'Prénom',
+                'lastName': 'Nom',
+                'email': 'E-mail',
+                'phone': 'Téléphon',
+                'birthday': 'Date de naissance',
+                'startday': 'Commence jour',
+                'street': 'Rue',
+                'city': 'Ville',
+                'state': 'État',
+                'zipcode': 'Code postal',
+                'department': 'Département'
+            }]
         }
     }
 ]

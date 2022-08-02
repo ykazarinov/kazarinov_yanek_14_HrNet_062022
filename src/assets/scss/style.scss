@@ -25,11 +25,15 @@ $themes: (
         'bgPlus2' : #68b441,
         'textContrast': black,
         'textNormal': lighten(black,50%),
+        'textNormal2': lighten(black,30%),
         'textInvers': white,
         'switchColor' : white,
         'switchIconColor': #ffc000,
         'bgInput': white,
         'borderInput': darken(white, 30%),
+        'borderInput2': lighten(black, 30%),
+        'iconColorBlue': white,
+        'iconColorRed': white,
 
     
     ),
@@ -40,11 +44,15 @@ $themes: (
         'bgPlus2' : #68b441,
         'textContrast': white,
         'textNormal': darken(white, 30%),
+        'textNormal2': darken(white, 30%),
         'textInvers': white,
         'switchColor' : darken(white, 80%),
         'switchIconColor': #ffc000,
         'bgInput': darken(white, 70%),
         'borderInput': transparent,
+        'borderInput2': darken(white, 30%),
+        'iconColorBlue': #0d6efd,
+        'iconColorRed': #dc3545,
 
 
     ),
@@ -57,11 +65,15 @@ $themes: (
     $bgPlus2: map-get($colorArray, 'bgPlus2');
     $textContrast: map-get($colorArray, 'textContrast');
     $textNormal: map-get($colorArray, 'textNormal');
+    $textNormal2: map-get($colorArray, 'textNormal2');
     $textInvers: map-get($colorArray , 'textInvers' );
     $switchColor: map-get($colorArray , 'switchColor' );
     $switchIconColor: map-get($colorArray , 'switchIconColor' );
     $bgInput: map-get($colorArray , 'bgInput' );
     $borderInput: map-get($colorArray , 'borderInput' );
+    $borderInput2: map-get($colorArray , 'borderInput2' );
+    $iconColorBlue: map-get($colorArray , 'iconColorBlue' );
+    $iconColorRed: map-get($colorArray , 'iconColorRed' );
 
 
     header.#{$name}{
@@ -128,6 +140,13 @@ $themes: (
 
         label{
             color: $textContrast;
+        }
+
+        .color-blue{
+            color: $iconColorBlue
+        }
+        .color-red{
+            color: $iconColorRed
         }
 
         .switch{
@@ -273,7 +292,16 @@ $themes: (
             color: $textContrast;
         }
         
-
+        .table-cont{
+            thead{
+                color: $textContrast
+            }
+            tbody{
+                color: $textNormal2;
+                border-top: $borderInput2 solid 1px;
+                border-bottom: $borderInput2 solid 1px;
+            }
+        }
     }
 
   }
@@ -646,36 +674,58 @@ legend.scheduler-border {
 
 .table-cont{
     margin-bottom: 2rem;
+    max-width: 720px;
+    overflow: scroll;
+
     th{
         padding: .5rem;
-        max-width: 8.3vw;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        text-align: center;
-        &.title{
-            white-space: nowrap;
-            vertical-align: middle;
+        max-width: 7vw;
+        
+
+        .title{
+            
+            display: flex;
+            align-items: center;
+            .text{
+                // max-width: calc(8.3vw - 14px);
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                text-align: center;
+                overflow: hidden;
+            }
+            .arrow-cont{
+                width: 14px;
+            }
+
             &:hover{
                 cursor: pointer;
             }
         }
         .arrow{
-            font-size: .6rem;
-            margin-left: .4rem;
+            font-size: .8rem;
+            margin-left: .2rem;
         }
     }
     tbody{
-        border-top: solid 1px $dark-grey;
-        border-bottom: solid 1px $dark-grey;
+       
+
+        
         td{
-            max-width: 8.3vw;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            
+           
             padding: .3rem;
             text-align: left;
             border-bottom: solid 1px $darker2;
+            &.data{
+                max-width: 7vw;
+                 overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            
+            }
+            .but-cont{
+                display: flex;
+            }
         }
         font-size: .8rem;
         .dark{

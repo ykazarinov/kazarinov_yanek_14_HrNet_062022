@@ -1,18 +1,34 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons'
-
+import { faAngleDown, faAngleUp, faUserPlus, faTrashCan, faPen } from '@fortawesome/free-solid-svg-icons'
+import { Link } from "react-router-dom";
 import {setSortDirection} from '../../slices/getAllEmployees.slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { transcription } from '../../app.config';
+import Button from '../../components/Button/button'
+import { useEffect } from 'react';
+import { getNextKeyDef } from '@testing-library/user-event/dist/keyboard/getNextKeyDef';
 
 export default function Table(props){
-    console.log(props.data)
+    // console.log(props.data)
     const dispatch = useDispatch()
     const {sort} = useSelector((state)=>state.allEmployees)
     const {sortDirection} = useSelector((state)=>state.allEmployees)
-    const setTableSort = ((date)=>{
+    const {sortedArray} = useSelector((state)=>state.allEmployees)
+    const {employeesState} = useSelector((state)=>state.allEmployees)
+
+    const  currentLang  = useSelector((state) => state['lang'].actualLang)
+    const langData = transcription.find(lng => lng.lang === currentLang).data.employees
+    const setTableSort = ((key)=>{
         return {
             type: "allEmployees/setSort",
-            payload: date
+            payload: key
+        }
+    })
+
+    const createSortedArray = ((array)=>{
+        return {
+            type: "allEmployees/setSortedData",
+            payload: array
         }
     })
 
@@ -24,86 +40,150 @@ export default function Table(props){
         return result
     }
 
-    const sorting = ((e) => {
-       
-        if(e.target.innerText === sort){
+    // let arrayForSort = [...employeesState]
+    // let tempArray = arrayForSort.sort(byField(sort, sortDirection))
+
+    useEffect(()=>{
+        var clone = Object.assign([], employeesState);
+        // console.log(clone.sort(byField(sort, sortDirection)))
+        dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
+ 
+    }, [sort, sortDirection])
+
+    const sorting = ((objKey) => {
+        if(objKey === sort){
             dispatch(setSortDirection())
         }
-        dispatch(setTableSort(e.target.innerText))
+        dispatch(setTableSort(objKey))
+
+        // dispatch(createSortedArray(tempArray))
 
     })
     
-    let arrayForSort = [...props.data]
-    let tempArray = arrayForSort.sort(byField(sort, sortDirection))
-    return (
-        <table className="table-cont">
-           <thead>
-                <tr 
-                    role='row'
-                    onClick={(e) => sorting(e)}
-                >
-                    { Object.keys(tempArray[0]).map((objKey, index)=>(
-                            objKey === '_id' ||
-                            objKey === 'user' ||
-                            objKey === 'createdAt' ||
-                            objKey === 'updatedAt' ||
-                            objKey === '__v' ?
-                            null : 
-                            <th key={index} className='title' title={objKey}>
-                                {objKey}
-                                {
-                                    sort === objKey && sortDirection === 'ascending' ?
-                                        <FontAwesomeIcon icon={faAngleDown} className='arrow' /> : 
-                                    sort === objKey && sortDirection === 'descending' ? 
-                                        <FontAwesomeIcon icon={faAngleUp} className='arrow' /> :
-                                    null
-                                }
-                                
-                            </th>
-                            
-                            
-                        ))
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                {tempArray.map((emplObj, index)=>(
-                    
-                    <tr role='row' 
-                        key={`row` + index}
-                        className={index % 2 == 0 ? `dark` : `light`}
-                    >
 
-                        {Object.keys(emplObj).map((myKey, index)=>(
-                             myKey === '_id' ||
-                             myKey === 'user' ||
-                             myKey === 'createdAt' ||
-                             myKey === 'updatedAt' ||
-                             myKey === '__v' ?
-                             null : <td key={`val`+index}
-                             title={
-                                Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
-                                    Object.values(emplObj)[index][0].stateName :
-                                Array.isArray(Object.values(emplObj)[index]) && myKey === 'department' ? 
-                                    Object.values(emplObj)[index][0].departmentName :
-                                String(Object.values(emplObj)[index])
-                             }
-                             >
-                                {
-                                Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
-                                    Object.values(emplObj)[index][0].stateName :
-                                Array.isArray(Object.values(emplObj)[index]) && myKey === 'department' ? 
-                                    Object.values(emplObj)[index][0].departmentName :
-                                String(Object.values(emplObj)[index])
-                                
-                                }
-                             </td>
-                        ))}
-                    </tr>
-                ))}
+
+    
+    
+
+
+    return (
+        <div>
+            <Button 
+                datatype='link' 
+                to="/addemployee" 
+                bgColor="btn-primary"
+                addClass='color-blue'
+                value = {
+                    <FontAwesomeIcon icon={faUserPlus} />
+                }
+            >
                 
-            </tbody>
-          
-        </table>
+            </Button>
+            <table className="table-cont">
+            <thead>
+                    <tr>
+                        { 
+                        sortedArray ?
+                        Object.keys(sortedArray[1]).map((objKey, index)=>(
+                                objKey === '_id' ||
+                                objKey === 'user' ||
+                                objKey === 'createdAt' ||
+                                objKey === 'updatedAt' ||
+                                objKey === '__v' ?
+                                null : 
+                                <th 
+                                    key={index} 
+                                    title={objKey}
+                                    onClick={() => sorting(objKey)}
+                                >
+                                    <div className='title'>
+                                        <div className='text'>
+                                        
+                                            {langData[1][objKey]}
+                                            {/* {objKey} */}
+                                        </div>
+                                        
+                                        {
+                                            sort === objKey && sortDirection === 'ascending' ?
+                                                <div className='arrow-cont'><FontAwesomeIcon icon={faAngleDown} className='arrow' /></div> : 
+                                            sort === objKey && sortDirection === 'descending' ? 
+                                                <div className='arrow-cont'><FontAwesomeIcon icon={faAngleUp} className='arrow' /></div> :
+                                            null
+                                        }
+                                    </div>
+                                    
+                                </th>
+                                
+                                
+                            )) : null
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    { sortedArray ? 
+                    sortedArray.map((emplObj, index)=>(
+                        
+                        <tr role='row' 
+                            key={`row` + index}
+                            className={index % 2 == 0 ? `dark` : `light`}
+                        >
+
+                            {Object.keys(emplObj).map((myKey, index)=>(
+                                myKey === '_id' ||
+                                myKey === 'user' ||
+                                myKey === 'createdAt' ||
+                                myKey === 'updatedAt' ||
+                                myKey === '__v' ?
+                                null : <td 
+                                    key={`val`+index}
+                                    className='data'
+                                    title={
+                                        Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
+                                            Object.values(emplObj)[index][0].stateName :
+                                        Array.isArray(Object.values(emplObj)[index]) && myKey === 'department' ? 
+                                            Object.values(emplObj)[index][0].departmentName :
+                                        String(Object.values(emplObj)[index])
+                                    }
+                                >
+                                    {
+                                    Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
+                                        Object.values(emplObj)[index][0].stateName :
+                                    Array.isArray(Object.values(emplObj)[index]) && myKey === 'department' ? 
+                                        Object.values(emplObj)[index][0].departmentName :
+                                    String(Object.values(emplObj)[index])
+                                    
+                                    }
+                                </td>
+                                
+                            ))}
+                        <td>
+                            {/* <button type="button" className="btn btn-primary btn-sm"><FontAwesomeIcon icon={faPen} /></button> */}
+                            <div className='but-cont'>
+                                <Button 
+                                    datatype='button' 
+                                    addClass='btn-sm color-blue'
+                                    bgColor="btn-primary"
+                                    value = {
+                                        <FontAwesomeIcon icon={faPen} />
+                                    }
+                                ></Button>
+                                <Button 
+                                    datatype='button' 
+                                    addClass='btn-sm color-red'
+                                    bgColor="btn-danger"
+                                    value = {
+                                        <FontAwesomeIcon icon={faTrashCan} />
+                                    }
+                                ></Button>
+                            </div>
+                        </td>
+                        </tr>
+                    )) : null
+                }
+                    
+                </tbody>
+            
+            </table>
+        </div>
     )
 }

@@ -36,7 +36,8 @@ const initialState = {
     employeesState: null,
     loading: false,
     sort: 'createdAt',
-    sortDirection: 'descending'
+    sortDirection: 'descending',
+    sortedArray : []
 }
 
 // slice, which content reducers and actions for data of the User's Profil and status of loading 
@@ -53,6 +54,9 @@ const allEmployeesSlice = createSlice({
             state.sortDirection = 'descending' :
             state.sortDirection = 'ascending'
         },
+        setSortedData: (state, action) => {
+            state.sortedArray = action.payload
+         },
 
     },
     extraReducers: {
@@ -60,6 +64,7 @@ const allEmployeesSlice = createSlice({
     [getAllEmployees.fulfilled]: (state, action) => {
         state.loading = false
         state.employeesState = action.payload
+        state.sortedArray = state.employeesState
         state.success = true
     },
     [getAllEmployees.rejected]: (state) => {
@@ -72,6 +77,6 @@ const allEmployeesSlice = createSlice({
   },
 });
 const { reducer, actions } = allEmployeesSlice;
-export const { setSort, setSortDirection } = actions
+export const { setSort, setSortDirection, setSortedData } = actions
 export default reducer;
 
