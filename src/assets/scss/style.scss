@@ -737,3 +737,15 @@ legend.scheduler-border {
     }
     
 }
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    &-item{
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

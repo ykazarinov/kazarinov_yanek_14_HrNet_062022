@@ -5,6 +5,8 @@ import {setSortDirection} from '../../slices/getAllEmployees.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { transcription } from '../../app.config';
 import Button from '../../components/Button/button'
+import PaginCountSelect from '../paginCountSelect/pagincountselect';
+import Pagination from '../Pagination/pagination';
 import { useEffect } from 'react';
 import { getNextKeyDef } from '@testing-library/user-event/dist/keyboard/getNextKeyDef';
 
@@ -14,7 +16,10 @@ export default function Table(props){
     const {sort} = useSelector((state)=>state.allEmployees)
     const {sortDirection} = useSelector((state)=>state.allEmployees)
     const {sortedArray} = useSelector((state)=>state.allEmployees)
+    const {paginCount} = useSelector((state)=>state.allEmployees)
     const {employeesState} = useSelector((state)=>state.allEmployees)
+    const {actualPaginNumber} = useSelector((state)=>state.allEmployees)
+    const {paginatedArray} = useSelector((state)=>state.allEmployees)
 
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
@@ -59,15 +64,35 @@ export default function Table(props){
         // dispatch(createSortedArray(tempArray))
 
     })
+
+    const createSubarray = ((array, size)=>{
+        let subarray = [];
+        for (let i = 0; i <Math.ceil(array.length/size); i++){
+            subarray[i] = array.slice((i*size), (i*size) + size);
+        }
+        return subarray;
+    })
     
+    const createPaginatedArray = ((array)=>{
+        return {
+            type: "allEmployees/setPaginatedData",
+            payload: array
+        }
+    })
 
-
+    useEffect(()=>{
+        var clone = Object.assign([], sortedArray);
+        let arrayByPages = createSubarray(clone, paginCount)
+        // console.log(arrayByPages)
+        dispatch(createPaginatedArray(arrayByPages))
+    }, [sortedArray, paginCount])
     
     
 
 
     return (
         <div>
+
             <Button 
                 datatype='link' 
                 to="/addemployee" 
@@ -79,12 +104,13 @@ export default function Table(props){
             >
                 
             </Button>
+            <PaginCountSelect></PaginCountSelect>
             <table className="table-cont">
             <thead>
                     <tr>
                         { 
-                        sortedArray ?
-                        Object.keys(sortedArray[1]).map((objKey, index)=>(
+                        // paginatedArray && actualPaginNumber ?
+                        Object.keys(paginatedArray[actualPaginNumber][0]).map((objKey, index)=>(
                                 objKey === '_id' ||
                                 objKey === 'user' ||
                                 objKey === 'createdAt' ||
@@ -115,13 +141,15 @@ export default function Table(props){
                                 </th>
                                 
                                 
-                            )) : null
+                            ))
+                            //  : null
                         }
                     </tr>
                 </thead>
                 <tbody>
-                    { sortedArray ? 
-                    sortedArray.map((emplObj, index)=>(
+                    { 
+                    // paginatedArray && actualPaginNumber ? 
+                    paginatedArray[actualPaginNumber].map((emplObj, index)=>(
                         
                         <tr role='row' 
                             key={`row` + index}
@@ -178,12 +206,14 @@ export default function Table(props){
                             </div>
                         </td>
                         </tr>
-                    )) : null
+                    )) 
+                    // : null
                 }
                     
                 </tbody>
             
             </table>
+            <Pagination></Pagination>
         </div>
     )
 }

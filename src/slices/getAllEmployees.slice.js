@@ -37,8 +37,19 @@ const initialState = {
     loading: false,
     sort: 'createdAt',
     sortDirection: 'descending',
-    sortedArray : []
+    sortedArray : [],
+    paginatedArray : [],
+    actualPaginNumber: 0,
+    paginCount: 5,
 }
+
+const createSubarray = ((array, size)=>{
+    let subarray = [];
+    for (let i = 0; i <Math.ceil(array.length/size); i++){
+        subarray[i] = array.slice((i*size), (i*size) + size);
+    }
+    return subarray;
+})
 
 // slice, which content reducers and actions for data of the User's Profil and status of loading 
 // after the updating
@@ -57,6 +68,16 @@ const allEmployeesSlice = createSlice({
         setSortedData: (state, action) => {
             state.sortedArray = action.payload
          },
+         setPaginatedData: (state, action) => {
+            state.paginatedArray = action.payload
+         },
+         setActualPaginNumber: (state, action) => {
+            state.actualPaginNumber = action.payload
+         },
+         setPaginCount: (state, action) =>{
+            state.paginCount = action.payload
+         }
+
 
     },
     extraReducers: {
@@ -65,6 +86,9 @@ const allEmployeesSlice = createSlice({
         state.loading = false
         state.employeesState = action.payload
         state.sortedArray = state.employeesState
+        var clone = Object.assign([], state.sortedArray);
+        state.paginatedArray = createSubarray(clone, state.paginCount)
+        // state.paginatedArray = state.employeesState
         state.success = true
     },
     [getAllEmployees.rejected]: (state) => {
@@ -77,6 +101,6 @@ const allEmployeesSlice = createSlice({
   },
 });
 const { reducer, actions } = allEmployeesSlice;
-export const { setSort, setSortDirection, setSortedData } = actions
+export const { setSort, setSortDirection, setSortedData, setPaginatedData, setActualPaginNumber, setPaginCount } = actions
 export default reducer;
 

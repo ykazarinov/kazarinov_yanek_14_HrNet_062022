@@ -1,25 +1,34 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+
 export default function Pagination(props){
+    const {paginatedArray} = useSelector((state)=>state.allEmployees)
+    const dispatch = useDispatch()
 
-    const createSubarray = ((array, size)=>{
-        let subarray = [];
-        for (let i = 0; i <Math.ceil(array.length/size); i++){
-            subarray[i] = array.slice((i*size), (i*size) + size);
+    const setPagNumber = ((num)=>{
+        return {
+            type: "allEmployees/setActualPaginNumber",
+            payload: num
         }
-        return subarray;
     })
-
-    let arrayByPages = createSubarray(props.array, 3)
-
-    console.log(arrayByPages)
 
     return (
         <div className="pagination">
             {
-                arrayByPages.map((line, index)=>{
-                    <div className="pagination-item">
+                paginatedArray.map((line, index)=>(
+                    <div 
+                        className="pagination-item" 
+                        key={`pag` + index}
+                        onClick={
+                            (e)=> 
+                            dispatch(setPagNumber(Number(e.target.innerText)))
+                            
+                        }
+                    >
                         {index}
                     </div>
-                })
+                ))
             }
         </div>
     )

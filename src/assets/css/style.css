@@ -11514,4 +11514,16 @@ legend.scheduler-border {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.pagination-item {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*# sourceMappingURL=style.css.map */
