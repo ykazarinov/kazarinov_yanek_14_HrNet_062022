@@ -34,6 +34,7 @@ $themes: (
         'borderInput2': lighten(black, 30%),
         'iconColorBlue': white,
         'iconColorRed': white,
+        'iconColorWhite': white,
 
     
     ),
@@ -53,6 +54,7 @@ $themes: (
         'borderInput2': darken(white, 30%),
         'iconColorBlue': #0d6efd,
         'iconColorRed': #dc3545,
+        'iconColorWhite': white,
 
 
     ),
@@ -74,6 +76,7 @@ $themes: (
     $borderInput2: map-get($colorArray , 'borderInput2' );
     $iconColorBlue: map-get($colorArray , 'iconColorBlue' );
     $iconColorRed: map-get($colorArray , 'iconColorRed' );
+    $iconColorWhite: map-get($colorArray , 'iconColorWhite' );
 
 
     header.#{$name}{
@@ -85,11 +88,7 @@ $themes: (
         label{
             color: $textNormal;
         }
-        .langselect{
-            background-color: $bgInput;
-            color: $textContrast;
-            border: solid 1px $borderInput;
-        }
+        
 
         .authcont{
             &-user-icon{
@@ -125,8 +124,9 @@ $themes: (
                 padding: .2rem;
                 margin-left: .3rem;
                 border-radius: 5px;
-               
-    
+                background-color: $bgInput;
+                color: $textContrast;
+                border: solid 1px $borderInput;
             }
     
         }
@@ -145,8 +145,16 @@ $themes: (
         .color-blue{
             color: $iconColorBlue
         }
+        .color-white{
+            color: $iconColorWhite
+        }
         .color-red{
             color: $iconColorRed
+        }
+        .paginselect{
+            background-color: $bgInput;
+            color: $textContrast;
+            border: solid 1px $borderInput;
         }
 
         .switch{
@@ -673,7 +681,7 @@ legend.scheduler-border {
 }
 
 .table-cont{
-    margin-bottom: 2rem;
+    margin-bottom: .5rem;
     max-width: 720px;
     overflow: scroll;
 
@@ -748,4 +756,16 @@ legend.scheduler-border {
         justify-content: center;
         align-items: center;
     }
+}
+
+.pagination{
+    margin-bottom: 2rem;
+    
+}
+
+.paginselect{
+    padding: .2rem;
+    margin-left: .3rem;
+    margin-right: .3rem;
+    border-radius: 5px;
 }

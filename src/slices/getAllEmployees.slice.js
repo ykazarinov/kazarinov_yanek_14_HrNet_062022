@@ -65,6 +65,10 @@ const allEmployeesSlice = createSlice({
             state.sortDirection = 'descending' :
             state.sortDirection = 'ascending'
         },
+        setSortDirectionDefault: (state) => {
+            state.sortDirection = 'descending' 
+           
+        },
         setSortedData: (state, action) => {
             state.sortedArray = action.payload
          },
@@ -101,6 +105,6 @@ const allEmployeesSlice = createSlice({
   },
 });
 const { reducer, actions } = allEmployeesSlice;
-export const { setSort, setSortDirection, setSortedData, setPaginatedData, setActualPaginNumber, setPaginCount } = actions
+export const { setSort, setSortDirection, setSortedData, setPaginatedData, setActualPaginNumber, setPaginCount, setSortDirectionDefault } = actions
 export default reducer;
 

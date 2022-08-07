@@ -1,14 +1,21 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faUserPlus, faTrashCan, faPen } from '@fortawesome/free-solid-svg-icons'
-import { Link } from "react-router-dom";
-import {setSortDirection} from '../../slices/getAllEmployees.slice';
+import {setSortDirection} from '../slices/getAllEmployees.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { transcription } from '../../app.config';
-import Button from '../../components/Button/button'
-import PaginCountSelect from '../paginCountSelect/pagincountselect';
-import Pagination from '../Pagination/pagination';
+import { transcription } from '../app.config';
+import PaginCountSelect from './pagincountselect';
+import Pagination from './pagination';
 import { useEffect } from 'react';
-import { getNextKeyDef } from '@testing-library/user-event/dist/keyboard/getNextKeyDef';
+import { Link } from "react-router-dom";
+
+
+export function byField(field, sortDirection) {
+    let result
+    sortDirection === 'ascending' ?
+    result = ((a, b) => a[field] > b[field] ? 1 : -1) :
+    result = ((a, b) => b[field] > a[field] ? 1 : -1)
+    return result
+}
 
 export default function Table(props){
     // console.log(props.data)
@@ -20,7 +27,7 @@ export default function Table(props){
     const {employeesState} = useSelector((state)=>state.allEmployees)
     const {actualPaginNumber} = useSelector((state)=>state.allEmployees)
     const {paginatedArray} = useSelector((state)=>state.allEmployees)
-
+    const {actualTheme} = useSelector((state) => state.theme)
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
     const setTableSort = ((key)=>{
@@ -37,31 +44,13 @@ export default function Table(props){
         }
     })
 
-    function byField(field, sortDirection) {
-        let result
-        sortDirection === 'ascending' ?
-        result = ((a, b) => a[field] > b[field] ? 1 : -1) :
-        result = ((a, b) => b[field] > a[field] ? 1 : -1)
-        return result
-    }
 
-    // let arrayForSort = [...employeesState]
-    // let tempArray = arrayForSort.sort(byField(sort, sortDirection))
-
-    useEffect(()=>{
-        var clone = Object.assign([], employeesState);
-        // console.log(clone.sort(byField(sort, sortDirection)))
-        dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
- 
-    }, [sort, sortDirection])
 
     const sorting = ((objKey) => {
         if(objKey === sort){
             dispatch(setSortDirection())
         }
         dispatch(setTableSort(objKey))
-
-        // dispatch(createSortedArray(tempArray))
 
     })
 
@@ -80,10 +69,16 @@ export default function Table(props){
         }
     })
 
+
+    useEffect(()=>{
+        var clone = Object.assign([], employeesState);
+        dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
+ 
+    }, [sort, sortDirection])
+
     useEffect(()=>{
         var clone = Object.assign([], sortedArray);
         let arrayByPages = createSubarray(clone, paginCount)
-        // console.log(arrayByPages)
         dispatch(createPaginatedArray(arrayByPages))
     }, [sortedArray, paginCount])
     
@@ -93,23 +88,21 @@ export default function Table(props){
     return (
         <div>
 
-            <Button 
-                datatype='link' 
+            <Link 
                 to="/addemployee" 
-                bgColor="btn-primary"
-                addClass='color-blue'
-                value = {
-                    <FontAwesomeIcon icon={faUserPlus} />
+                className={
+                    actualTheme === 'theme-light' ?
+                    'btn btn-primary color-blue' :
+                    'btn btn-outline-dark color-blue'
                 }
             >
-                
-            </Button>
+                <FontAwesomeIcon icon={faUserPlus} />
+            </Link>
             <PaginCountSelect></PaginCountSelect>
             <table className="table-cont">
             <thead>
                     <tr>
                         { 
-                        // paginatedArray && actualPaginNumber ?
                         Object.keys(paginatedArray[actualPaginNumber][0]).map((objKey, index)=>(
                                 objKey === '_id' ||
                                 objKey === 'user' ||
@@ -126,7 +119,6 @@ export default function Table(props){
                                         <div className='text'>
                                         
                                             {langData[1][objKey]}
-                                            {/* {objKey} */}
                                         </div>
                                         
                                         {
@@ -142,13 +134,11 @@ export default function Table(props){
                                 
                                 
                             ))
-                            //  : null
                         }
                     </tr>
                 </thead>
                 <tbody>
                     { 
-                    // paginatedArray && actualPaginNumber ? 
                     paginatedArray[actualPaginNumber].map((emplObj, index)=>(
                         
                         <tr role='row' 
@@ -185,29 +175,27 @@ export default function Table(props){
                                 
                             ))}
                         <td>
-                            {/* <button type="button" className="btn btn-primary btn-sm"><FontAwesomeIcon icon={faPen} /></button> */}
                             <div className='but-cont'>
-                                <Button 
-                                    datatype='button' 
-                                    addClass='btn-sm color-blue'
-                                    bgColor="btn-primary"
-                                    value = {
-                                        <FontAwesomeIcon icon={faPen} />
+                                <button 
+                                    type='button' 
+                                    className={ actualTheme === 'theme-light' ?
+                                        'btn btn-sm btn-primary color-blue' :
+                                        'btn btn-sm btn-outline-dark color-blue'
                                     }
-                                ></Button>
-                                <Button 
-                                    datatype='button' 
-                                    addClass='btn-sm color-red'
-                                    bgColor="btn-danger"
-                                    value = {
-                                        <FontAwesomeIcon icon={faTrashCan} />
+                                >{<FontAwesomeIcon icon={faPen} />}</button>
+                                <button 
+                                    type='button' 
+                                    className={ actualTheme === 'theme-light' ?
+                                        'btn btn-sm btn-danger color-red' :
+                                        'btn btn-sm btn-outline-dark color-red'
                                     }
-                                ></Button>
+                                >
+                                    {<FontAwesomeIcon icon={faTrashCan} />}
+                                </button>
                             </div>
                         </td>
                         </tr>
                     )) 
-                    // : null
                 }
                     
                 </tbody>

@@ -51,7 +51,18 @@ const transcription = [
                 'state': 'State',
                 'zipcode': 'Zip code',
                 'department': 'Department'
-            }]
+                },
+                'Show',
+                'All',
+                'entries',
+                'Search',
+                'Showing',
+                'to',
+                'of',
+                'entries',
+                'Previous',
+                'Next'
+            ]
         }
     },
     {   lang: 'Français',
@@ -103,7 +114,18 @@ const transcription = [
                 'state': 'État',
                 'zipcode': 'Code postal',
                 'department': 'Département'
-            }]
+                },
+                'Montrer',
+                'Tout',
+                'entrées',
+                'Chercher',
+                'Montrer',
+                'à',
+                'de',
+                'entrées',
+                'Précédent',
+                'Prochain'
+            ]
         }
     }
 ]

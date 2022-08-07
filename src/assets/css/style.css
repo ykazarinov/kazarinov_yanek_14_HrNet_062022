@@ -10769,11 +10769,6 @@ header.theme-light .logo {
 header.theme-light label {
   color: gray;
 }
-header.theme-light .langselect {
-  background-color: white;
-  color: black;
-  border: solid 1px #b3b3b3;
-}
 header.theme-light .authcont-user-icon {
   background-color: #68b441;
   color: white;
@@ -10806,6 +10801,9 @@ footer.theme-light .lang-cont .langselect {
   padding: 0.2rem;
   margin-left: 0.3rem;
   border-radius: 5px;
+  background-color: white;
+  color: black;
+  border: solid 1px #b3b3b3;
 }
 
 .theme-light {
@@ -10820,8 +10818,16 @@ footer.theme-light .lang-cont .langselect {
 .theme-light .color-blue {
   color: white;
 }
+.theme-light .color-white {
+  color: white;
+}
 .theme-light .color-red {
   color: white;
+}
+.theme-light .paginselect {
+  background-color: white;
+  color: black;
+  border: solid 1px #b3b3b3;
 }
 .theme-light .switch {
   background-color: white;
@@ -10962,11 +10968,6 @@ header.theme-dark .logo {
 header.theme-dark label {
   color: #b3b3b3;
 }
-header.theme-dark .langselect {
-  background-color: #4d4d4d;
-  color: white;
-  border: solid 1px transparent;
-}
 header.theme-dark .authcont-user-icon {
   background-color: #68b441;
   color: white;
@@ -10999,6 +11000,9 @@ footer.theme-dark .lang-cont .langselect {
   padding: 0.2rem;
   margin-left: 0.3rem;
   border-radius: 5px;
+  background-color: #4d4d4d;
+  color: white;
+  border: solid 1px transparent;
 }
 
 .theme-dark {
@@ -11013,8 +11017,16 @@ footer.theme-dark .lang-cont .langselect {
 .theme-dark .color-blue {
   color: #0d6efd;
 }
+.theme-dark .color-white {
+  color: white;
+}
 .theme-dark .color-red {
   color: #dc3545;
+}
+.theme-dark .paginselect {
+  background-color: #4d4d4d;
+  color: white;
+  border: solid 1px transparent;
 }
 .theme-dark .switch {
   background-color: #333333;
@@ -11462,7 +11474,7 @@ legend.scheduler-border {
 }
 
 .table-cont {
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   max-width: 720px;
   overflow: scroll;
 }
@@ -11524,6 +11536,17 @@ legend.scheduler-border {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.pagination {
+  margin-bottom: 2rem;
+}
+
+.paginselect {
+  padding: 0.2rem;
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  border-radius: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */

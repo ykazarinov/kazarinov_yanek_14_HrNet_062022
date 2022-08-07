@@ -1,30 +1,60 @@
-import Select from "../../components/Select/select"
-import Calendar from "../../components/Calendar/calendar"
-import OutsideAlerter from "../../components/OutsideAlerter/outsidealerter";
-import ErrorMessage from "../../components/ErrorMessage/errormessage"
+import Select from "../components/select"
+import Calendar from "../components/calendar"
+import OutsideAlerter from "../components/outsidealerter";
+import ErrorMessage from "../components/errormessage"
 
 import { Navigate } from 'react-router-dom';
 
-import { setClose1, setClose2 } from "../../slices/calendar.slice";
-import { setCloseSelect1, setCloseSelect2 } from "../../slices/select.slice";
-import { setEmployee } from "../../slices/employee.slice";
+import { setClose1, setClose2 } from "../slices/calendar.slice";
+import { setCloseSelect1, setCloseSelect2 } from "../slices/select.slice";
+import { setEmployee } from "../slices/employee.slice";
+import { setSortDirectionDefault } from "../slices/getAllEmployees.slice";
 
-import { transcription } from '../../app.config';
+import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { byField } from "../components/table";
+import { useEffect } from "react";
 
 const stateList = ['', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
 const depList = ['', '62de9795bbd221693ca401d4', 'item 2', 'item 3']
 
-export default function Home(){
+export default function AddEmployee(){
     const dispatch = useDispatch();
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
     const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
 
     const message = useSelector((state) => state.message);
-
+    const {actualTheme} = useSelector((state) => state.theme)
     const langData = transcription.find(lng => lng.lang === currentLang).data.addemployee
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { success } = useSelector((state) => state.newEmployee);
+    const {employeesState} = useSelector((state)=>state.allEmployees)
+    const {sort} = useSelector((state)=>state.allEmployees)
+    const {sortDirection} = useSelector((state)=>state.allEmployees)
+
+
+    useEffect(()=>{
+        var clone = Object.assign([], employeesState);
+        dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
+ 
+    }, [sort, sortDirection])
+
+    const createSortedArray = ((array)=>{
+        return {
+            type: "allEmployees/setSortedData",
+            payload: array
+        }
+    })
+
+    const sortDefault = ((sort)=>{
+        return {
+            type: "allEmployees/setSort",
+            payload: sort
+        }
+    })
+
+
 
     const changeDateFormatToBackEnd = (dateIn) =>{
         let day = dateIn.substr(0, 2)
@@ -54,6 +84,8 @@ export default function Home(){
         }
         console.log(formValues)
         dispatch(setEmployee( formValues ))
+        dispatch(sortDefault('createdAt'))
+        dispatch(setSortDirectionDefault())
 
         
     };
@@ -204,8 +236,26 @@ export default function Home(){
                            
                         </div>
                         <div className="col-12 button-container">
-                            <button type="submit" className="btn btn-primary btn-lg">{langData[11]}</button>
-                            <button type="button" className="btn btn-dark btn-lg">{langData[12]}</button>
+                            <button 
+                                type="submit" 
+                                className={
+                                    actualTheme === 'theme-light' ?
+                                    'btn btn-lg btn-primary color-blue' :
+                                    'btn btn-lg btn-outline-dark color-blue'
+                                }
+                            >
+                                {langData[11]}
+                            </button>
+                            <Link 
+                                to='/employees'
+                                className={
+                                    actualTheme === 'theme-light' ?
+                                    'btn btn-lg btn-dark color-white' :
+                                    'btn btn-lg btn-outline-dark color-white'
+                                }
+                            >
+                                {langData[12]}
+                            </Link>
                         </div>
                     </div>
                 </div>

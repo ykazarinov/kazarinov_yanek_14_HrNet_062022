@@ -1,10 +1,10 @@
-import Table from '../../components/Table/table'
+import Table from '../components/table'
 import { Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { setSuccessFalse } from "../../slices/employee.slice";
+import { setSuccessFalse } from "../slices/employee.slice";
 import { useEffect } from 'react';
-import { transcription } from '../../app.config';
-import { getAllEmployees } from "../../slices/getAllEmployees.slice";
+import { transcription } from '../app.config';
+import { getAllEmployees } from "../slices/getAllEmployees.slice";
 
 export default function Employees(){
     const dispatch = useDispatch();

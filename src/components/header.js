@@ -5,9 +5,9 @@ import { faIdCard } from '@fortawesome/free-solid-svg-icons'
 
 import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../slices/auth";
+import { logout } from "../slices/auth";
 
-import { transcription } from '../../app.config';
+import { transcription } from '../app.config';
 
 
 export default function Headers(){

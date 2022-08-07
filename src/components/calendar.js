@@ -5,18 +5,18 @@ import { faCalendarDays, faAngleLeft, faAngleRight, faHouse } from '@fortawesome
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { setIsOpen1, setIsOpen2 } from "../../slices/calendar.slice";
-import { setOpen1, setOpen2 } from "../../slices/calendar.slice";
-import { setCurrentMonth1, setCurrentMonth2 } from "../../slices/calendar.slice";
-import { setChoosedDay1, setChoosedDay2 } from "../../slices/calendar.slice";
-import { setClose1, setClose2 } from "../../slices/calendar.slice";
-import { setInputDate1, setInputDate2 } from "../../slices/calendar.slice";
+import { setIsOpen1, setIsOpen2 } from "../slices/calendar.slice";
+import { setOpen1, setOpen2 } from "../slices/calendar.slice";
+import { setCurrentMonth1, setCurrentMonth2 } from "../slices/calendar.slice";
+import { setChoosedDay1, setChoosedDay2 } from "../slices/calendar.slice";
+import { setClose1, setClose2 } from "../slices/calendar.slice";
+import { setInputDate1, setInputDate2 } from "../slices/calendar.slice";
 import { useEffect } from "react";
 
 // import { Field } from "formik";
 
-import{today} from '../../app.config'
-import {conf} from '../../app.config.js'
+import{today} from '../app.config'
+import {conf} from '../app.config.js'
 
 const OpenCalendarList = styled('div')`
     display: block;`

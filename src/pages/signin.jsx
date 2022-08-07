@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { login } from "../../slices/auth";
-import { clearMessage } from "../../slices/message";
-import { transcription } from '../../app.config';
+import { login } from "../slices/auth";
+import { clearMessage } from "../slices/message";
+import { transcription } from '../app.config';
+import {getAllEmployees} from '../slices/getAllEmployees.slice';
 
 const Login = (props) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -21,6 +22,12 @@ const Login = (props) => {
     dispatch(clearMessage());
     document.title = "HRNet - Sign-in Page"
   }, [dispatch]);
+
+  useEffect(()=>{
+   
+      dispatch(getAllEmployees())
+   
+  }, [login])
 
   const initialValues = {
     email: "",
@@ -43,8 +50,10 @@ const Login = (props) => {
   };
 
   if (isLoggedIn) {
+
     return <Navigate to="/employees" />;
   }
+
 
 
 

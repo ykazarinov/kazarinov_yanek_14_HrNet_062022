@@ -1,6 +1,6 @@
-import Switch from "../Switch/switch"
+import Switch from "./switch"
 import { useSelector } from "react-redux";
-import LangSelect from '../LangSelect/langselect'
+import LangSelect from './langselect'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlobe } from '@fortawesome/free-solid-svg-icons'

@@ -1,33 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
+import AddEmployee from '../pages/addemployee';
+import Employees from '../pages/employees';
+import Error from '../pages/error';
+import Login from '../pages/signin';
 
-
-
-import Home from '../pages/Home/home';
-import Employees from '../pages/Employees/employees';
-import Error from '../pages/Error/error';
-
-import Header from '../components/Header/header'
-import Footer from '../components/Footer/footer'
-
-import Login from '../pages/Signin/signin';
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 function MainLayoutRoutes() {
     return (
         <React.Fragment >
-           
-          
-                <Header />
-                <Routes>
-                    <Route exact path="/" element={<Login />} />
-                    <Route exact path="/addemployee"  element={<Home />} />
-                    <Route exact path="/employees" element={<Employees />} />
-                    <Route path='*' element={<Error />} />
-                </Routes>
-                <Footer />
-          
-            
+            <Header />
+            <Routes>
+                <Route exact path="/" element={<Login />} />
+                <Route exact path="/addemployee"  element={<AddEmployee />} />
+                <Route exact path="/employees" element={<Employees />} />
+                <Route path='*' element={<Error />} />
+            </Routes>
+            <Footer />
         </React.Fragment>
   )
 }

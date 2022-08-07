@@ -12,7 +12,7 @@ import {
     setActualItem2,
     setIsOpen1, 
     setIsOpen2,
-} from "../../slices/select.slice";
+} from "../slices/select.slice";
 
 const OpenSelectList = styled('ul')`
     display: block;`

@@ -1,6 +1,6 @@
 import React from 'react';
-import Lang from '../Lang/lang'
-import { transcription } from '../../app.config';
+import Lang from './lang'
+import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
 
 
