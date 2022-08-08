@@ -8,6 +8,7 @@ import authReducer from "./slices/auth";
 import messageReducer from "./slices/message";
 import newEmployeeReducer from "./slices/employee.slice";
 import allEmployeesReducer from "./slices/getAllEmployees.slice"
+import delEmployeeReducer from "./slices/deleteEmployee.slice"
 
 
 const reducer = {
@@ -21,6 +22,7 @@ const reducer = {
   message: messageReducer,
   newEmployee: newEmployeeReducer,
   allEmployees: allEmployeesReducer,
+  delEmployee: delEmployeeReducer,
 
   
 }

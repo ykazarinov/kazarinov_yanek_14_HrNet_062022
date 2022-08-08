@@ -43,6 +43,14 @@ const initialState = {
     paginCount: 5,
 }
 
+function byField(field, sortDirection) {
+    let result
+    sortDirection === 'ascending' ?
+    result = ((a, b) => a[field] > b[field] ? 1 : -1) :
+    result = ((a, b) => b[field] > a[field] ? 1 : -1)
+    return result
+}
+
 const createSubarray = ((array, size)=>{
     let subarray = [];
     for (let i = 0; i <Math.ceil(array.length/size); i++){
@@ -89,10 +97,11 @@ const allEmployeesSlice = createSlice({
     [getAllEmployees.fulfilled]: (state, action) => {
         state.loading = false
         state.employeesState = action.payload
-        state.sortedArray = state.employeesState
-        var clone = Object.assign([], state.sortedArray);
-        state.paginatedArray = createSubarray(clone, state.paginCount)
-        // state.paginatedArray = state.employeesState
+        
+        var clone = Object.assign([], state.employeesState);
+        state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
+        state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
+        
         state.success = true
     },
     [getAllEmployees.rejected]: (state) => {

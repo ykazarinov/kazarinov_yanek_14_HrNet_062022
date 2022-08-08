@@ -7,6 +7,9 @@ import PaginCountSelect from './pagincountselect';
 import Pagination from './pagination';
 import { useEffect } from 'react';
 import { Link } from "react-router-dom";
+import { deleteEmployee } from "../slices/deleteEmployee.slice";
+import { getAllEmployees } from "../slices/getAllEmployees.slice";
+import { setSuccessFalse } from '../slices/deleteEmployee.slice';
 
 
 export function byField(field, sortDirection) {
@@ -30,6 +33,8 @@ export default function Table(props){
     const {actualTheme} = useSelector((state) => state.theme)
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
+    const {success} = useSelector((state)=>state.delEmployee)
+
     const setTableSort = ((key)=>{
         return {
             type: "allEmployees/setSort",
@@ -68,6 +73,11 @@ export default function Table(props){
             payload: array
         }
     })
+
+    useEffect(()=>{
+        dispatch(setSuccessFalse())
+        dispatch(getAllEmployees())
+    }, [success])
 
 
     useEffect(()=>{
@@ -183,15 +193,18 @@ export default function Table(props){
                                         'btn btn-sm btn-outline-dark color-blue'
                                     }
                                 >{<FontAwesomeIcon icon={faPen} />}</button>
-                                <button 
-                                    type='button' 
-                                    className={ actualTheme === 'theme-light' ?
-                                        'btn btn-sm btn-danger color-red' :
-                                        'btn btn-sm btn-outline-dark color-red'
-                                    }
-                                >
-                                    {<FontAwesomeIcon icon={faTrashCan} />}
-                                </button>
+                                {/* <form onSubmit={(e) => handleSubmit(emplObj._id, e)}> */}
+                                    <button 
+                                        onClick={()=>dispatch(deleteEmployee(emplObj._id))}
+                                        type='submit' 
+                                        className={ actualTheme === 'theme-light' ?
+                                            'btn btn-sm btn-danger color-red' :
+                                            'btn btn-sm btn-outline-dark color-red'
+                                        }
+                                    >
+                                        {<FontAwesomeIcon icon={faTrashCan} />}
+                                    </button>
+                                {/* </form> */}
                             </div>
                         </td>
                         </tr>

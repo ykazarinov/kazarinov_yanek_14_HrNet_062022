@@ -8,13 +8,11 @@ import { Navigate } from 'react-router-dom';
 import { setClose1, setClose2 } from "../slices/calendar.slice";
 import { setCloseSelect1, setCloseSelect2 } from "../slices/select.slice";
 import { setEmployee } from "../slices/employee.slice";
-import { setSortDirectionDefault } from "../slices/getAllEmployees.slice";
 
 import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { byField } from "../components/table";
-import { useEffect } from "react";
+
 
 const stateList = ['', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
 const depList = ['', '62de9795bbd221693ca401d4', 'item 2', 'item 3']
@@ -29,32 +27,6 @@ export default function AddEmployee(){
     const langData = transcription.find(lng => lng.lang === currentLang).data.addemployee
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { success } = useSelector((state) => state.newEmployee);
-    const {employeesState} = useSelector((state)=>state.allEmployees)
-    const {sort} = useSelector((state)=>state.allEmployees)
-    const {sortDirection} = useSelector((state)=>state.allEmployees)
-
-
-    useEffect(()=>{
-        var clone = Object.assign([], employeesState);
-        dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
- 
-    }, [sort, sortDirection])
-
-    const createSortedArray = ((array)=>{
-        return {
-            type: "allEmployees/setSortedData",
-            payload: array
-        }
-    })
-
-    const sortDefault = ((sort)=>{
-        return {
-            type: "allEmployees/setSort",
-            payload: sort
-        }
-    })
-
-
 
     const changeDateFormatToBackEnd = (dateIn) =>{
         let day = dateIn.substr(0, 2)
@@ -82,10 +54,9 @@ export default function AddEmployee(){
             department: e.target.elements.department.value, 
             
         }
-        console.log(formValues)
+
         dispatch(setEmployee( formValues ))
-        dispatch(sortDefault('createdAt'))
-        dispatch(setSortDirectionDefault())
+
 
         
     };
