@@ -10829,6 +10829,11 @@ footer.theme-light .lang-cont .langselect {
   color: black;
   border: solid 1px #b3b3b3;
 }
+.theme-light .search-input {
+  background-color: white;
+  color: black;
+  border: solid 1px #b3b3b3;
+}
 .theme-light .switch {
   background-color: white;
   padding: 3px;
@@ -11024,6 +11029,11 @@ footer.theme-dark .lang-cont .langselect {
   color: #dc3545;
 }
 .theme-dark .paginselect {
+  background-color: #4d4d4d;
+  color: white;
+  border: solid 1px transparent;
+}
+.theme-dark .search-input {
   background-color: #4d4d4d;
   color: white;
   border: solid 1px transparent;
@@ -11547,6 +11557,20 @@ legend.scheduler-border {
   margin-left: 0.3rem;
   margin-right: 0.3rem;
   border-radius: 5px;
+}
+
+.search-input {
+  padding: 0.2rem;
+  margin-left: 0.3rem;
+  margin-right: 0;
+  border-radius: 5px;
+}
+
+.above-table {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 /*# sourceMappingURL=style.css.map */

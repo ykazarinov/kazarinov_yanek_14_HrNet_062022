@@ -41,6 +41,8 @@ const initialState = {
     paginatedArray : [],
     actualPaginNumber: 0,
     paginCount: 5,
+    searchResult: [],
+    isSearch: false
 }
 
 function byField(field, sortDirection) {
@@ -88,6 +90,21 @@ const allEmployeesSlice = createSlice({
          },
          setPaginCount: (state, action) =>{
             state.paginCount = action.payload
+         },
+         setSearchResult: (state, action) => {
+            state.searchResult = action.payload
+            var clone = Object.assign([], state.searchResult);
+            state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
+            state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
+         },
+         setIsSearch: (state, action) => {
+            state.isSearch = action.payload
+            if(state.isSearch === false){
+                state.searchResult = Object.assign([], state.employeesState);
+                var clone = Object.assign([], state.searchResult);
+                state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
+                state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
+            }
          }
 
 
@@ -98,9 +115,12 @@ const allEmployeesSlice = createSlice({
         state.loading = false
         state.employeesState = action.payload
         
-        var clone = Object.assign([], state.employeesState);
+        state.searchResult = Object.assign([], state.employeesState);
+        var clone = Object.assign([], state.searchResult);
         state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
         state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
+
+        
         
         state.success = true
     },
@@ -114,6 +134,16 @@ const allEmployeesSlice = createSlice({
   },
 });
 const { reducer, actions } = allEmployeesSlice;
-export const { setSort, setSortDirection, setSortedData, setPaginatedData, setActualPaginNumber, setPaginCount, setSortDirectionDefault } = actions
+export const { 
+    setSort, 
+    setSortDirection, 
+    setSortedData, 
+    setPaginatedData, 
+    setActualPaginNumber, 
+    setPaginCount, 
+    setSortDirectionDefault,
+    setSearchResult,
+    setIsSearch
+} = actions
 export default reducer;
 

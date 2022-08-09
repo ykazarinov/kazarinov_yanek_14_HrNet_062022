@@ -61,7 +61,8 @@ const transcription = [
                 'of',
                 'entries',
                 'Previous',
-                'Next'
+                'Next',
+                'The search returned no results.',
             ]
         }
     },
@@ -124,7 +125,8 @@ const transcription = [
                 'de',
                 'entrées',
                 'Précédent',
-                'Prochain'
+                'Prochain',
+                'La recherche n\'a donné aucun résultat.',
             ]
         }
     }

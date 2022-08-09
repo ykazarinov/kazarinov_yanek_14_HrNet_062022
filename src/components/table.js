@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { deleteEmployee } from "../slices/deleteEmployee.slice";
 import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import { setSuccessFalse } from '../slices/deleteEmployee.slice';
+import Search from './search';
 
 
 export function byField(field, sortDirection) {
@@ -30,6 +31,8 @@ export default function Table(props){
     const {employeesState} = useSelector((state)=>state.allEmployees)
     const {actualPaginNumber} = useSelector((state)=>state.allEmployees)
     const {paginatedArray} = useSelector((state)=>state.allEmployees)
+    const {searchResult} = useSelector((state)=>state.allEmployees)
+    const {isSearch} = useSelector((state)=>state.allEmployees)
     const {actualTheme} = useSelector((state) => state.theme)
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
@@ -74,14 +77,23 @@ export default function Table(props){
         }
     })
 
+
+
     useEffect(()=>{
         dispatch(setSuccessFalse())
         dispatch(getAllEmployees())
+        // dispatch(setSearchResult())
     }, [success])
 
 
     useEffect(()=>{
-        var clone = Object.assign([], employeesState);
+        var clone
+   
+            clone = Object.assign([], searchResult);
+
+
+
+        
         dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
  
     }, [sort, sortDirection])
@@ -92,23 +104,28 @@ export default function Table(props){
         dispatch(createPaginatedArray(arrayByPages))
     }, [sortedArray, paginCount])
     
-    
+
 
 
     return (
         <div>
-
-            <Link 
-                to="/addemployee" 
-                className={
-                    actualTheme === 'theme-light' ?
-                    'btn btn-primary color-blue' :
-                    'btn btn-outline-dark color-blue'
-                }
-            >
-                <FontAwesomeIcon icon={faUserPlus} />
-            </Link>
-            <PaginCountSelect></PaginCountSelect>
+            <section className='above-table'>
+                <section className='above-tabble-1'>
+                    <Link 
+                        to="/addemployee" 
+                        className={
+                            actualTheme === 'theme-light' ?
+                            'btn btn-primary color-blue' :
+                            'btn btn-outline-dark color-blue'
+                        }
+                    >
+                        <FontAwesomeIcon icon={faUserPlus} />
+                    </Link>
+                    <PaginCountSelect></PaginCountSelect>
+                </section>
+                <Search></Search>
+            </section>
+            {searchResult.length > 0 ?
             <table className="table-cont">
             <thead>
                     <tr>
@@ -214,6 +231,11 @@ export default function Table(props){
                 </tbody>
             
             </table>
+            : 
+            <div class="alert alert-secondary" role="alert">
+                {langData[12]}
+            </div>
+            }
             <Pagination></Pagination>
         </div>
     )

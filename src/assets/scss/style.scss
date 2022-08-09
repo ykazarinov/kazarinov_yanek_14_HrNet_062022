@@ -156,6 +156,11 @@ $themes: (
             color: $textContrast;
             border: solid 1px $borderInput;
         }
+        .search-input{
+            background-color: $bgInput;
+            color: $textContrast;
+            border: solid 1px $borderInput;
+        }
 
         .switch{
             $borderWidth : 3px;
@@ -769,3 +774,18 @@ legend.scheduler-border {
     margin-right: .3rem;
     border-radius: 5px;
 }
+
+.search-input{
+    padding: .2rem;
+    margin-left: .3rem;
+    margin-right: 0;
+    border-radius: 5px;
+}
+
+.above-table{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+

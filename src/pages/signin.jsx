@@ -23,11 +23,13 @@ const Login = (props) => {
     document.title = "HRNet - Sign-in Page"
   }, [dispatch]);
 
-  useEffect(()=>{
+  // useEffect(()=>{
+  //     if(isLoggedIn){
+  //       dispatch(getAllEmployees())
+  //     }
+      
    
-      dispatch(getAllEmployees())
-   
-  }, [login])
+  // }, [isLoggedIn])
 
   const initialValues = {
     email: "",
