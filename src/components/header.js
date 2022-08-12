@@ -20,9 +20,9 @@ export default function Headers(){
     const langData = transcription.find(lng => lng.lang === currentLang).data.header
 
     // function for logout
-    const myLogout = () => {
-        dispatch(logout())
-    }
+    // const myLogout = () => {
+    //     dispatch(logout())
+    // }
     
     const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
     return (
@@ -50,7 +50,7 @@ export default function Headers(){
                                     {user.email.substr(0, 1)}
                                 </Link>
                 
-                                <button  className="authcont-text" onClick={myLogout}>
+                                <button  className="authcont-text" onClick={()=>dispatch(logout())}>
                                     <FontAwesomeIcon icon={faSignOut} />
                                     {langData[1]} 
                                 </button>

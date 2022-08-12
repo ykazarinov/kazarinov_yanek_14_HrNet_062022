@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 import getAllEmployeesService from "../services/getAllEmployees.service";
+import {searchPhrase} from '../resurces/searchphrase'
 
 // createAsyncThunk for middleware for update data of User's Profil 
 export const getAllEmployees = createAsyncThunk(
@@ -42,7 +43,8 @@ const initialState = {
     actualPaginNumber: 0,
     paginCount: 5,
     searchResult: [],
-    isSearch: false
+    isSearch: false,
+    searchValue: ''
 }
 
 function byField(field, sortDirection) {
@@ -59,6 +61,22 @@ const createSubarray = ((array, size)=>{
         subarray[i] = array.slice((i*size), (i*size) + size);
     }
     return subarray;
+})
+
+
+const arrayProcessingAfterSearch = ((state)=>{
+    let clone = Object.assign([], state.searchResult);
+    state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
+    state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
+   // If search result a small (for just first pagin page) 
+   // but actual pagin number is 2 and more, then
+   // we downgrade this number 
+    if(!state.paginatedArray[state.actualPaginNumber]){
+        if(state.actualPaginNumber >= 1){
+            state.actualPaginNumber --
+        }
+         
+    }
 })
 
 // slice, which content reducers and actions for data of the User's Profil and status of loading 
@@ -93,18 +111,21 @@ const allEmployeesSlice = createSlice({
          },
          setSearchResult: (state, action) => {
             state.searchResult = action.payload
-            var clone = Object.assign([], state.searchResult);
-            state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
-            state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
+            arrayProcessingAfterSearch(state)
          },
          setIsSearch: (state, action) => {
             state.isSearch = action.payload
             if(state.isSearch === false){
                 state.searchResult = Object.assign([], state.employeesState);
-                var clone = Object.assign([], state.searchResult);
+                let clone = Object.assign([], state.searchResult);
                 state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
                 state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
+               
             }
+            
+         },
+         setSearchValue: (state, action) => {
+            state.searchValue = action.payload
          }
 
 
@@ -114,9 +135,17 @@ const allEmployeesSlice = createSlice({
     [getAllEmployees.fulfilled]: (state, action) => {
         state.loading = false
         state.employeesState = action.payload
+        if(state.searchValue !== ''){
+            let serchRes = searchPhrase(state.searchValue, state.employeesState)
+            state.isSearch = serchRes.isSearch
+            state.searchResult = serchRes.searchResult
+            arrayProcessingAfterSearch(state)
+           
+        }else{
+            state.searchResult = Object.assign([], state.employeesState);
+        }
         
-        state.searchResult = Object.assign([], state.employeesState);
-        var clone = Object.assign([], state.searchResult);
+        let clone = Object.assign([], state.searchResult);
         state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
         state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
 
@@ -143,7 +172,8 @@ export const {
     setPaginCount, 
     setSortDirectionDefault,
     setSearchResult,
-    setIsSearch
+    setIsSearch,
+    setSearchValue
 } = actions
 export default reducer;
 

@@ -11,7 +11,7 @@ import Footer from '../components/footer'
 
 function MainLayoutRoutes() {
     return (
-        <React.Fragment >
+        <>
             <Header />
             <Routes>
                 <Route exact path="/" element={<Login />} />
@@ -20,7 +20,7 @@ function MainLayoutRoutes() {
                 <Route path='*' element={<Error />} />
             </Routes>
             <Footer />
-        </React.Fragment>
+        </>
   )
 }
 

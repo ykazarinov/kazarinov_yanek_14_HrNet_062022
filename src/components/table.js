@@ -12,7 +12,6 @@ import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import { setSuccessFalse } from '../slices/deleteEmployee.slice';
 import Search from './search';
 
-
 export function byField(field, sortDirection) {
     let result
     sortDirection === 'ascending' ?
@@ -22,21 +21,20 @@ export function byField(field, sortDirection) {
 }
 
 export default function Table(props){
-    // console.log(props.data)
     const dispatch = useDispatch()
     const {sort} = useSelector((state)=>state.allEmployees)
     const {sortDirection} = useSelector((state)=>state.allEmployees)
     const {sortedArray} = useSelector((state)=>state.allEmployees)
     const {paginCount} = useSelector((state)=>state.allEmployees)
-    const {employeesState} = useSelector((state)=>state.allEmployees)
+
     const {actualPaginNumber} = useSelector((state)=>state.allEmployees)
     const {paginatedArray} = useSelector((state)=>state.allEmployees)
     const {searchResult} = useSelector((state)=>state.allEmployees)
-    const {isSearch} = useSelector((state)=>state.allEmployees)
     const {actualTheme} = useSelector((state) => state.theme)
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
     const {success} = useSelector((state)=>state.delEmployee)
+
 
     const setTableSort = ((key)=>{
         return {
@@ -78,28 +76,22 @@ export default function Table(props){
     })
 
 
-
+    //after delete
     useEffect(()=>{
         dispatch(setSuccessFalse())
         dispatch(getAllEmployees())
-        // dispatch(setSearchResult())
     }, [success])
 
 
     useEffect(()=>{
-        var clone
-   
-            clone = Object.assign([], searchResult);
+        let clone = Object.assign([], searchResult);
 
-
-
-        
         dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
  
     }, [sort, sortDirection])
 
     useEffect(()=>{
-        var clone = Object.assign([], sortedArray);
+        const clone = Object.assign([], sortedArray);
         let arrayByPages = createSubarray(clone, paginCount)
         dispatch(createPaginatedArray(arrayByPages))
     }, [sortedArray, paginCount])
@@ -130,7 +122,7 @@ export default function Table(props){
             <thead>
                     <tr>
                         { 
-                        Object.keys(paginatedArray[actualPaginNumber][0]).map((objKey, index)=>(
+                        Object.keys(paginatedArray[0][0]).map((objKey, index)=>(
                                 objKey === '_id' ||
                                 objKey === 'user' ||
                                 objKey === 'createdAt' ||
@@ -166,7 +158,7 @@ export default function Table(props){
                 </thead>
                 <tbody>
                     { 
-                    paginatedArray[actualPaginNumber].map((emplObj, index)=>(
+                        paginatedArray[actualPaginNumber].map((emplObj, index)=>(
                         
                         <tr role='row' 
                             key={`row` + index}
@@ -210,7 +202,7 @@ export default function Table(props){
                                         'btn btn-sm btn-outline-dark color-blue'
                                     }
                                 >{<FontAwesomeIcon icon={faPen} />}</button>
-                                {/* <form onSubmit={(e) => handleSubmit(emplObj._id, e)}> */}
+                               
                                     <button 
                                         onClick={()=>dispatch(deleteEmployee(emplObj._id))}
                                         type='submit' 
@@ -221,10 +213,11 @@ export default function Table(props){
                                     >
                                         {<FontAwesomeIcon icon={faTrashCan} />}
                                     </button>
-                                {/* </form> */}
+                               
                             </div>
                         </td>
                         </tr>
+                        
                     )) 
                 }
                     
@@ -232,7 +225,7 @@ export default function Table(props){
             
             </table>
             : 
-            <div class="alert alert-secondary" role="alert">
+            <div className="alert alert-secondary" role="alert">
                 {langData[12]}
             </div>
             }

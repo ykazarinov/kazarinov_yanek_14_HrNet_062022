@@ -12,10 +12,10 @@ const subarrayCreator = ((myArray, size)=>{
 })
 
 const createArrayOfDates = ((year, month)=>{
-  var myDate = new Date(year, month, 1)
-  var myMonth = myDate.getMonth() != 0 ? myDate.getMonth() : 12
-  var end = new Date(myDate.getFullYear(), myMonth, 0).getDate(); 
-  var result = [];
+  let myDate = new Date(year, month, 1)
+  let myMonth = myDate.getMonth() != 0 ? myDate.getMonth() : 12
+  let end = new Date(myDate.getFullYear(), myMonth, 0).getDate(); 
+  let result = [];
   let firstDayOfCurrentMonth
   // 1. create array of dates
   for(let i = 1; i <= end; i++){

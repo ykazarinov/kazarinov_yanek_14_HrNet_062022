@@ -50,6 +50,8 @@ const delEmployeeSlice = createSlice({
     [deleteEmployee.fulfilled]: (state, action) => {
         state.loading = false
         state.success = action.payload
+       
+        
 
         
     },
