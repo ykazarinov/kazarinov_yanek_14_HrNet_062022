@@ -8,14 +8,17 @@ import { Navigate } from 'react-router-dom';
 import { setClose1, setClose2 } from "../slices/calendar.slice";
 import { setCloseSelect1, setCloseSelect2 } from "../slices/select.slice";
 import { setEmployee } from "../slices/employee.slice";
+import {getStates} from "../slices/states.slice"
+import {getDepartments} from "../slices/departments.slice"
 
 import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 
-const stateList = ['', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
-const depList = ['', '62de9795bbd221693ca401d4', 'item 2', 'item 3']
+// const stateList = ['', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
+// const depList = ['', '62de9795bbd221693ca401d4', 'item 2', 'item 3']
 
 export default function AddEmployee(){
     const dispatch = useDispatch();
@@ -27,6 +30,9 @@ export default function AddEmployee(){
     const langData = transcription.find(lng => lng.lang === currentLang).data.addemployee
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { success } = useSelector((state) => state.newEmployee);
+
+    const {statesList} = useSelector((state) => state.states)
+    const {departmentsList} = useSelector((state) => state.departments)
 
     const changeDateFormatToBackEnd = (dateIn) =>{
         let day = dateIn.substr(0, 2)
@@ -49,9 +55,9 @@ export default function AddEmployee(){
             startday: changeDateFormatToBackEnd(e.target.elements.startday.value), 
             street: e.target.elements.street.value, 
             city: e.target.elements.city.value, 
-            state: e.target.elements.state.value, 
+            state: statesList.find(val => val.stateName === e.target.elements.state.value)._id, 
             zipcode: e.target.elements.zipcode.value, 
-            department: e.target.elements.department.value, 
+            department: departmentsList.find(val => val.departmentName === e.target.elements.department.value)._id, 
             
         }
 
@@ -60,6 +66,14 @@ export default function AddEmployee(){
 
         
     };
+
+    useEffect(()=>{
+        dispatch(getStates())
+        dispatch(getDepartments())
+       
+    }, [])
+
+
 
     if (!isLoggedIn) {
         return <Navigate to="/" />;
@@ -180,11 +194,12 @@ export default function AddEmployee(){
                                 <div className="address col-6">
                                         <label htmlFor="state">{langData[8]}</label>
                                         <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect1())}>
-                                            <Select fieldName='state' data={stateList} calNum={1} prefix='select'></Select>
+                                            <Select fieldName='state' data={statesList} calNum={1} prefix='select'></Select>
                                         </OutsideAlerter>
                                         {Array.isArray(message) && (
                                             <ErrorMessage myParam="state"></ErrorMessage>
                                         )}
+                                      
                                        
                                 </div>
                                 <div className="col-6">
@@ -199,7 +214,7 @@ export default function AddEmployee(){
                         <div className="address col-6">
                             <label htmlFor="department">{langData[10]}</label>
                             <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect2())}>
-                                <Select fieldName='department' data={depList} calNum={2} prefix='select'></Select>
+                                <Select fieldName='department' data={departmentsList} calNum={2} prefix='select'></Select>
                             </OutsideAlerter>
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="department"></ErrorMessage>

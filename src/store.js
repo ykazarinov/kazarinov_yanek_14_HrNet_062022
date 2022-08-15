@@ -9,7 +9,8 @@ import messageReducer from "./slices/message";
 import newEmployeeReducer from "./slices/employee.slice";
 import allEmployeesReducer from "./slices/getAllEmployees.slice"
 import delEmployeeReducer from "./slices/deleteEmployee.slice"
-
+import statesReducer from "./slices/states.slice"
+import departmentsReducer from "./slices/departments.slice"
 
 const reducer = {
   calendarReducer1: calendarReducer1,
@@ -23,6 +24,8 @@ const reducer = {
   newEmployee: newEmployeeReducer,
   allEmployees: allEmployeesReducer,
   delEmployee: delEmployeeReducer,
+  states: statesReducer,
+  departments: departmentsReducer
 
   
 }

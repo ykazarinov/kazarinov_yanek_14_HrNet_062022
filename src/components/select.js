@@ -66,9 +66,14 @@ export default function Select( props ){
         {isOpen ?
         <OpenSelectList>
             {props.data.map && props.data.map((item, index)=>
-                (<li key={index} onClick={()=>dispatch(changeItem(item))}>{item}</li>)
+                ( props.calNum === 1 ?
+                <li key={index} onClick={()=>dispatch(changeItem(item.stateName))}>{item.stateName}</li>
+                : <li key={index} onClick={()=>dispatch(changeItem(item.departmentName))}>{item.departmentName}</li>
+                )
+                
             )}
         </OpenSelectList>
+       
         : <CloseSelectList></CloseSelectList>
         }
     </div>
