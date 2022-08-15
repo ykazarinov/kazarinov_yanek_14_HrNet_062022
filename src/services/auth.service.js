@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:4000/auth/login";
+import {API_REST_URL} from '../app.config'
+const API_URL = API_REST_URL + "/auth/login";
 
 // services for login and logout request by the axios
 

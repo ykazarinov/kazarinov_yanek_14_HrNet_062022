@@ -1,3 +1,4 @@
+const API_REST_URL = 'http://localhost:4000'
 const today = new Date()
 const conf = {employeeMinAge: 18,};
 const transcription = [
@@ -132,4 +133,4 @@ const transcription = [
     }
 ]
 
-export { today, conf, transcription };
+export { API_REST_URL, today, conf, transcription };
