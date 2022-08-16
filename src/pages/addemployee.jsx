@@ -29,7 +29,7 @@ export default function AddEmployee(){
     const {actualTheme} = useSelector((state) => state.theme)
     const langData = transcription.find(lng => lng.lang === currentLang).data.addemployee
     const { isLoggedIn } = useSelector((state) => state.auth);
-    const { success } = useSelector((state) => state.newEmployee);
+    const { createEmployeeSuccess } = useSelector((state) => state.newEmployee);
 
     const {statesList} = useSelector((state) => state.states)
     const {departmentsList} = useSelector((state) => state.departments)
@@ -55,9 +55,13 @@ export default function AddEmployee(){
             startday: changeDateFormatToBackEnd(e.target.elements.startday.value), 
             street: e.target.elements.street.value, 
             city: e.target.elements.city.value, 
-            state: statesList.find(val => val.stateName === e.target.elements.state.value)._id, 
+            state: e.target.elements.state.value !== '' ? 
+                statesList.find(val => val.stateName === e.target.elements.state.value)._id : 
+                null, 
             zipcode: e.target.elements.zipcode.value, 
-            department: departmentsList.find(val => val.departmentName === e.target.elements.department.value)._id, 
+            department: e.target.elements.department.value !== '' ?
+                departmentsList.find(val => val.departmentName === e.target.elements.department.value)._id : 
+                null, 
             
         }
 
@@ -79,7 +83,7 @@ export default function AddEmployee(){
         return <Navigate to="/" />;
     }
 
-    if(success){
+    if(createEmployeeSuccess){
         return <Navigate to="/employees" />;
     }
 

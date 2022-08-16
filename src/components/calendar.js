@@ -23,6 +23,19 @@ const OpenCalendarList = styled('div')`
 const CloseCalendarList = styled('div')`display: none;`
 
 
+export const frenchFormatDate = ((myDay, myMonth, myYear) => {
+    return (myDay < 10 ? ('0' + myDay): myDay) + '/' + (myMonth < 10 ? ('0' + myMonth) : myMonth) + '/' + myYear
+})
+
+export const toFrenchFormatDate = ((internationalFormat) => {
+    let myYear = internationalFormat.substring(0,4)
+    let myMonth = internationalFormat.substring(5,7)
+    let myDay = internationalFormat.substring(8,10)
+    return (
+        myDay + '/' + myMonth + '/' + myYear
+    )
+})
+
 export default function Calendar(props){
     
     
@@ -160,9 +173,7 @@ export default function Calendar(props){
         }
     })
 
-    const frenchFormatDate = ((myDay, myMonth, myYear) => {
-        return (myDay < 10 ? ('0' + myDay): myDay) + '/' + (myMonth < 10 ? ('0' + myMonth) : myMonth) + '/' + myYear
-    })
+
 
     const exeptionDate = ((myChoosedDay, myChoosedMonth, myCurrentMonth)=>{
       

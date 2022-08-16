@@ -61,7 +61,7 @@ const initialState = {
     inputValues: {},
     entities: null,
     loading: false,
-    success: false
+    createEmployeeSuccess: false
 }
 
 // slice, which content reducers and actions for data of the User's Profil and status of loading 
@@ -71,7 +71,15 @@ const newEmployeeSlice = createSlice({
     initialState,
     reducers: {
         setSuccessFalse: (state, action) => {
-            state.success = false
+            state.createEmployeeSuccess = false
+            
+            // state.actualItem1 = 'Choose item...'
+            // state.actualItem2 = 'Choose item...'
+            // state.inputDate1 = ''
+            // state.inputDate2 = ''
+            // state.entities = '111'
+            
+
         },
     },
     extraReducers: {
@@ -79,7 +87,7 @@ const newEmployeeSlice = createSlice({
     [setEmployee.fulfilled]: (state, action) => {
         state.loading = false
         state.entities = action.payload.entities
-        state.success = true
+        state.createEmployeeSuccess = true
     },
     [setEmployee.rejected]: (state) => {
         state.loading = false

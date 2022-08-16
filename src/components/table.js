@@ -11,12 +11,56 @@ import { deleteEmployee } from "../slices/deleteEmployee.slice";
 import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import { setSuccessFalse } from '../slices/deleteEmployee.slice';
 import Search from './search';
+import {toFrenchFormatDate} from './calendar'
 
 export function byField(field, sortDirection) {
     let result
-    sortDirection === 'ascending' ?
-    result = ((a, b) => a[field] > b[field] ? 1 : -1) :
-    result = ((a, b) => b[field] > a[field] ? 1 : -1)
+    if(field !== 'state' && field !== 'department'){
+        sortDirection === 'ascending' ?
+        result = ((a, b) => a[field] > b[field] ? 1 : -1) :
+        result = ((a, b) => b[field] > a[field] ? 1 : -1)
+    }else if(field === 'state'){
+        sortDirection === 'ascending' ?
+        result = ((a, b) => (
+            a[field] !== null ?
+            a[field][0].stateAbbreviation : 
+            ''
+        ) > (
+            b[field] !== null ?
+            b[field][0].stateAbbreviation :
+            ''
+        ) ? 1 : -1) :
+        result = ((a, b) => (
+            b[field] !== null ?
+            b[field][0].stateAbbreviation :
+            ''
+        ) > (
+            a[field] !== null ?
+            a[field][0].stateAbbreviation : 
+            ''
+        ) ? 1 : -1)
+    }else if(field === 'department'){
+        sortDirection === 'ascending' ?
+        result = ((a, b) => (
+            a[field] !== null ?
+            a[field][0].departmentName : 
+            ''
+        ) > (
+            b[field] !== null ?
+            b[field][0].departmentName :
+            ''
+        ) ? 1 : -1) :
+        result = ((a, b) => (
+            b[field] !== null ?
+            b[field][0].departmentName :
+            ''
+        ) > (
+            a[field] !== null ?
+            a[field][0].departmentName : 
+            ''
+        ) ? 1 : -1)
+    }
+    
     return result
 }
 
@@ -175,19 +219,30 @@ export default function Table(props){
                                     key={`val`+index}
                                     className='data'
                                     title={
+                                        
+                                        myKey === 'birthday' || myKey === 'startday' ?
+                                            toFrenchFormatDate(
+                                                String(Object.values(emplObj)[index])
+                                                )
+                                                :
                                         Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
-                                            Object.values(emplObj)[index][0].stateName :
+                                            Object.values(emplObj)[index][0].stateAbbreviation :
                                         Array.isArray(Object.values(emplObj)[index]) && myKey === 'department' ? 
                                             Object.values(emplObj)[index][0].departmentName :
+                                        Object.values(emplObj)[index] === null ?
+                                            '':
                                         String(Object.values(emplObj)[index])
                                     }
                                 >
-                                    {
-                                    Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
-                                        Object.values(emplObj)[index][0].stateName :
-                                    Array.isArray(Object.values(emplObj)[index]) && myKey === 'department' ? 
-                                        Object.values(emplObj)[index][0].departmentName :
-                                    String(Object.values(emplObj)[index])
+                                    {   myKey === 'birthday' || myKey === 'startday' ?
+                                            toFrenchFormatDate(Object.values(emplObj)[index]):
+                                        Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
+                                            Object.values(emplObj)[index][0].stateAbbreviation :
+                                        Array.isArray(Object.values(emplObj)[index]) && myKey === 'department' ? 
+                                            Object.values(emplObj)[index][0].departmentName :
+                                        Object.values(emplObj)[index] === null ?
+                                            '':
+                                        String(Object.values(emplObj)[index])
                                     
                                     }
                                 </td>

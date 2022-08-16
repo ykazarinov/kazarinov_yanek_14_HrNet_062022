@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 function createGenericSlice(sliceName) {
 
   const initialState = {
-      ['actualItem' + sliceName]: 'Choose item...',
+      ['actualItem' + sliceName]: '',
       ['isOpen' + sliceName]: false
   };
 

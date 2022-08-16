@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 import getAllEmployeesService from "../services/getAllEmployees.service";
 import {searchPhrase} from '../resurces/searchphrase'
+import {byField} from '../components/table'
 
 // createAsyncThunk for middleware for update data of User's Profil 
 export const getAllEmployees = createAsyncThunk(
@@ -47,13 +48,13 @@ const initialState = {
     searchValue: ''
 }
 
-function byField(field, sortDirection) {
-    let result
-    sortDirection === 'ascending' ?
-    result = ((a, b) => a[field] > b[field] ? 1 : -1) :
-    result = ((a, b) => b[field] > a[field] ? 1 : -1)
-    return result
-}
+// function byField(field, sortDirection) {
+//     let result
+//     sortDirection === 'ascending' ?
+//     result = ((a, b) => a[field] > b[field] ? 1 : -1) :
+//     result = ((a, b) => b[field] > a[field] ? 1 : -1)
+//     return result
+// }
 
 const createSubarray = ((array, size)=>{
     let subarray = [];
@@ -71,6 +72,7 @@ const arrayProcessingAfterSearch = ((state)=>{
    // If search result a small (for just first pagin page) 
    // but actual pagin number is 2 and more, then
    // we downgrade this number 
+   
     if(!state.paginatedArray[state.actualPaginNumber]){
         if(state.actualPaginNumber >= 1){
             state.actualPaginNumber --
@@ -135,6 +137,7 @@ const allEmployeesSlice = createSlice({
     [getAllEmployees.fulfilled]: (state, action) => {
         state.loading = false
         state.employeesState = action.payload
+        
         if(state.searchValue !== ''){
             let serchRes = searchPhrase(state.searchValue, state.employeesState)
             state.isSearch = serchRes.isSearch
@@ -143,6 +146,7 @@ const allEmployeesSlice = createSlice({
            
         }else{
             state.searchResult = Object.assign([], state.employeesState);
+            arrayProcessingAfterSearch(state)
         }
         
         let clone = Object.assign([], state.searchResult);
