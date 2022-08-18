@@ -11573,4 +11573,14 @@ legend.scheduler-border {
   margin-bottom: 1rem;
 }
 
+.lightbox {
+  padding-top: 2.5rem;
+}
+.lightbox .buttons-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*# sourceMappingURL=style.css.map */

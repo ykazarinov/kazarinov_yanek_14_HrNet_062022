@@ -12,6 +12,11 @@ import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import { setSuccessFalse } from '../slices/deleteEmployee.slice';
 import Search from './search';
 import {toFrenchFormatDate} from './calendar'
+import {LightBox} from '@artfish/lightbox'
+import {useState} from "react"
+
+
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export function byField(field, sortDirection) {
     let result
@@ -141,10 +146,56 @@ export default function Table(props){
     }, [sortedArray, paginCount])
     
 
+    const [hidden, setHidden] = useState(true);
+    const [elemId, setElemId] = useState(null)
+    const openModal = (id) => {
+      setHidden(false)
+      setElemId(id)
+    }
+    const closeModal = () => {
+      setHidden(true)
+    }
+
+    const deleteItem = (()=>{
+        dispatch(deleteEmployee(elemId))
+        setHidden(true)
+    })
+
 
 
     return (
         <div>
+            <LightBox 
+                content={
+                    <>
+                    {langData[13]}
+                    <div className='buttons-container'>
+                        <button 
+                            type='button' 
+                            onClick={deleteItem}
+                            className={ 
+                                actualTheme === 'theme-light' ?
+                                'btn btn-sm btn-danger color-red' :
+                                'btn btn-sm btn-outline-dark color-red'
+                            }
+                        >{langData[14]}</button>
+                        <button 
+                            type='button'
+                            onClick={closeModal}
+                            className={ 
+                                actualTheme === 'theme-light' ?
+                                'btn btn-sm btn-primary color-blue' :
+                                'btn btn-sm btn-outline-dark color-blue'
+                            }
+                        >{langData[15]}</button>
+                    </div>
+                    
+                    </>
+                }
+                hidden={hidden}
+                onClick={closeModal}
+                close={<FontAwesomeIcon icon={faXmark} />}
+            ></LightBox>
             <section className='above-table'>
                 <section className='above-tabble-1'>
                     <Link 
@@ -259,7 +310,10 @@ export default function Table(props){
                                 >{<FontAwesomeIcon icon={faPen} />}</button>
                                
                                     <button 
-                                        onClick={()=>dispatch(deleteEmployee(emplObj._id))}
+                                        onClick={
+                                            // ()=>dispatch(deleteEmployee(emplObj._id))
+                                            ()=>openModal(emplObj._id)
+                                        }
                                         type='submit' 
                                         className={ actualTheme === 'theme-light' ?
                                             'btn btn-sm btn-danger color-red' :

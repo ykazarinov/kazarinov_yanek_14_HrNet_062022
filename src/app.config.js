@@ -64,6 +64,9 @@ const transcription = [
                 'Previous',
                 'Next',
                 'The search returned no results.',
+                'Are you sure you want to delete employee data?',
+                'Delete',
+                'Cancel'
             ]
         }
     },
@@ -128,6 +131,9 @@ const transcription = [
                 'Précédent',
                 'Prochain',
                 'La recherche n\'a donné aucun résultat.',
+                'Êtes-vous sûr de vouloir supprimer les données des employés?',
+                'Effacer',
+                'Annuler',
             ]
         }
     }
