@@ -15,6 +15,8 @@ export default function Search(){
    
 
     useEffect(()=>{
+
+
         let serchRes = searchPhrase(searchValue, employeesState)
        
         if(serchRes.isSearch && serchRes.searchResult){

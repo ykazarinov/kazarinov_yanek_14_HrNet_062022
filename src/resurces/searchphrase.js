@@ -7,6 +7,7 @@ export function searchPhrase(value, employeesState){
 
     if(value.length >= 3){
         isSearch = true
+        
         employeesState.map((emp)=>(
             // console.log(emp)
            
@@ -18,14 +19,15 @@ export function searchPhrase(value, employeesState){
                     key === 'updatedAt' ||
                     key === '__v' ?  null :
                     (
-                        typeof emp[key] === 'object' ?
+                        emp[key] === null ? null :
+                        typeof emp[key] === 'object' ? 
                         Object.keys(emp[key][0]).forEach((subKey)=>(
                             subKey === 'createdAt' ||
                             subKey === 'updatedAt' ||
                             subKey === '__v' ||
                             subKey === '_id' ? null :
                             (
-                                // console.log(subKey +  ' : ' + emp[key][0][subKey])
+                                
                                 emp[key][0][subKey].indexOf(value)!== -1 ?
                                 (   newArr.length === 0 ? newArr.push(Object.assign({}, emp)) : null,
                                     newArr.forEach(obj=>{
@@ -43,27 +45,28 @@ export function searchPhrase(value, employeesState){
                                  : null 
                             ) 
                         ))
-                        : 
-                        // console.log(key + ' : ' + emp[key])
+                        :
+                        // : emp[key] === null ? null :
+                         
                         String(emp[key]).indexOf(value)!== -1 ?
-                        (   newArr.length === 0 ? newArr.push(Object.assign({}, emp)) : null,
-                            newArr.forEach(obj=>{
-                                verif = false;
-                                // console.log(obj._id, emp._id)
-                                (String(obj._id) === String(emp._id) ? 
-                                    verif = false : 
-                                    verif = true
-                                )
-                            }
-                            ),
-                            verif === true ? 
-                            newArr.push(Object.assign({}, emp)): null
+                        (   
+                                newArr.length === 0 ? newArr.push(Object.assign({}, emp)) : null,
+                                newArr.forEach(obj=>{
+                                    verif = false;
+                                    // console.log(obj._id, emp._id)
+                                    (String(obj._id) === String(emp._id) ? 
+                                        verif = false : 
+                                        verif = true
+                                    )
+                                }
+                                ),
+                                verif === true ? 
+                                newArr.push(Object.assign({}, emp)): null
+                           
                         )
+
                          : null 
-                        
-                        
-                        //newArr.push(Object.assign({}, emp)) : null
-                     
+                    
                     )
                 ))
                 

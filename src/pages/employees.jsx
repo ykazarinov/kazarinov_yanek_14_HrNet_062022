@@ -46,7 +46,7 @@ export default function Employees(){
 
     
 
-    return <div className={currentTheme}>
+    return <main className={currentTheme}>
         <div className='container'>
                 <div className="row">
                     <div className="col-12">
@@ -55,5 +55,5 @@ export default function Employees(){
                     </div>
                 </div> 
             </div>
-        </div>
+        </main>
 }
