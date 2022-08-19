@@ -51,6 +51,7 @@ $themes: (
         'bgInput': white,
         'borderInput': darken(white, 30%),
         'borderInput2': lighten(black, 30%),
+        'borderInput3': lighten(black, 70%),
         'iconColorBlue': white,
         'iconColorRed': white,
         'iconColorWhite': white,
@@ -71,6 +72,7 @@ $themes: (
         'bgInput': darken(white, 70%),
         'borderInput': transparent,
         'borderInput2': darken(white, 30%),
+        'borderInput3': darken(white, 70%),
         'iconColorBlue': #0d6efd,
         'iconColorRed': #dc3545,
         'iconColorWhite': white,
@@ -93,6 +95,7 @@ $themes: (
     $bgInput: map-get($colorArray , 'bgInput' );
     $borderInput: map-get($colorArray , 'borderInput' );
     $borderInput2: map-get($colorArray , 'borderInput2' );
+    $borderInput3: map-get($colorArray , 'borderInput3' );
     $iconColorBlue: map-get($colorArray , 'iconColorBlue' );
     $iconColorRed: map-get($colorArray , 'iconColorRed' );
     $iconColorWhite: map-get($colorArray , 'iconColorWhite' );
@@ -152,7 +155,21 @@ $themes: (
     }
 
     .#{$name}{
+
+
         background-color: $bgNormal;
+
+        .uploadContainer{
+            border: 1px solid $borderInput3;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .defaultImage{
+            color: $bgPlus2;
+        }
         h1{
             color: $textNormal;
         }
@@ -317,7 +334,7 @@ $themes: (
             }
         }
         fieldset.scheduler-border{
-            border: 1px solid $bgInput;
+            border: 1px solid $borderInput3;
         }
         legend.scheduler-border{
             background-color: $bgNormal;
@@ -810,6 +827,20 @@ legend.scheduler-border {
 
 .lightbox{
     padding-top: 2.5rem;
+    min-height: 30vh;
+    height: auto;
+    top: calc((100vh - 10rem - 3.5rem) / 2);
+    .uploadImgCont{
+        display: flex;
+        justify-content: center;
+        img{
+            width: 10rem;
+            height: 10rem;
+            border-radius: 5rem;
+
+        }
+    }
+    
     .buttons-container{
         margin-top: 1rem;
         display: flex;
@@ -818,3 +849,32 @@ legend.scheduler-border {
     }
 }
 
+.uploadContainer{
+    display: flex;
+    align-items: center;
+}
+
+.defaultImage{
+    font-size: 10rem;
+}
+
+.butUplCont{
+    flex-grow: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.uploadedImage{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5rem;
+    object-fit: contain;
+}
+
+.table-cont tbody td.photoTd{
+    text-align: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+}

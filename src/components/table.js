@@ -1,5 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp, faUserPlus, faTrashCan, faPen } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faUserPlus, faTrashCan, faPen, faCircleUser } from '@fortawesome/free-solid-svg-icons'
+
+
+
 import {setSortDirection} from '../slices/getAllEmployees.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { transcription } from '../app.config';
@@ -161,6 +164,16 @@ export default function Table(props){
         setHidden(true)
     })
 
+    const [hidden2, setHidden2] = useState(true);
+    const [elemImg, setElemImg] = useState(null)
+    const openModal2 = (img) => {
+      setHidden2(false)
+      setElemImg(img)
+    }
+    const closeModal2 = () => {
+      setHidden2(true)
+    }
+
 
 
     return (
@@ -194,6 +207,18 @@ export default function Table(props){
                 }
                 hidden={hidden}
                 onClick={closeModal}
+                close={<FontAwesomeIcon icon={faXmark} />}
+            ></LightBox>
+
+            <LightBox 
+                content={
+                    <div className='uploadImgCont'>
+                        <img src={elemImg} alt='Uploaded' />
+                    </div>
+                    
+                }
+                hidden={hidden2}
+                onClick={closeModal2}
                 close={<FontAwesomeIcon icon={faXmark} />}
             ></LightBox>
             <section className='above-table'>
@@ -268,9 +293,10 @@ export default function Table(props){
                                 myKey === '__v' ?
                                 null : <td 
                                     key={`val`+index}
-                                    className='data'
+                                    
+                                    className={myKey === 'photo' ? 'photoTd data' : 'data'}
                                     title={
-                                        
+                                        // myKey === 'photo' ?  <FontAwesomeIcon icon={faCircleUser} /> :
                                         myKey === 'birthday' || myKey === 'startday' ?
                                             toFrenchFormatDate(
                                                 String(Object.values(emplObj)[index])
@@ -285,7 +311,16 @@ export default function Table(props){
                                         String(Object.values(emplObj)[index])
                                     }
                                 >
-                                    {   myKey === 'birthday' || myKey === 'startday' ?
+                                    {   
+                                        myKey === 'photo' && String(Object.values(emplObj)[index]) ?  
+                                        <FontAwesomeIcon 
+                                            onClick={()=>openModal2(String(Object.values(emplObj)[index]))}
+                                            icon={faCircleUser} 
+                                        /> :
+                                        myKey === 'photo' && !String(Object.values(emplObj)[index]) ?  
+                                        null :
+
+                                        myKey === 'birthday' || myKey === 'startday' ?
                                             toFrenchFormatDate(Object.values(emplObj)[index]):
                                         Array.isArray(Object.values(emplObj)[index]) && myKey === 'state' ? 
                                             Object.values(emplObj)[index][0].stateAbbreviation :

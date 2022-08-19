@@ -2,7 +2,7 @@ import Select from "../components/select"
 import Calendar from "../components/calendar"
 import OutsideAlerter from "../components/outsidealerter";
 import ErrorMessage from "../components/errormessage"
-
+import authHeader from "../services/auth-header";
 import { Navigate } from 'react-router-dom';
 
 import { setClose1, setClose2 } from "../slices/calendar.slice";
@@ -14,7 +14,13 @@ import {getDepartments} from "../slices/departments.slice"
 import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import React from "react";
+import axios from "../axios";
+import {API_REST_URL} from '../app.config'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 
 
 // const stateList = ['', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
@@ -33,6 +39,12 @@ export default function AddEmployee(){
 
     const {statesList} = useSelector((state) => state.states)
     const {departmentsList} = useSelector((state) => state.departments)
+    
+    const [imageUrl, setImageUrl] = useState('') 
+    const [isLoading, setLoading] = useState('')
+
+    const inputFileRef = React.useRef(null)
+    // const imageUrl = ''
 
     const changeDateFormatToBackEnd = (dateIn) =>{
         let day = dateIn.substr(0, 2)
@@ -46,7 +58,7 @@ export default function AddEmployee(){
         let formValues = {}
 
         formValues = { 
-            photo: e.target.elements.photo.value, 
+            photo: API_REST_URL + imageUrl, 
             firstName: e.target.elements.firstName.value, 
             lastName: e.target.elements.lastName.value, 
             email: e.target.elements.email.value, 
@@ -70,6 +82,25 @@ export default function AddEmployee(){
 
         
     };
+
+    const handleChangeFile= async(event)=>{
+        try{
+            const formData = new FormData()
+            const file = event.target.files[0]
+            formData.append('image', file)
+            const {data} = await axios.post('/upload', formData, {headers: authHeader()})
+
+            setImageUrl(data.url)
+        }
+        catch(err){
+            console.warn(err)
+            alert(err)
+        }
+    }
+
+    const onClickRemoveImage = () => {
+        setImageUrl('')
+    }
 
     useEffect(()=>{
         dispatch(getStates())
@@ -100,15 +131,60 @@ export default function AddEmployee(){
                 <div className="col-2"></div>
                 <div className="col-8">
                     <div className="row">
-                        <div className="col-12">
-                            <label htmlFor='photo'>{langData[15]}</label>
+                        <div className="col-12 uploadContainer">
+                          
                             <input 
                                 name='photo' 
                                 type='file' 
-                                className='input-standart' 
+                                // className='input-standart' 
                                 id="photo"
+                                onChange={handleChangeFile}
+                                ref={inputFileRef}
+                                hidden
                                 
                             />
+                            
+                               {imageUrl === '' ?
+                                    <>
+                                    <FontAwesomeIcon className="defaultImage" icon={faCircleUser} />
+                                    <div className="butUplCont">
+                                        <button 
+                                            type="button" 
+                                            className={
+                                                actualTheme === 'theme-light' ?
+                                                'btn btn-primary color-blue' :
+                                                'btn btn-outline-dark color-blue'
+                                            }
+                                            onClick={()=>inputFileRef.current.click()}
+                                        >
+                                            {langData[16]}
+                                        </button>
+                                    </div>
+                                    </>
+                                    : 
+                                    <>
+                                    <img className="uploadedImage" src={API_REST_URL + imageUrl} alt='Uploaded' />
+                                    <div className="butUplCont">   
+                                        <button 
+                                            type="button" 
+                                            className={
+                                                actualTheme === 'theme-light' ?
+                                                'btn btn-sm btn-danger color-red' :
+                                                'btn btn-sm btn-outline-dark color-red'
+                                            }
+                                            onClick={onClickRemoveImage}
+                                        >
+                                            {langData[17]}
+                                        </button>
+                                    </div> 
+                                    </>
+
+                                }
+                                
+                               
+                            
+                            
+                           
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="photo"></ErrorMessage>
                             )}

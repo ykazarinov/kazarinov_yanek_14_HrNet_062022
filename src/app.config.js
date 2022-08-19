@@ -28,7 +28,9 @@ const transcription = [
                 'Cancel',
                 'Email',
                 'Phone',
-                'Photo'
+                'Photo',
+                'Upload a photo',
+                'Delete photo'
             ],
             signin: [
                 'Sign In',
@@ -95,7 +97,9 @@ const transcription = [
                 'Annuler',
                 'E-mail',
                 'Téléphone',
-                'Photo'
+                'Photo',
+                'Télécharger une photo',
+                'Supprimer la photo'
             ],
             signin: [
                 'S\'identifier',

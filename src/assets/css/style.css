@@ -10759,6 +10759,30 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex: 0 0 auto;
+}
+
 header.theme-light {
   background-color: white;
   color: black;
@@ -10808,6 +10832,16 @@ footer.theme-light .lang-cont .langselect {
 
 .theme-light {
   background-color: white;
+}
+.theme-light .uploadContainer {
+  border: 1px solid #b3b3b3;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.theme-light .defaultImage {
+  color: #68b441;
 }
 .theme-light h1, .theme-light .h1 {
   color: gray;
@@ -10948,7 +10982,7 @@ footer.theme-light .lang-cont .langselect {
   color: #cccccc;
 }
 .theme-light fieldset.scheduler-border {
-  border: 1px solid white;
+  border: 1px solid #b3b3b3;
 }
 .theme-light legend.scheduler-border {
   background-color: white;
@@ -11012,6 +11046,16 @@ footer.theme-dark .lang-cont .langselect {
 
 .theme-dark {
   background-color: #1a1a1a;
+}
+.theme-dark .uploadContainer {
+  border: 1px solid #4d4d4d;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.theme-dark .defaultImage {
+  color: #68b441;
 }
 .theme-dark h1, .theme-dark .h1 {
   color: #b3b3b3;
@@ -11575,12 +11619,53 @@ legend.scheduler-border {
 
 .lightbox {
   padding-top: 2.5rem;
+  min-height: 30vh;
+  height: auto;
+  top: calc((100vh - 10rem - 3.5rem) / 2);
+}
+.lightbox .uploadImgCont {
+  display: flex;
+  justify-content: center;
+}
+.lightbox .uploadImgCont img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 5rem;
 }
 .lightbox .buttons-container {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.uploadContainer {
+  display: flex;
+  align-items: center;
+}
+
+.defaultImage {
+  font-size: 10rem;
+}
+
+.butUplCont {
+  flex-grow: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.uploadedImage {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 5rem;
+  object-fit: contain;
+}
+
+.table-cont tbody td.photoTd {
+  text-align: center;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */
