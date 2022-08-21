@@ -8,8 +8,11 @@ import { Navigate } from 'react-router-dom';
 import { setClose1, setClose2 } from "../slices/calendar.slice";
 import { setCloseSelect1, setCloseSelect2 } from "../slices/select.slice";
 import { setEmployee } from "../slices/employee.slice";
-import {getStates} from "../slices/states.slice"
-import {getDepartments} from "../slices/departments.slice"
+
+import { setFileType, setImageUrl } from '../slices/file.slice'
+
+import { getStates } from "../slices/states.slice"
+import { getDepartments } from "../slices/departments.slice"
 
 import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
@@ -17,36 +20,39 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import React from "react";
 import axios from "../axios";
-import {API_REST_URL} from '../app.config'
+import { API_REST_URL } from '../app.config'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
+import { faCircleUser, faXmark, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 
+import handleDeleteFile from '../resurces/deletefile'
 
-// const stateList = ['', '62de4f9df5885a099d8dd473', 'item 2', 'item 3']
-// const depList = ['', '62de9795bbd221693ca401d4', 'item 2', 'item 3']
+import { LightBox } from '@artfish/lightbox'
 
-export default function AddEmployee(){
+export default function AddEmployee() {
+
     const dispatch = useDispatch();
-    const  currentLang  = useSelector((state) => state['lang'].actualLang)
-    const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
+    const currentLang = useSelector((state) => state['lang'].actualLang)
+    const currentTheme = useSelector((state) => state['theme'].actualTheme)
 
     const message = useSelector((state) => state.message);
-    const {actualTheme} = useSelector((state) => state.theme)
+    const { actualTheme } = useSelector((state) => state.theme)
     const langData = transcription.find(lng => lng.lang === currentLang).data.addemployee
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { createEmployeeSuccess } = useSelector((state) => state.newEmployee);
 
-    const {statesList} = useSelector((state) => state.states)
-    const {departmentsList} = useSelector((state) => state.departments)
-    
-    const [imageUrl, setImageUrl] = useState('') 
-    const [isLoading, setLoading] = useState('')
+    const { fileType, imageUrl } = useSelector((state) => state.uploadFile)
+
+    const { statesList } = useSelector((state) => state.states)
+    const { departmentsList } = useSelector((state) => state.departments)
+
+    const [hidden, setHidden] = useState(true);
+
+    const [uploadedFile, setUploadedFile] = useState(null)
 
     const inputFileRef = React.useRef(null)
-    // const imageUrl = ''
 
-    const changeDateFormatToBackEnd = (dateIn) =>{
+    const changeDateFormatToBackEnd = (dateIn) => {
         let day = dateIn.substr(0, 2)
         let month = dateIn.substr(3, 2)
         let year = dateIn.substr(6, 4)
@@ -57,70 +63,147 @@ export default function AddEmployee(){
         e.preventDefault();
         let formValues = {}
 
-        formValues = { 
-            photo: API_REST_URL + imageUrl, 
-            firstName: e.target.elements.firstName.value, 
-            lastName: e.target.elements.lastName.value, 
-            email: e.target.elements.email.value, 
-            phone: e.target.elements.phone.value, 
-            birthday: changeDateFormatToBackEnd(e.target.elements.birthday.value), 
-            startday: changeDateFormatToBackEnd(e.target.elements.startday.value), 
-            street: e.target.elements.street.value, 
-            city: e.target.elements.city.value, 
-            state: e.target.elements.state.value !== '' ? 
-                statesList.find(val => val.stateName === e.target.elements.state.value)._id : 
-                null, 
-            zipcode: e.target.elements.zipcode.value, 
+        formValues = {
+            photo: API_REST_URL + imageUrl,
+            firstName: e.target.elements.firstName.value,
+            lastName: e.target.elements.lastName.value,
+            email: e.target.elements.email.value,
+            phone: e.target.elements.phone.value,
+            birthday: changeDateFormatToBackEnd(e.target.elements.birthday.value),
+            startday: changeDateFormatToBackEnd(e.target.elements.startday.value),
+            street: e.target.elements.street.value,
+            city: e.target.elements.city.value,
+            state: e.target.elements.state.value !== '' ?
+                statesList.find(val => val.stateName === e.target.elements.state.value)._id :
+                null,
+            zipcode: e.target.elements.zipcode.value,
             department: e.target.elements.department.value !== '' ?
-                departmentsList.find(val => val.departmentName === e.target.elements.department.value)._id : 
-                null, 
-            
+                departmentsList.find(val => val.departmentName === e.target.elements.department.value)._id :
+                null,
+
         }
 
-        dispatch(setEmployee( formValues ))
+        dispatch(setEmployee(formValues))
 
-
-        
     };
 
-    const handleChangeFile= async(event)=>{
-        try{
-            const formData = new FormData()
-            const file = event.target.files[0]
-            formData.append('image', file)
-            const {data} = await axios.post('/upload', formData, {headers: authHeader()})
 
-            setImageUrl(data.url)
+
+    function checkFileType(uploadedFile) {
+        let fileReader = new FileReader()
+        fileReader.onloadend = function (e) {
+            let arr = (new Uint8Array(e.target.result)).subarray(0, 4)
+            let header = ""
+            let type
+            for (let i = 0; i < arr.length; i++) {
+                header += arr[i].toString(16)
+            }
+            switch (header) {
+                case "89504e47":
+                    type = "image/png"
+                    break;
+                case "ffd8ffe0":
+                case "ffd8ffe1":
+                case "ffd8ffe2":
+                case "ffd8ffe3":
+                case "ffd8ffe8":
+                    type = "image/jpeg"
+                    break;
+                default:
+                    type = "unknown"
+                    break;
+            }
+            dispatch(setFileType(type))
         }
-        catch(err){
-            console.warn(err)
-            alert(err)
-        }
+        fileReader.readAsArrayBuffer(uploadedFile)
     }
 
-    const onClickRemoveImage = () => {
-        setImageUrl('')
+
+    const handleChangeFile = (event) => {
+        setUploadedFile(event.target.files[0])
     }
 
-    useEffect(()=>{
+    const onClickRemoveImage = (imageName) => {
+        dispatch(setImageUrl(''))
+        handleDeleteFile(imageName)
+    }
+
+    useEffect(() => {
+        if (uploadedFile !== null) {
+            checkFileType(uploadedFile)
+        }
+    }, [uploadedFile])
+
+    useEffect(() => {
         dispatch(getStates())
         dispatch(getDepartments())
-       
+
     }, [])
 
+    useEffect(() => {
+
+        const uploadFileToServer = async () => {
+            try {
+
+                const formData = new FormData()
+                if (fileType !== 'unknown') {
+                    formData.append('image', uploadedFile)
+                    const { data } = await axios.post('/upload', formData, { headers: authHeader() })
+                    dispatch(setImageUrl(data.url))
+                } else {
+                    openModal()
+                }
+
+
+            }
+            catch (err) {
+                console.warn(err)
+
+            }
+        }
+        if (fileType !== '') {
+            uploadFileToServer()
+        }
+
+    }, [fileType])
 
 
     if (!isLoggedIn) {
+
         return <Navigate to="/" />;
     }
 
-    if(createEmployeeSuccess){
+    if (createEmployeeSuccess) {
         return <Navigate to="/employees" />;
     }
 
+    const clickAndImageDelete = (() => {
+        if (imageUrl !== '') {
+            handleDeleteFile(imageUrl)
+            dispatch(setImageUrl(''))
+        }
+    })
 
+
+    const openModal = () => {
+        setHidden(false)
+    }
+    const closeModal = () => {
+        setHidden(true)
+    }
 
     return <main className={currentTheme}>
+        <LightBox
+            content={
+                <div className="error-container">
+                    <div className="error-icon"><FontAwesomeIcon icon={faCircleExclamation} /></div>
+                    {langData[18]}
+                </div>
+            }
+            hidden={hidden}
+            onClick={closeModal}
+            close={<FontAwesomeIcon icon={faXmark} />}
+        ></LightBox>
         <div className="container">
             <div className="row">
                 <div className="col-12">
@@ -132,72 +215,73 @@ export default function AddEmployee(){
                 <div className="col-8">
                     <div className="row">
                         <div className="col-12 uploadContainer">
-                          
-                            <input 
-                                name='photo' 
-                                type='file' 
+
+                            <input
+                                name='photo'
+                                type='file'
+                                accept="image/*"
                                 // className='input-standart' 
                                 id="photo"
                                 onChange={handleChangeFile}
                                 ref={inputFileRef}
                                 hidden
-                                
+
                             />
-                            
-                               {imageUrl === '' ?
-                                    <>
+
+                            {imageUrl === '' ?
+                                <>
                                     <FontAwesomeIcon className="defaultImage" icon={faCircleUser} />
                                     <div className="butUplCont">
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             className={
                                                 actualTheme === 'theme-light' ?
-                                                'btn btn-primary color-blue' :
-                                                'btn btn-outline-dark color-blue'
+                                                    'btn btn-primary color-blue' :
+                                                    'btn btn-outline-dark color-blue'
                                             }
-                                            onClick={()=>inputFileRef.current.click()}
+                                            onClick={() => inputFileRef.current.click()}
                                         >
                                             {langData[16]}
                                         </button>
                                     </div>
-                                    </>
-                                    : 
-                                    <>
+                                </>
+                                :
+                                <>
                                     <img className="uploadedImage" src={API_REST_URL + imageUrl} alt='Uploaded' />
-                                    <div className="butUplCont">   
-                                        <button 
-                                            type="button" 
+                                    <div className="butUplCont">
+                                        <button
+                                            type="button"
                                             className={
                                                 actualTheme === 'theme-light' ?
-                                                'btn btn-sm btn-danger color-red' :
-                                                'btn btn-sm btn-outline-dark color-red'
+                                                    'btn btn-sm btn-danger color-red' :
+                                                    'btn btn-sm btn-outline-dark color-red'
                                             }
-                                            onClick={onClickRemoveImage}
+                                            onClick={() => onClickRemoveImage(API_REST_URL + imageUrl)}
                                         >
                                             {langData[17]}
                                         </button>
-                                    </div> 
-                                    </>
+                                    </div>
+                                </>
 
-                                }
-                                
-                               
-                            
-                            
-                           
+                            }
+
+
+
+
+
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="photo"></ErrorMessage>
                             )}
-                           
-                                
+
+
                         </div>
                         <div className="col-6">
                             <label htmlFor='firstName'>{langData[1]}</label>
-                            <input 
-                                name='firstName' 
-                                className='input-standart' 
-                                id="firstName" 
-                                
+                            <input
+                                name='firstName'
+                                className='input-standart'
+                                id="firstName"
+
                             />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="firstName"></ErrorMessage>
@@ -205,11 +289,11 @@ export default function AddEmployee(){
                         </div>
                         <div className="col-6">
                             <label htmlFor='lastName'>{langData[2]}</label>
-                            <input 
-                                name='lastName' 
-                                className='input-standart' 
+                            <input
+                                name='lastName'
+                                className='input-standart'
                                 id="lastName"
-                                
+
                             />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="lastName"></ErrorMessage>
@@ -232,26 +316,26 @@ export default function AddEmployee(){
                         </div>
 
                         <div className="address col-6">
-                                <label htmlFor="birthday">{langData[3]}</label>
-                                <OutsideAlerter myDispatch={()=>dispatch(setClose1())}>
-                                    <Calendar fieldName='birthday' calNum={1}></Calendar>
-                                </OutsideAlerter>
-                                {Array.isArray(message) && (
-                                    <ErrorMessage myParam="birthday"></ErrorMessage>
-                                )}
-                  
-                                
+                            <label htmlFor="birthday">{langData[3]}</label>
+                            <OutsideAlerter myDispatch={() => dispatch(setClose1())}>
+                                <Calendar fieldName='birthday' calNum={1}></Calendar>
+                            </OutsideAlerter>
+                            {Array.isArray(message) && (
+                                <ErrorMessage myParam="birthday"></ErrorMessage>
+                            )}
+
+
                         </div>
                         <div className="address col-6">
-                                <label htmlFor="startday">{langData[4]}</label>
-                                <OutsideAlerter myDispatch={()=>dispatch(setClose2())}>
-                                    <Calendar fieldName='startday' calNum={2}></Calendar>
-                                </OutsideAlerter>
-                                {Array.isArray(message) && (
-                                    <ErrorMessage myParam="startday"></ErrorMessage>
-                                )}
-                               
-                                
+                            <label htmlFor="startday">{langData[4]}</label>
+                            <OutsideAlerter myDispatch={() => dispatch(setClose2())}>
+                                <Calendar fieldName='startday' calNum={2}></Calendar>
+                            </OutsideAlerter>
+                            {Array.isArray(message) && (
+                                <ErrorMessage myParam="startday"></ErrorMessage>
+                            )}
+
+
                         </div>
 
                         <fieldset className="scheduler-border col-12">
@@ -272,52 +356,53 @@ export default function AddEmployee(){
                                     )}
                                 </div>
                                 <div className="address col-6">
-                                        <label htmlFor="state">{langData[8]}</label>
-                                        <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect1())}>
-                                            <Select fieldName='state' data={statesList} calNum={1} prefix='select'></Select>
-                                        </OutsideAlerter>
-                                        {Array.isArray(message) && (
-                                            <ErrorMessage myParam="state"></ErrorMessage>
-                                        )}
-                                      
-                                       
+                                    <label htmlFor="state">{langData[8]}</label>
+                                    <OutsideAlerter myDispatch={() => dispatch(setCloseSelect1())}>
+                                        <Select fieldName='state' data={statesList} calNum={1} prefix='select'></Select>
+                                    </OutsideAlerter>
+                                    {Array.isArray(message) && (
+                                        <ErrorMessage myParam="state"></ErrorMessage>
+                                    )}
+
+
                                 </div>
                                 <div className="col-6">
                                     <label htmlFor='zipcode'>{langData[9]}</label>
-                                    <input name='zipcode' className='input-standart' id="zipcode" type='number'/>
+                                    <input name='zipcode' className='input-standart' id="zipcode" type='number' />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="zipcode"></ErrorMessage>
                                     )}
                                 </div>
                             </div>
-                        </fieldset> 
+                        </fieldset>
                         <div className="address col-6">
                             <label htmlFor="department">{langData[10]}</label>
-                            <OutsideAlerter myDispatch={()=>dispatch(setCloseSelect2())}>
+                            <OutsideAlerter myDispatch={() => dispatch(setCloseSelect2())}>
                                 <Select fieldName='department' data={departmentsList} calNum={2} prefix='select'></Select>
                             </OutsideAlerter>
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="department"></ErrorMessage>
                             )}
-                           
+
                         </div>
                         <div className="col-12 button-container">
-                            <button 
-                                type="submit" 
+                            <button
+                                type="submit"
                                 className={
                                     actualTheme === 'theme-light' ?
-                                    'btn btn-lg btn-primary color-blue' :
-                                    'btn btn-lg btn-outline-dark color-blue'
+                                        'btn btn-lg btn-primary color-blue' :
+                                        'btn btn-lg btn-outline-dark color-blue'
                                 }
                             >
                                 {langData[11]}
                             </button>
-                            <Link 
+                            <Link
                                 to='/employees'
+                                onClick={clickAndImageDelete}
                                 className={
                                     actualTheme === 'theme-light' ?
-                                    'btn btn-lg btn-dark color-white' :
-                                    'btn btn-lg btn-outline-dark color-white'
+                                        'btn btn-lg btn-dark color-white' :
+                                        'btn btn-lg btn-outline-dark color-white'
                                 }
                             >
                                 {langData[12]}
@@ -326,10 +411,10 @@ export default function AddEmployee(){
                     </div>
                 </div>
                 <div className="col-2"></div>
-                
+
             </form>
-        </div>    
+        </div>
     </main>
-        
-       
+
+
 }

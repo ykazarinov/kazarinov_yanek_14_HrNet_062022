@@ -61,7 +61,10 @@ const initialState = {
     inputValues: {},
     entities: null,
     loading: false,
-    createEmployeeSuccess: false
+    createEmployeeSuccess: false,
+    imageUrl: '',
+    fileType: '',
+    uploadedFile: null
 }
 
 // slice, which content reducers and actions for data of the User's Profil and status of loading 
@@ -81,6 +84,15 @@ const newEmployeeSlice = createSlice({
             
 
         },
+        setImageUrl: (state, action) => {
+            state.imageUrl = action.payload
+        },
+        setFileType: (state, action) => {
+            state.fileType = action.payload
+        },
+        setUploadedFile: (state, action) => {
+            state.uploadedFile = action.payload
+        }
     },
     extraReducers: {
     
@@ -99,6 +111,6 @@ const newEmployeeSlice = createSlice({
   },
 });
 const { reducer, actions } = newEmployeeSlice;
-export const { setSuccessFalse, } = actions
+export const { setSuccessFalse, setImageUrl, setFileType, setUploadedFile} = actions
 export default reducer;
 

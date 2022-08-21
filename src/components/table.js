@@ -17,6 +17,8 @@ import Search from './search';
 import {toFrenchFormatDate} from './calendar'
 import {LightBox} from '@artfish/lightbox'
 import {useState} from "react"
+import axios from "../axios";
+import authHeader from "../services/auth-header";
 
 
 import { faXmark } from '@fortawesome/free-solid-svg-icons'

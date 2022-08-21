@@ -30,7 +30,8 @@ const transcription = [
                 'Phone',
                 'Photo',
                 'Upload a photo',
-                'Delete photo'
+                'Delete photo',
+                'File format error! Choose an image file!',
             ],
             signin: [
                 'Sign In',
@@ -99,7 +100,8 @@ const transcription = [
                 'Téléphone',
                 'Photo',
                 'Télécharger une photo',
-                'Supprimer la photo'
+                'Supprimer la photo',
+                'Erreur de format de fichier! Choisissez un fichier image!'
             ],
             signin: [
                 'S\'identifier',

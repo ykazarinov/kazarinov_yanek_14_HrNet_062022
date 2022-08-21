@@ -9,6 +9,9 @@ import { logout } from "../slices/auth";
 
 import { transcription } from '../app.config';
 
+import handleDeleteFile from "../resurces/deletefile";
+import { setImageUrl } from "../slices/employee.slice";
+
 
 export default function Headers(){
 
@@ -18,11 +21,13 @@ export default function Headers(){
 
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
     const langData = transcription.find(lng => lng.lang === currentLang).data.header
-
-    // function for logout
-    // const myLogout = () => {
-    //     dispatch(logout())
-    // }
+    const {imageUrl} = useSelector((state) => state.newEmployee)
+    const clickAndImageDelete = (()=>{
+        if(imageUrl !== ''){
+            handleDeleteFile(imageUrl)
+            dispatch(setImageUrl(''))
+        }
+    })
     
     const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
     return (
@@ -31,7 +36,10 @@ export default function Headers(){
                 <div className="row">
                     <div className="col-4 logo-cont">
                         <div className="logo">
-                            <Link to='/'>
+                            <Link 
+                                to='/'
+                                onClick={clickAndImageDelete}   
+                            >
                                 <FontAwesomeIcon icon={faIdCard} /> HR<span>Net</span>
                             </Link>
                         </div>
@@ -46,11 +54,20 @@ export default function Headers(){
                             <p>Loading profile...</p>
                         ) :(
                             <div className="authcont">
-                                <Link className="authcont-user-icon" to="/" title={user.email}>
+                                <Link 
+                                    className="authcont-user-icon" 
+                                    to="/" title={user.email}
+                                    onClick={clickAndImageDelete} 
+                                >
                                     {user.email.substr(0, 1)}
                                 </Link>
                 
-                                <button  className="authcont-text" onClick={()=>dispatch(logout())}>
+                                <button  className="authcont-text" onClick={()=>(
+                                        clickAndImageDelete(), 
+                                        dispatch(logout())
+                                        
+                                        )}
+                                >
                                     <FontAwesomeIcon icon={faSignOut} />
                                     {langData[1]} 
                                 </button>
