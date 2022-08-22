@@ -1,9 +1,10 @@
 import React from 'react';
-import Lang from './lang'
+
 import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
 
-
+import loadable from '@loadable/component'
+const Lang = loadable(() => import('./lang'));
 
 export default function LangSelect(){
     const dispatch = useDispatch();

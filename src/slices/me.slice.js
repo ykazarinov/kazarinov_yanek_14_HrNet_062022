@@ -54,10 +54,10 @@ const authSlice = createSlice({
     rememberMe: (state, action) => {
       state.isLoggedIn = true;
     },
-    signIn: (state,action) =>{
-      state.user = action.payload
-      state.isLoggedIn = true;
-    }
+    // signIn: (state,action) =>{
+    //   state.user = action.payload.user
+    //   state.isLoggedIn = true;
+    // }
   },
   //extraReducers allows createSlice to respond to other action types
   // besides the types it has generated.

@@ -1,9 +1,11 @@
 import Switch from "./switch"
 import { useSelector } from "react-redux";
-import LangSelect from './langselect'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGlobe } from '@fortawesome/free-solid-svg-icons'
+
+import loadable from '@loadable/component'
+const LangSelect = loadable(() => import('./langselect'));
 
 export default function Footer(){
     

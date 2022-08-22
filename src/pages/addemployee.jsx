@@ -1,33 +1,31 @@
-import Select from "../components/select"
-import Calendar from "../components/calendar"
-import OutsideAlerter from "../components/outsidealerter";
-import ErrorMessage from "../components/errormessage"
+import React from "react";
 import authHeader from "../services/auth-header";
 import { Navigate } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 import { setClose1, setClose2 } from "../slices/calendar.slice";
 import { setCloseSelect1, setCloseSelect2 } from "../slices/select.slice";
 import { setEmployee } from "../slices/employee.slice";
-
 import { setFileType, setImageUrl } from '../slices/file.slice'
-
 import { getStates } from "../slices/states.slice"
 import { getDepartments } from "../slices/departments.slice"
-
 import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import React from "react";
+import { useEffect, useState } from "react";
+
+import { faCircleUser, faXmark, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import axios from "../axios";
 import { API_REST_URL } from '../app.config'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleUser, faXmark, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
-
 import handleDeleteFile from '../resurces/deletefile'
 
 import { LightBox } from '@artfish/lightbox'
+
+import loadable from '@loadable/component'
+const OutsideAlerter = loadable(() => import("../components/outsidealerter"))
+const ErrorMessage  = loadable(() => import("../components/errormessage"))
+const  Select = loadable(() => import('../components/select'))
+const Calendar = loadable(() => import("../components/calendar"));
 
 export default function AddEmployee() {
 
@@ -120,7 +118,10 @@ export default function AddEmployee() {
 
 
     const handleChangeFile = (event) => {
-        setUploadedFile(event.target.files[0])
+        if(event.target.files[0]){
+            setUploadedFile(event.target.files[0])
+        }else{return}
+        
     }
 
     const onClickRemoveImage = (imageName) => {
@@ -196,7 +197,11 @@ export default function AddEmployee() {
         <LightBox
             content={
                 <div className="error-container">
-                    <div className="error-icon"><FontAwesomeIcon icon={faCircleExclamation} /></div>
+                    <div className="error-icon">
+                    
+                        <FontAwesomeIcon icon={faCircleExclamation} />
+                    
+                    </div>
                     {langData[18]}
                 </div>
             }
@@ -318,7 +323,9 @@ export default function AddEmployee() {
                         <div className="address col-6">
                             <label htmlFor="birthday">{langData[3]}</label>
                             <OutsideAlerter myDispatch={() => dispatch(setClose1())}>
-                                <Calendar fieldName='birthday' calNum={1}></Calendar>
+                               
+                                    <Calendar fieldName='birthday' calNum={1}></Calendar>
+                               
                             </OutsideAlerter>
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="birthday"></ErrorMessage>
@@ -329,7 +336,9 @@ export default function AddEmployee() {
                         <div className="address col-6">
                             <label htmlFor="startday">{langData[4]}</label>
                             <OutsideAlerter myDispatch={() => dispatch(setClose2())}>
-                                <Calendar fieldName='startday' calNum={2}></Calendar>
+                               
+                                    <Calendar fieldName='startday' calNum={2}></Calendar>
+                               
                             </OutsideAlerter>
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="startday"></ErrorMessage>

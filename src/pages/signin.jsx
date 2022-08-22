@@ -1,12 +1,18 @@
 import React, { useEffect  } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { login } from "../slices/auth";
+import authHeader from "../services/auth-header";
+// import { Formik, Field, Form, ErrorMessage } from "formik";
+// import * as Yup from "yup";
+import { login, rememberMe, signIn } from "../slices/auth";
 import { clearMessage } from "../slices/message";
 import { transcription } from '../app.config';
-import {getAllEmployees} from '../slices/getAllEmployees.slice';
+
+import axios from "../axios";
+
+import loadable from '@loadable/component'
+const ErrorMessage  = loadable(() => import("../components/errormessage"))
+
 
 const Login = (props) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -18,37 +24,52 @@ const Login = (props) => {
   const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
   const dispatch = useDispatch();
 
+  useEffect(()=>{
+    const token = JSON.parse(localStorage.getItem('token'));
+        const rememberMeToggle = localStorage.getItem('rememberMe')
+        if(token && rememberMeToggle){
+
+//////////////////////////////////
+
+          const getUser = async () => {
+            try {
+                const { data } = await axios.get('/auth/me', {headers: authHeader()})
+                dispatch(signIn(data))
+                dispatch(rememberMe())
+            }
+            catch (err) {
+                console.warn(err)
+           }
+        }
+       
+        getUser()
+    
+
+        ///////////////////////////////////////////
+      }
+
+  },[])
+
   useEffect(() => {
-    dispatch(clearMessage());
+    // dispatch(clearMessage());
     document.title = "HRNet - Sign-in Page"
   }, [dispatch]);
 
-  // useEffect(()=>{
-  //     if(isLoggedIn){
-  //       dispatch(getAllEmployees())
-  //     }
-      
-   
-  // }, [isLoggedIn])
 
-  const initialValues = {
-    email: "",
-    password: "",
-  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    let formValues = {}
+    formValues = {
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value,
+      rememberMeToggle: e.target.elements.rememberMeToggle.value,
+    }
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().required("This field is required!"),
-    password: Yup.string().required("This field is required!"),
-  });
-
-  // function for submit
-  const handleLogin = (formValue) => {
-    const { email, password, rememberMeToggle } = formValue;
-
-    if(rememberMeToggle){
+    if(formValues.rememberMeToggle){
       localStorage.setItem("rememberMe", true);
     }
-    dispatch(login({ email, password }))
+    
+    dispatch(login(formValues))
   };
 
   if (isLoggedIn) {
@@ -69,32 +90,26 @@ const Login = (props) => {
 
              
               <h1>{langData[0]}</h1>
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={handleLogin}
-                >
-                  <Form>
+               
+                  <form onSubmit={handleLogin}>
                     <div className="form-group input-wrapper">
                       <label htmlFor="email">{langData[1]}</label>
-                      <Field name="email" type="text" className="form-control input-standart" />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="alert alert-danger"
-                      />
+                      <input name="email" type="text" className="form-control input-standart" />
+                      {message ? (
+                        
+                         <ErrorMessage myParam="error"></ErrorMessage>
+                      ):null}
                     </div>
                     <div className="form-group input-wrapper">
                       <label htmlFor="password">{langData[2]}</label>
-                      <Field name="password" type="password" className="form-control input-standart" />
-                      <ErrorMessage
-                        name="password"
-                        component="div"
-                        className="alert alert-danger"
-                      />
+                      <input name="password" type="password" className="form-control input-standart" />
+                      {message ? (
+                        
+                        <ErrorMessage myParam="error"></ErrorMessage>
+                      ):null}
                     </div>
                     <div className="input-remember">
-                      <Field type="checkbox" id="remember-me" name="rememberMeToggle" />
+                      <input type="checkbox" id="remember-me" name="rememberMeToggle" />
                       <label htmlFor="remember-me">{langData[3]}</label>
                     </div>
                     <div className="form-group button-container">
@@ -103,8 +118,8 @@ const Login = (props) => {
                         {langData[4]}
                       </button>
                     </div>
-                  </Form>
-                </Formik>
+                  </form>
+              
 
               {message && (
                 <div className="form-group">

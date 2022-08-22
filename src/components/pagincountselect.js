@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { transcription } from '../app.config';
 import { setActualPaginNumber } from '../slices/getAllEmployees.slice';
-import { setPaginCount } from '../slices/getAllEmployees.slice';
 
 export default function PaginCountSelect(){
     const dispatch = useDispatch()

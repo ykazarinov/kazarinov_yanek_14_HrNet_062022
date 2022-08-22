@@ -1,27 +1,25 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faAngleUp, faUserPlus, faTrashCan, faPen, faCircleUser } from '@fortawesome/free-solid-svg-icons'
-
-
+import { faAngleDown, faAngleUp, faUserPlus, faTrashCan, faPen, faCircleUser, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import {setSortDirection} from '../slices/getAllEmployees.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { transcription } from '../app.config';
-import PaginCountSelect from './pagincountselect';
-import Pagination from './pagination';
+
 import { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { deleteEmployee } from "../slices/deleteEmployee.slice";
 import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import { setSuccessFalse } from '../slices/deleteEmployee.slice';
-import Search from './search';
+
 import {toFrenchFormatDate} from './calendar'
 import {LightBox} from '@artfish/lightbox'
 import {useState} from "react"
-import axios from "../axios";
-import authHeader from "../services/auth-header";
 
+import loadable from '@loadable/component'
 
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+const PaginCountSelect = loadable(() => import('./pagincountselect'));
+const Pagination = loadable(() => import('./pagination'));
+const Search = loadable(() => import('./search'));
 
 export function byField(field, sortDirection) {
     let result

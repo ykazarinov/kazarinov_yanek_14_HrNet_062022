@@ -1,5 +1,5 @@
 import styled from "styled-components"
-// import { useEffect, useState } from "react";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarDays, faAngleLeft, faAngleRight, faHouse } from '@fortawesome/free-solid-svg-icons'
 
@@ -13,13 +13,10 @@ import { setClose1, setClose2 } from "../slices/calendar.slice";
 import { setInputDate1, setInputDate2 } from "../slices/calendar.slice";
 import { useEffect } from "react";
 
-// import { Field } from "formik";
-
 import{today} from '../app.config'
 import {conf} from '../app.config.js'
 
-const OpenCalendarList = styled('div')`
-    display: block;`
+const OpenCalendarList = styled('div')`display: block;`
 const CloseCalendarList = styled('div')`display: none;`
 
 

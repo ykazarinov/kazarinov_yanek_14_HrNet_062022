@@ -1,21 +1,15 @@
 import styled from "styled-components"
-import { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 import { useSelector, useDispatch } from "react-redux";
 
-// import { Field} from "formik";
-
 import {    
-    setActualItem1, 
-    setActualItem2,
     setIsOpen1, 
     setIsOpen2,
 } from "../slices/select.slice";
 
-const OpenSelectList = styled('ul')`
-    display: block;`
+const OpenSelectList = styled('ul')`display: block;`
 const CloseSelectList = styled('ul')`display: none;`
 
 export default function Select( props ){
@@ -28,14 +22,6 @@ export default function Select( props ){
         switch(props.calNum){
             case 1: return setIsOpen1() 
             case 2: return setIsOpen2() 
-            default: return
-        }
-    })
-
-    const setActualItem = (()=>{ 
-        switch(props.calNum){ 
-            case 1: return setActualItem1() 
-            case 2: return setActualItem2()
             default: return
         }
     })

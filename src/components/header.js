@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faIdCard } from '@fortawesome/free-solid-svg-icons'
+import { faIdCard, faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons'
 
-
-import { faUserCircle, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/auth";
 
@@ -11,7 +9,6 @@ import { transcription } from '../app.config';
 
 import handleDeleteFile from "../resurces/deletefile";
 import { setImageUrl } from "../slices/employee.slice";
-
 
 export default function Headers(){
 
