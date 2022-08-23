@@ -6,6 +6,7 @@ import { transcription } from '../app.config';
 import {  setActualItem1, setActualItem2, setIsOpen1, setIsOpen2 } from "../slices/select.slice";
 import { resetCalendar1, resetCalendar2 } from "../slices/calendar.slice";
 import {setImageUrl, setFileType} from "../slices/file.slice"
+import {afterEditSuccess} from "../slices/editEmployee.slice"
 
 import loadable from '@loadable/component'
 const Table = loadable(() => import("../components/table"))
@@ -22,6 +23,7 @@ export default function Employees(){
         dispatch(setSuccessFalse())
     }, [])
 
+    //after create
     useEffect(()=>{
         if(createEmployeeSuccess === false){
              dispatch(setActualItem1(''))
@@ -35,6 +37,11 @@ export default function Employees(){
         }
        
     }, [createEmployeeSuccess])
+
+    //after edit
+    useEffect(()=>{
+        dispatch(afterEditSuccess())
+    }, [])
 
     
     const { isLoggedIn } = useSelector((state) => state.auth);

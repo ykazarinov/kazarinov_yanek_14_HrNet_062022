@@ -12,6 +12,7 @@ import delEmployeeReducer from "./slices/deleteEmployee.slice"
 import statesReducer from "./slices/states.slice"
 import departmentsReducer from "./slices/departments.slice"
 import uploadFileReducer from "./slices/file.slice"
+import editEmployeeReducer from "./slices/editEmployee.slice"
 
 const reducer = {
   calendarReducer1: calendarReducer1,
@@ -27,7 +28,8 @@ const reducer = {
   delEmployee: delEmployeeReducer,
   states: statesReducer,
   departments: departmentsReducer,
-  uploadFile: uploadFileReducer
+  uploadFile: uploadFileReducer,
+  editEmployee: editEmployeeReducer
 
   
 }

@@ -11,6 +11,15 @@ import { deleteEmployee } from "../slices/deleteEmployee.slice";
 import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import { setSuccessFalse } from '../slices/deleteEmployee.slice';
 
+import {fillCalendar1, fillCalendar2} from '../slices/calendar.slice'
+import {setActualItem1, setActualItem2} from '../slices/select.slice'
+import {setCloseSelect1, setCloseSelect2} from '../slices/select.slice'
+import {setImageUrl} from '../slices/file.slice'
+
+import {setEditEmployee} from '../slices/editEmployee.slice'
+
+import {API_REST_URL} from '../app.config'
+
 import {toFrenchFormatDate} from './calendar'
 import {LightBox} from '@artfish/lightbox'
 import {useState} from "react"
@@ -186,7 +195,39 @@ export default function Table(props){
       setHidden2(true)
     }
 
+    const dateToObject = (date) => {
+        let myYear = date.substring(0,4)
+        let myMonth = date.substring(5,7)
+        let myDay = date.substring(8,10)
+        return{
+            choosedYear: myYear,
+            choosedMonth: Number(myMonth),
+            choosedDay: myDay,
+            inputDate: toFrenchFormatDate(date)
+        }
+    }
 
+    const editItem = (id) => {
+        const item = employeesState.find(item=>item._id === id)
+        dispatch(setEditEmployee(item))
+        dispatch(fillCalendar1(dateToObject(item.birthday)))
+        dispatch(fillCalendar2(dateToObject(item.startday)))
+        if(item.state !== null){
+            dispatch(setActualItem1(item.state[0].stateName))
+            dispatch(setCloseSelect1())
+        }
+        if(item.department !== null){
+            dispatch(setActualItem2(item.department[0].departmentName))
+            dispatch(setCloseSelect2())
+        }
+        if(item.photo){
+            dispatch(setImageUrl(item.photo.replace(API_REST_URL, '')))
+        }
+        
+        
+       
+        
+    }
 
     return (
         <div>
@@ -349,13 +390,17 @@ export default function Table(props){
                             ))}
                         <td>
                             <div className='but-cont'>
-                                <button 
+                                <Link
+                                    onClick={
+                                        ()=>editItem(emplObj._id)
+                                    }
+                                    to={'/editeemployee/' + emplObj._id} 
                                     type='button' 
                                     className={ actualTheme === 'theme-light' ?
                                         'btn btn-sm btn-primary color-blue' :
                                         'btn btn-sm btn-outline-dark color-blue'
                                     }
-                                >{<FontAwesomeIcon icon={faPen} />}</button>
+                                >{<FontAwesomeIcon icon={faPen} />}</Link>
                                
                                     <button 
                                         onClick={

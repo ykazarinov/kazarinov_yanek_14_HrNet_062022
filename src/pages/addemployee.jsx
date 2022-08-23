@@ -12,6 +12,8 @@ import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
+import {patchEmployee} from '../slices/editEmployee.slice'
+
 import { faCircleUser, faXmark, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -38,17 +40,22 @@ export default function AddEmployee() {
     const langData = transcription.find(lng => lng.lang === currentLang).data.addemployee
     const { isLoggedIn } = useSelector((state) => state.auth);
     const { createEmployeeSuccess } = useSelector((state) => state.newEmployee);
+    const {editEmployeeSuccess} = useSelector((state) => state.editEmployee)
 
     const { fileType, imageUrl } = useSelector((state) => state.uploadFile)
 
     const { statesList } = useSelector((state) => state.states)
     const { departmentsList } = useSelector((state) => state.departments)
 
+    const {editedEmployee} = useSelector((state) => state.editEmployee)
+
     const [hidden, setHidden] = useState(true);
 
     const [uploadedFile, setUploadedFile] = useState(null)
 
     const inputFileRef = React.useRef(null)
+
+
 
     const changeDateFormatToBackEnd = (dateIn) => {
         let day = dateIn.substr(0, 2)
@@ -62,6 +69,7 @@ export default function AddEmployee() {
         let formValues = {}
 
         formValues = {
+            id: editedEmployee._id ? editedEmployee._id : null, 
             photo: imageUrl ? API_REST_URL + imageUrl: '',
             firstName: e.target.elements.firstName.value,
             lastName: e.target.elements.lastName.value,
@@ -80,8 +88,12 @@ export default function AddEmployee() {
                 null,
 
         }
-
-        dispatch(setEmployee(formValues))
+        if(editedEmployee === null){
+            dispatch(setEmployee(formValues))
+        }else{
+            dispatch(patchEmployee(formValues))
+        }
+        
 
     };
 
@@ -174,7 +186,7 @@ export default function AddEmployee() {
         return <Navigate to="/" />;
     }
 
-    if (createEmployeeSuccess) {
+    if (createEmployeeSuccess  || editEmployeeSuccess) {
         return <Navigate to="/employees" />;
     }
 
@@ -230,6 +242,8 @@ export default function AddEmployee() {
                                 onChange={handleChangeFile}
                                 ref={inputFileRef}
                                 hidden
+                                // defaultValue={editedEmployee ? editedEmployee.photo : null}
+
 
                             />
 
@@ -286,6 +300,7 @@ export default function AddEmployee() {
                                 name='firstName'
                                 className='input-standart'
                                 id="firstName"
+                                defaultValue={editedEmployee ? editedEmployee.firstName : null}
 
                             />
                             {Array.isArray(message) && (
@@ -298,6 +313,7 @@ export default function AddEmployee() {
                                 name='lastName'
                                 className='input-standart'
                                 id="lastName"
+                                defaultValue={editedEmployee ? editedEmployee.lastName : null}
 
                             />
                             {Array.isArray(message) && (
@@ -307,14 +323,26 @@ export default function AddEmployee() {
 
                         <div className="col-6">
                             <label htmlFor='email'>{langData[13]}</label>
-                            <input name='email' type='email' className='input-standart' id="email" />
+                            <input 
+                                name='email' 
+                                type='email' 
+                                className='input-standart' 
+                                id="email" 
+                                defaultValue={editedEmployee ? editedEmployee.email : null}
+                            />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="email"></ErrorMessage>
                             )}
                         </div>
                         <div className="col-6">
                             <label htmlFor='phone'>{langData[14]}</label>
-                            <input name='phone' type='phone' className='input-standart' id="phone" />
+                            <input 
+                                name='phone' 
+                                type='phone' 
+                                className='input-standart' 
+                                id="phone" 
+                                defaultValue={editedEmployee ? editedEmployee.phone : null}
+                                />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="phone"></ErrorMessage>
                             )}
@@ -352,14 +380,24 @@ export default function AddEmployee() {
                             <div className="row">
                                 <div className="col-6">
                                     <label htmlFor='street'>{langData[6]}</label>
-                                    <input name='street' className='input-standart' id="street" />
+                                    <input 
+                                        name='street' 
+                                        className='input-standart' 
+                                        id="street"
+                                        defaultValue={editedEmployee ? editedEmployee.street : null} 
+                                    />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="street"></ErrorMessage>
                                     )}
                                 </div>
                                 <div className="col-6">
                                     <label htmlFor='city'>{langData[7]}</label>
-                                    <input name='city' className='input-standart' id="city" />
+                                    <input 
+                                        name='city' 
+                                        className='input-standart' 
+                                        id="city" 
+                                        defaultValue={editedEmployee ? editedEmployee.city : null}
+                                    />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="city"></ErrorMessage>
                                     )}
@@ -377,7 +415,13 @@ export default function AddEmployee() {
                                 </div>
                                 <div className="col-6">
                                     <label htmlFor='zipcode'>{langData[9]}</label>
-                                    <input name='zipcode' className='input-standart' id="zipcode" type='number' />
+                                    <input 
+                                        name='zipcode' 
+                                        className='input-standart' 
+                                        id="zipcode" 
+                                        type='number' 
+                                        defaultValue={editedEmployee ? editedEmployee.zipcode : null}
+                                    />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="zipcode"></ErrorMessage>
                                     )}

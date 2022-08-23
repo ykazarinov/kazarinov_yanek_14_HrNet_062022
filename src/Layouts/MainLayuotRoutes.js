@@ -16,6 +16,7 @@ function MainLayoutRoutes() {
             <Routes>
                 <Route exact path="/" element={<Login />} />
                 <Route exact path="/addemployee"  element={<AddEmployee />} />
+                <Route exact path="/editeemployee/:id"  element={<AddEmployee />} />
                 <Route exact path="/employees" element={<Employees />} />
                 <Route path='*' element={<Error />} />
             </Routes>

@@ -16,13 +16,14 @@ export const login = createAsyncThunk(
       const data = await AuthService.login(email, password)
       return { user: data };
     } catch (error) {
-      let message = {}
-      message.error = 
+      let message = [{}]
+      message[0].msg = 
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
         error.toString();
+      message[0].param = 'all'
       thunkAPI.dispatch(setMessage(message));
       console.log(message)
       //rejectWithValue is a utility function that you can return (or throw) 
@@ -40,8 +41,13 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 // Initial state: if user is exist then isLoggedIn is true and user consist the data
 //else isLoggedIn is false and user is null
 const initialState = user
-  ? { isLoggedIn: true, user }
-  : { isLoggedIn: false, user: null };
+  ? { isLoggedIn: true, 
+      user,
+      remember: false  }
+  : { isLoggedIn: false,
+      user: null,
+      remember: false
+    };
 
 //This Slice creates actions and reducers 
 //for authorization and exit from the authorized mode.
@@ -52,7 +58,8 @@ const authSlice = createSlice({
   reducers: {
     //Switch to "Logged in" mode
     rememberMe: (state, action) => {
-      state.isLoggedIn = true;
+      // state.isLoggedIn = true;
+      state.remember = true;
     },
     signIn: (state,action) =>{
       state.user = action.payload

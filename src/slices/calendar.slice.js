@@ -184,13 +184,21 @@ function createGenericSlice(sliceName) {
           state['currentMonth' + sliceName] = monthDates(currentDay.getFullYear(), currentDay.getMonth() + 1)
           state['choosedDay' + sliceName] = currentDay.getDate()
           state['inputDate' + sliceName] = ''
+        },
+        fillCalendar: (state, action) => {
+          state['isOpen' + sliceName] = false
+          state['choosedYear' + sliceName] = action.payload.choosedYear
+          state['choosedMonth' + sliceName] = action.payload.choosedMonth
+          state['currentMonth' + sliceName] = monthDates(action.payload.choosedYear, action.payload.choosedMonth)
+          state['choosedDay' + sliceName] = action.payload.choosedDay
+          state['inputDate' + sliceName] = action.payload.inputDate
         }
 
       },
     });
     const { reducer, actions } = calendarSlice;
-    const {setIsOpen, setOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, setInputDate, resetCalendar } = actions;
-    return {setIsOpen, setOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, setInputDate, resetCalendar, reducer}
+    const {setIsOpen, setOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, setInputDate, resetCalendar, fillCalendar } = actions;
+    return {setIsOpen, setOpen, setClose, setChoosedYear, setChoosedMonth, setCurrentMonth, setChoosedDay, setInputDate, resetCalendar, fillCalendar, reducer}
   }
 
   const slice1 = createGenericSlice("1")
@@ -205,6 +213,7 @@ function createGenericSlice(sliceName) {
   const setChoosedDay1 = slice1.setChoosedDay
   const setInputDate1 = slice1.setInputDate
   const resetCalendar1 = slice1.resetCalendar
+  const fillCalendar1 = slice1.fillCalendar
   const calendarReducer1 = slice1.reducer
 
   const setIsOpen2 = slice2.setIsOpen
@@ -216,6 +225,7 @@ function createGenericSlice(sliceName) {
   const setChoosedDay2 = slice2.setChoosedDay
   const setInputDate2 = slice2.setInputDate
   const resetCalendar2 = slice2.resetCalendar
+  const fillCalendar2 = slice2.fillCalendar
   const calendarReducer2 = slice2.reducer
 
   export {
@@ -228,6 +238,7 @@ function createGenericSlice(sliceName) {
     setChoosedDay1,
     setInputDate1,
     resetCalendar1,
+    fillCalendar1,
     calendarReducer1,
     setIsOpen2,
     setOpen2,
@@ -238,6 +249,7 @@ function createGenericSlice(sliceName) {
     setChoosedDay2,
     setInputDate2,
     resetCalendar2,
+    fillCalendar2,
     calendarReducer2}
 
   

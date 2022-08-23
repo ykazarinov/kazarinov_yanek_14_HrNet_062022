@@ -16,7 +16,8 @@ const ErrorMessage  = loadable(() => import("../components/errormessage"))
 
 const Login = (props) => {
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { message } = useSelector((state) => state.message);
+  const { remember } = useSelector((state) => state.auth);
+  const message = useSelector((state) => state.message);
 
   const  currentLang  = useSelector((state) => state['lang'].actualLang)
   const langData = transcription.find(lng => lng.lang === currentLang).data.signin
@@ -51,6 +52,14 @@ const Login = (props) => {
     document.title = "HRNet - Sign-in Page"
   }, [dispatch]);
 
+  useEffect(()=>{
+    if(isLoggedIn){
+      if(remember){
+        localStorage.setItem("rememberMe", true);
+      }
+    }
+  }, [isLoggedIn])
+
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -61,11 +70,11 @@ const Login = (props) => {
       rememberMeToggle: e.target.elements.rememberMeToggle.value,
     }
 
-    if(formValues.rememberMeToggle){
-      localStorage.setItem("rememberMe", true);
-    }
+    dispatch(rememberMe())
     
     dispatch(login(formValues))
+
+   
   };
 
   if (isLoggedIn) {
@@ -77,59 +86,54 @@ const Login = (props) => {
 
 
   return (
+    <>
+    {isLoggedIn ? 'Loading ... ' :
     <main className={currentTheme}>
-      <div className="container">
-        <div className="row">
-          <div className="col-3"></div>
-          <div className="col-6">
-            <section className="sign-in-content">
+    <div className="container">
+      <div className="row">
+        <div className="col-3"></div>
+        <div className="col-6">
+          <section className="sign-in-content">
 
+           
+            <h1>{langData[0]}</h1>
              
-              <h1>{langData[0]}</h1>
-               
-                  <form onSubmit={handleLogin}>
-                    <div className="form-group input-wrapper">
-                      <label htmlFor="email">{langData[1]}</label>
-                      <input name="email" type="text" className="form-control input-standart" />
-                      {message ? (
-                        
-                         <ErrorMessage myParam="error"></ErrorMessage>
-                      ):null}
-                    </div>
-                    <div className="form-group input-wrapper">
-                      <label htmlFor="password">{langData[2]}</label>
-                      <input name="password" type="password" className="form-control input-standart" />
-                      {message ? (
-                        
-                        <ErrorMessage myParam="error"></ErrorMessage>
-                      ):null}
-                    </div>
-                    <div className="input-remember">
-                      <input type="checkbox" id="remember-me" name="rememberMeToggle" />
-                      <label htmlFor="remember-me">{langData[3]}</label>
-                    </div>
-                    <div className="form-group button-container">
-                      <button type="submit" className="btn btn-primary btn-lg"
-                      >
-                        {langData[4]}
-                      </button>
-                    </div>
-                  </form>
-              
-
-              {message && (
-                <div className="form-group">
-                  <div className="alert alert-danger" role="alert">
-                    {message}
+                <form onSubmit={handleLogin}>
+                  <div className="form-group input-wrapper">
+                    <label htmlFor="email">{langData[1]}</label>
+                    <input name="email" type="text" className="form-control input-standart" />
+                    {Array.isArray(message) && (
+                                <ErrorMessage myParam="all"></ErrorMessage>
+                            )}
                   </div>
-                </div>
-              )}
-            </section>
-          </div>
-          <div className="col-3"></div>
+                  <div className="form-group input-wrapper">
+                    <label htmlFor="password">{langData[2]}</label>
+                    <input name="password" type="password" className="form-control input-standart" />
+                    {Array.isArray(message) && (
+                                <ErrorMessage myParam="all"></ErrorMessage>
+                            )}
+                  </div>
+                  <div className="input-remember">
+                    <input type="checkbox" id="remember-me" name="rememberMeToggle" />
+                    <label htmlFor="remember-me">{langData[3]}</label>
+                  </div>
+                  <div className="form-group button-container">
+                    <button type="submit" className="btn btn-primary btn-lg"
+                    >
+                      {langData[4]}
+                    </button>
+                  </div>
+                </form>
+            
+          </section>
         </div>
+        <div className="col-3"></div>
       </div>
-    </main>
+    </div>
+  </main>
+    }
+    </>
+
   );
 };
 export default Login;

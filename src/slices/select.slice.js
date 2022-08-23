@@ -29,7 +29,8 @@ function createGenericSlice(sliceName) {
             ['actualItem' + sliceName]: state['actualItem' + sliceName],
             ['isOpen' + sliceName] : false,
           };
-        }
+        },
+       
       },
     });
     const { reducer, actions } = selectSlice;
