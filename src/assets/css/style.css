@@ -11680,6 +11680,8 @@ legend.scheduler-border {
 .table-cont tbody td.photoTd {
   text-align: center;
   font-size: 1.2rem;
+}
+.table-cont tbody td.photoTd .photoTd-icon {
   cursor: pointer;
 }
 

@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { transcription } from '../app.config';
 import {  setActualItem1, setActualItem2, setIsOpen1, setIsOpen2 } from "../slices/select.slice";
 import { resetCalendar1, resetCalendar2 } from "../slices/calendar.slice";
+import {setImageUrl, setFileType} from "../slices/file.slice"
 
 import loadable from '@loadable/component'
 const Table = loadable(() => import("../components/table"))
@@ -15,6 +16,7 @@ export default function Employees(){
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
     const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
     const { createEmployeeSuccess } = useSelector((state) => state.newEmployee);
+
  
     useEffect(()=>{
         dispatch(setSuccessFalse())
@@ -28,6 +30,8 @@ export default function Employees(){
             dispatch(setIsOpen2(false))
             dispatch(resetCalendar1())
             dispatch(resetCalendar2())
+            dispatch(setImageUrl(''))
+            dispatch(setFileType(''))
         }
        
     }, [createEmployeeSuccess])

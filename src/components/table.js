@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faUserPlus, faTrashCan, faPen, faCircleUser, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import {setSortDirection} from '../slices/getAllEmployees.slice';
+import {setSortDirection, localDeleteEmployee} from '../slices/getAllEmployees.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { transcription } from '../app.config';
 
@@ -79,6 +79,8 @@ export default function Table(props){
     const {sortedArray} = useSelector((state)=>state.allEmployees)
     const {paginCount} = useSelector((state)=>state.allEmployees)
 
+    const {employeesState} = useSelector((state)=>state.allEmployees)
+
     const {actualPaginNumber} = useSelector((state)=>state.allEmployees)
     const {paginatedArray} = useSelector((state)=>state.allEmployees)
     const {searchResult} = useSelector((state)=>state.allEmployees)
@@ -127,12 +129,21 @@ export default function Table(props){
         }
     })
 
+    useEffect(()=>{
+        dispatch(getAllEmployees())
+    },[])
 
     //after delete
     useEffect(()=>{
-        dispatch(setSuccessFalse())
-        dispatch(getAllEmployees())
-    }, [success])
+
+        if(success === true){
+            const clone = (Object.assign([], employeesState))
+            const cloneIndex = clone.findIndex(item => item._id === elemId);
+            clone.splice(cloneIndex, 1)
+            dispatch(localDeleteEmployee(clone))
+            dispatch(setSuccessFalse())
+        }
+    }, [dispatch, success])
 
 
     useEffect(()=>{
@@ -161,6 +172,7 @@ export default function Table(props){
 
     const deleteItem = (()=>{
         dispatch(deleteEmployee(elemId))
+
         setHidden(true)
     })
 
@@ -314,6 +326,7 @@ export default function Table(props){
                                     {   
                                         myKey === 'photo' && String(Object.values(emplObj)[index]) ?  
                                         <FontAwesomeIcon 
+                                            className='photoTd-icon'
                                             onClick={()=>openModal2(String(Object.values(emplObj)[index]))}
                                             icon={faCircleUser} 
                                         /> :

@@ -29,8 +29,6 @@ const Login = (props) => {
         const rememberMeToggle = localStorage.getItem('rememberMe')
         if(token && rememberMeToggle){
 
-//////////////////////////////////
-
           const getUser = async () => {
             try {
                 const { data } = await axios.get('/auth/me', {headers: authHeader()})
@@ -44,8 +42,6 @@ const Login = (props) => {
        
         getUser()
     
-
-        ///////////////////////////////////////////
       }
 
   },[])

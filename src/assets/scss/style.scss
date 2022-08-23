@@ -885,11 +885,15 @@ legend.scheduler-border {
 }
 
 .table-cont tbody td.photoTd{
-    text-align: center;
-    font-size: 1.2rem;
-    cursor: pointer;
+            text-align: center;
+        font-size: 1.2rem;
+    .photoTd-icon{
 
+        cursor: pointer;
+
+    }
 }
+
 
 .error-container{
     text-align: center;

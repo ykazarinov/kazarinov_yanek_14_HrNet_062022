@@ -128,6 +128,30 @@ const allEmployeesSlice = createSlice({
          },
          setSearchValue: (state, action) => {
             state.searchValue = action.payload
+         },
+        
+         localDeleteEmployee: (state, action) => {
+            state.loading = false
+            state.employeesState = action.payload
+            
+            if(state.searchValue !== ''){
+                let serchRes = searchPhrase(state.searchValue, state.employeesState)
+                state.isSearch = serchRes.isSearch
+                state.searchResult = serchRes.searchResult
+                arrayProcessingAfterSearch(state)
+               
+            }else{
+                state.searchResult = Object.assign([], state.employeesState);
+                arrayProcessingAfterSearch(state)
+            }
+            
+            let clone = Object.assign([], state.searchResult);
+            state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
+            state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
+    
+            
+            
+            
          }
 
 
@@ -177,7 +201,8 @@ export const {
     setSortDirectionDefault,
     setSearchResult,
     setIsSearch,
-    setSearchValue
+    setSearchValue,
+    localDeleteEmployee
 } = actions
 export default reducer;
 

@@ -62,7 +62,7 @@ export default function AddEmployee() {
         let formValues = {}
 
         formValues = {
-            photo: API_REST_URL + imageUrl,
+            photo: imageUrl ? API_REST_URL + imageUrl: '',
             firstName: e.target.elements.firstName.value,
             lastName: e.target.elements.lastName.value,
             email: e.target.elements.email.value,
