@@ -9,6 +9,7 @@ import {setImageUrl, setFileType} from "../slices/file.slice"
 import {afterEditSuccess} from "../slices/editEmployee.slice"
 import {setLocalEmployee} from "../slices/getAllEmployees.slice"
 import {setEditedEmployee} from "../slices/editEmployee.slice"
+import { getAllEmployees } from "../slices/getAllEmployees.slice";
 
 
 import loadable from '@loadable/component'
@@ -31,10 +32,19 @@ export default function Employees(){
         dispatch(setSuccessFalse())
     }, [])
 
+        //after create
+    // useEffect(()=>{
+    //     dispatch(setLocalEmployee(employeesAfterLocalEdit()))
+    // },[])
+
     //after create
     useEffect(()=>{
+        if(editableEmployee === null){
+            dispatch(getAllEmployees())
+        }
+        
         if(createEmployeeSuccess === false){
-             dispatch(setActualItem1(''))
+            dispatch(setActualItem1(''))
             dispatch(setActualItem2(''))
             dispatch(setIsOpen1(false))
             dispatch(setIsOpen2(false))
@@ -42,6 +52,7 @@ export default function Employees(){
             dispatch(resetCalendar2())
             dispatch(setImageUrl(''))
             dispatch(setFileType(''))
+            
         }
        
     }, [createEmployeeSuccess])
@@ -52,24 +63,23 @@ export default function Employees(){
         const editeElemId = editableEmployee._id
         const cloneIndex = clone.findIndex(item => item._id === editeElemId);
         clone[cloneIndex] = editedEmployee
+        
         return clone
     })
 
-    // useEffect(()=>{
-       
-    //     console.log(isLoggedIn)
-    //     dispatch(getAllEmployees())
-    // },[isLoggedIn])
 
     //after edit
     useEffect(()=>{
         if(editEmployeeSuccess === true){
-            console.log(employeesAfterLocalEdit())
+          
             dispatch(setLocalEmployee(employeesAfterLocalEdit()))
+            console.log('rrr')
             dispatch(afterEditSuccess())
         }
         
     }, [editEmployeeSuccess])
+
+
 
     
     

@@ -54,7 +54,7 @@ const Login = (props) => {
 
   useEffect(()=>{
     if(isLoggedIn){
-      console.log(isLoggedIn)
+     
       dispatch(getAllEmployees())
       if(remember){
         localStorage.setItem("rememberMe", true);

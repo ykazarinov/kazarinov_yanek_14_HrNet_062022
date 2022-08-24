@@ -94,7 +94,11 @@ const newEmployeeSlice = createSlice({
         },
         setUploadedFile: (state, action) => {
             state.uploadedFile = action.payload
+        },
+        setCreatedEmployee: (state, action) => {
+            state.createdEmployee = action.peyload
         }
+
     },
     extraReducers: {
     
@@ -113,6 +117,6 @@ const newEmployeeSlice = createSlice({
   },
 });
 const { reducer, actions } = newEmployeeSlice;
-export const { setSuccessFalse, setImageUrl, setFileType, setUploadedFile} = actions
+export const { setSuccessFalse, setImageUrl, setFileType, setUploadedFile, setCreatedEmployee} = actions
 export default reducer;
 

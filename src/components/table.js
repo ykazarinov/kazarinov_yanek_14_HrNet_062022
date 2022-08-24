@@ -162,15 +162,15 @@ export default function Table(props){
 
     useEffect(()=>{
         let clone = Object.assign([], searchResult);
-
-        // dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
+       
+        dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
  
     }, [sort, sortDirection])
 
     useEffect(()=>{
         const clone = Object.assign([], sortedArray);
         let arrayByPages = createSubarray(clone, paginCount)
-        // dispatch(createPaginatedArray(arrayByPages))
+        dispatch(createPaginatedArray(arrayByPages))
     }, [sortedArray, paginCount])
     
 
@@ -218,7 +218,7 @@ export default function Table(props){
         dispatch(fillCalendar1(dateToObject(item.birthday)))
         dispatch(fillCalendar2(dateToObject(item.startday)))
         if(item.state !== null){
-            console.log(item.state[0].stateName)
+           
             dispatch(setActualItem1(item.state[0].stateName))
             dispatch(setCloseSelect1())
         }
@@ -296,7 +296,7 @@ export default function Table(props){
                 </section>
                 <Search></Search>
             </section>
-            {searchResult.length > 0 ?
+            {paginatedArray.length > 0 ?
             <table className="table-cont">
             <thead>
                     <tr>

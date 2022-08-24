@@ -9,7 +9,7 @@ export function searchPhrase(value, employeesState){
         isSearch = true
         
         employeesState.map((emp)=>(
-            // console.log(emp)
+          
            
                 Object.keys(emp)).forEach((key)=>(
                     key === '_id' || 
@@ -32,7 +32,7 @@ export function searchPhrase(value, employeesState){
                                 (   newArr.length === 0 ? newArr.push(Object.assign({}, emp)) : null,
                                     newArr.forEach(obj=>{
                                         subVerif = false;
-                                        // console.log(obj._id, emp._id)
+                                       
                                         (String(obj._id) === String(emp._id) ? 
                                             subVerif = false : 
                                             subVerif = true
@@ -53,7 +53,7 @@ export function searchPhrase(value, employeesState){
                                 newArr.length === 0 ? newArr.push(Object.assign({}, emp)) : null,
                                 newArr.forEach(obj=>{
                                     verif = false;
-                                    // console.log(obj._id, emp._id)
+                                   
                                     (String(obj._id) === String(emp._id) ? 
                                         verif = false : 
                                         verif = true
@@ -73,8 +73,7 @@ export function searchPhrase(value, employeesState){
             
             
         )
-        // console.log(value.length)
-        // console.log(newArr)
+       
         searchResult = newArr
     }else{
         isSearch = false

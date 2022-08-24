@@ -170,15 +170,16 @@ const allEmployeesSlice = createSlice({
            
         }else{
             state.searchResult = Object.assign([], state.employeesState);
+            
             arrayProcessingAfterSearch(state)
         }
         
         let clone = Object.assign([], state.searchResult);
         state.sortedArray = clone.sort(byField(state.sort, state.sortDirection))
+        
         state.paginatedArray = createSubarray(state.sortedArray, state.paginCount)
 
-        
-        
+               
         state.success = true
     },
     [getAllEmployees.rejected]: (state) => {

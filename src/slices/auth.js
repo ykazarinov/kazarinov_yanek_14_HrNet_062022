@@ -25,7 +25,7 @@ export const login = createAsyncThunk(
         error.toString();
       message[0].param = 'all'
       thunkAPI.dispatch(setMessage(message));
-      console.log(message)
+     
       //rejectWithValue is a utility function that you can return (or throw) 
       //in your action creator to return a rejected response 
       //with a defined payload and meta.

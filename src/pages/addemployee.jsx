@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 
 import {patchEmployee} from '../slices/editEmployee.slice'
 import {setEditedEmployee} from '../slices/editEmployee.slice'
+import {setCreatedEmployee} from '../slices/employee.slice'
 
 import { faCircleUser, faXmark, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -91,11 +92,11 @@ export default function AddEmployee() {
                 null,
         }
 
-        console.log(formValuesForCreate)
+       
 
         formValuesForServerUpdate = (Object.assign([], formValuesForCreate))
         formValuesForServerUpdate.id = editableEmployee !== null ? editableEmployee._id : ''
-        console.log(formValuesForServerUpdate)
+      
 
         formValuesForLocalUpdate = (Object.assign([], formValuesForCreate))
         formValuesForLocalUpdate._id = editableEmployee !== null ? editableEmployee._id : ''
@@ -116,6 +117,7 @@ export default function AddEmployee() {
        
         if(editableEmployee === null){
             dispatch(setEmployee(formValuesForCreate))
+            // dispatch(setCreatedEmployee(formValuesForLocalCreate))
         }else{
             dispatch(patchEmployee(formValuesForServerUpdate))
             dispatch(setEditedEmployee(formValuesForLocalUpdate))
