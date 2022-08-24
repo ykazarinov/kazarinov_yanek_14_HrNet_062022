@@ -6,6 +6,7 @@ const API_URL = API_REST_URL + "/employees";
 // service for edit User's Profile request by the axios
 
 const postEmployee = (
+    employeeId,
     photo, 
     firstName, 
     lastName, 
@@ -20,6 +21,7 @@ const postEmployee = (
     department,) => {
     
         return axios.post(API_URL, {
+            
             "photo": photo, 
             "firstName": firstName,
             "lastName":lastName, 

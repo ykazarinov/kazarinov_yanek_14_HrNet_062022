@@ -61,11 +61,12 @@ export const patchEmployee = createAsyncThunk(
 
 const initialState = {
 
-    editedEmployee: null,
+    editableEmployee: null,
     loading: false,
     editEmployeeSuccess: false,
     imageUrl: '',
     fileType: '',
+    editedEmployee: null
 
 }
 
@@ -84,12 +85,15 @@ const editEmployeeSlice = createSlice({
         setEditFileType: (state, action) => {
             state.fileType = action.payload
         },
-        setEditEmployee: (state, action) => {
-            state.editedEmployee = action.payload
+        setEditableEmployee: (state, action) => {
+            state.editableEmployee = action.payload
         },
         afterEditSuccess: (state, action) => {
-            state.editedEmployee = null
+            state.editableEmployee = null
             state.editEmployeeSuccess = false
+        },
+        setEditedEmployee: (state, action) =>{
+            state.editedEmployee = action.payload
         }
        
     },
@@ -98,6 +102,7 @@ const editEmployeeSlice = createSlice({
     [patchEmployee.fulfilled]: (state, action) => {
         state.loading = false
         state.editEmployeeSuccess = action.payload
+        
     },
     [patchEmployee.rejected]: (state) => {
         state.loading = false
@@ -109,6 +114,6 @@ const editEmployeeSlice = createSlice({
   },
 });
 const { reducer, actions } = editEmployeeSlice;
-export const { setEditSuccessFalse, setEditImageUrl, setEditFileType, setEditEmployee, afterEditSuccess} = actions
+export const { setEditSuccessFalse, setEditImageUrl, setEditFileType, setEditableEmployee, afterEditSuccess, setEditedEmployee} = actions
 export default reducer;
 

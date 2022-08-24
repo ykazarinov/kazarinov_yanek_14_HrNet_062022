@@ -7,6 +7,9 @@ import {  setActualItem1, setActualItem2, setIsOpen1, setIsOpen2 } from "../slic
 import { resetCalendar1, resetCalendar2 } from "../slices/calendar.slice";
 import {setImageUrl, setFileType} from "../slices/file.slice"
 import {afterEditSuccess} from "../slices/editEmployee.slice"
+import {setLocalEmployee} from "../slices/getAllEmployees.slice"
+import {setEditedEmployee} from "../slices/editEmployee.slice"
+
 
 import loadable from '@loadable/component'
 const Table = loadable(() => import("../components/table"))
@@ -17,6 +20,11 @@ export default function Employees(){
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
     const  currentTheme  = useSelector((state) => state['theme'].actualTheme)
     const { createEmployeeSuccess } = useSelector((state) => state.newEmployee);
+    const {editEmployeeSuccess} = useSelector((state)=>state.editEmployee)
+    const {editableEmployee} = useSelector((state)=> state.editEmployee)
+    const {editedEmployee} = useSelector((state)=>state.editEmployee)
+    const {employeesState} = useSelector((state)=>state.allEmployees)
+    const {isLoggedIn} = useSelector((state)=> state.auth)
 
  
     useEffect(()=>{
@@ -38,13 +46,33 @@ export default function Employees(){
        
     }, [createEmployeeSuccess])
 
+
+    const employeesAfterLocalEdit = (()=>{
+        const clone = (Object.assign([], employeesState))
+        const editeElemId = editableEmployee._id
+        const cloneIndex = clone.findIndex(item => item._id === editeElemId);
+        clone[cloneIndex] = editedEmployee
+        return clone
+    })
+
+    // useEffect(()=>{
+       
+    //     console.log(isLoggedIn)
+    //     dispatch(getAllEmployees())
+    // },[isLoggedIn])
+
     //after edit
     useEffect(()=>{
-        dispatch(afterEditSuccess())
-    }, [])
+        if(editEmployeeSuccess === true){
+            console.log(employeesAfterLocalEdit())
+            dispatch(setLocalEmployee(employeesAfterLocalEdit()))
+            dispatch(afterEditSuccess())
+        }
+        
+    }, [editEmployeeSuccess])
 
     
-    const { isLoggedIn } = useSelector((state) => state.auth);
+    
     if (!isLoggedIn) {
         return <Navigate to="/" />;
     }

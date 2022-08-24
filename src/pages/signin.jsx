@@ -7,7 +7,7 @@ import authHeader from "../services/auth-header";
 import { login, rememberMe, signIn } from "../slices/auth";
 import { clearMessage } from "../slices/message";
 import { transcription } from '../app.config';
-
+import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import axios from "../axios";
 
 import loadable from '@loadable/component'
@@ -54,9 +54,13 @@ const Login = (props) => {
 
   useEffect(()=>{
     if(isLoggedIn){
+      console.log(isLoggedIn)
+      dispatch(getAllEmployees())
       if(remember){
         localStorage.setItem("rememberMe", true);
+       
       }
+     
     }
   }, [isLoggedIn])
 

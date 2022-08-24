@@ -34,7 +34,7 @@ export default function Headers(){
                     <div className="col-4 logo-cont">
                         <div className="logo">
                             <Link 
-                                to='/'
+                                to='/employees'
                                 onClick={clickAndImageDelete}   
                             >
                                 <FontAwesomeIcon icon={faIdCard} /> HR<span>Net</span>

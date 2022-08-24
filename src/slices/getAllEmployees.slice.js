@@ -130,7 +130,7 @@ const allEmployeesSlice = createSlice({
             state.searchValue = action.payload
          },
         
-         localDeleteEmployee: (state, action) => {
+         setLocalEmployee: (state, action) => {
             state.loading = false
             state.employeesState = action.payload
             
@@ -202,7 +202,7 @@ export const {
     setSearchResult,
     setIsSearch,
     setSearchValue,
-    localDeleteEmployee
+    setLocalEmployee
 } = actions
 export default reducer;
 

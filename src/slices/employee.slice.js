@@ -5,7 +5,8 @@ import editService from "../services/edit.service";
 // createAsyncThunk for middleware for update data of User's Profil 
 export const setEmployee = createAsyncThunk(
     'newEmployee/setEmployee',
-    async ({  
+    async ({
+        employeeId,  
         photo, 
         firstName, 
         lastName, 
@@ -21,6 +22,7 @@ export const setEmployee = createAsyncThunk(
      }, thunkAPI) => {
         try {
             const data = await editService.postEmployee(
+                employeeId,
                 photo, 
                 firstName, 
                 lastName, 

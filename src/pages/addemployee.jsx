@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 import {patchEmployee} from '../slices/editEmployee.slice'
+import {setEditedEmployee} from '../slices/editEmployee.slice'
 
 import { faCircleUser, faXmark, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -47,7 +48,7 @@ export default function AddEmployee() {
     const { statesList } = useSelector((state) => state.states)
     const { departmentsList } = useSelector((state) => state.departments)
 
-    const {editedEmployee} = useSelector((state) => state.editEmployee)
+    const {editableEmployee} = useSelector((state) => state.editEmployee)
 
     const [hidden, setHidden] = useState(true);
 
@@ -66,10 +67,12 @@ export default function AddEmployee() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let formValues = {}
+        let formValuesForCreate = {}
+        let formValuesForServerUpdate = {}
+        let formValuesForLocalUpdate = {}
 
-        formValues = {
-            id: editedEmployee._id ? editedEmployee._id : null, 
+        formValuesForCreate = {
+            // _id: editableEmployee !== null ? editableEmployee._id : '', 
             photo: imageUrl ? API_REST_URL + imageUrl: '',
             firstName: e.target.elements.firstName.value,
             lastName: e.target.elements.lastName.value,
@@ -80,18 +83,42 @@ export default function AddEmployee() {
             street: e.target.elements.street.value,
             city: e.target.elements.city.value,
             state: e.target.elements.state.value !== '' ?
-                statesList.find(val => val.stateName === e.target.elements.state.value)._id :
-                null,
+                    statesList.find(val => val.stateName === e.target.elements.state.value)._id :
+                    null,
             zipcode: e.target.elements.zipcode.value,
             department: e.target.elements.department.value !== '' ?
                 departmentsList.find(val => val.departmentName === e.target.elements.department.value)._id :
                 null,
-
         }
-        if(editedEmployee === null){
-            dispatch(setEmployee(formValues))
+
+        console.log(formValuesForCreate)
+
+        formValuesForServerUpdate = (Object.assign([], formValuesForCreate))
+        formValuesForServerUpdate.id = editableEmployee !== null ? editableEmployee._id : ''
+        console.log(formValuesForServerUpdate)
+
+        formValuesForLocalUpdate = (Object.assign([], formValuesForCreate))
+        formValuesForLocalUpdate._id = editableEmployee !== null ? editableEmployee._id : ''
+
+        
+            if(e.target.elements.state.value !== ''){
+                formValuesForLocalUpdate.state = []
+                formValuesForLocalUpdate.state[0] = statesList.find(val => val.stateName === e.target.elements.state.value)
+            } else{ formValuesForLocalUpdate.state = null }
+            if(e.target.elements.department.value !== ''){
+                formValuesForLocalUpdate.department = []
+                formValuesForLocalUpdate.department[0] = departmentsList.find(val => val.departmentName === e.target.elements.department.value)
+            } else{ formValuesForLocalUpdate.department = null }
+             
+       
+
+        
+       
+        if(editableEmployee === null){
+            dispatch(setEmployee(formValuesForCreate))
         }else{
-            dispatch(patchEmployee(formValues))
+            dispatch(patchEmployee(formValuesForServerUpdate))
+            dispatch(setEditedEmployee(formValuesForLocalUpdate))
         }
         
 
@@ -242,7 +269,7 @@ export default function AddEmployee() {
                                 onChange={handleChangeFile}
                                 ref={inputFileRef}
                                 hidden
-                                // defaultValue={editedEmployee ? editedEmployee.photo : null}
+                                // defaultValue={editableEmployee ? editableEmployee.photo : null}
 
 
                             />
@@ -300,7 +327,7 @@ export default function AddEmployee() {
                                 name='firstName'
                                 className='input-standart'
                                 id="firstName"
-                                defaultValue={editedEmployee ? editedEmployee.firstName : null}
+                                defaultValue={editableEmployee ? editableEmployee.firstName : null}
 
                             />
                             {Array.isArray(message) && (
@@ -313,7 +340,7 @@ export default function AddEmployee() {
                                 name='lastName'
                                 className='input-standart'
                                 id="lastName"
-                                defaultValue={editedEmployee ? editedEmployee.lastName : null}
+                                defaultValue={editableEmployee ? editableEmployee.lastName : null}
 
                             />
                             {Array.isArray(message) && (
@@ -328,7 +355,7 @@ export default function AddEmployee() {
                                 type='email' 
                                 className='input-standart' 
                                 id="email" 
-                                defaultValue={editedEmployee ? editedEmployee.email : null}
+                                defaultValue={editableEmployee ? editableEmployee.email : null}
                             />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="email"></ErrorMessage>
@@ -341,7 +368,7 @@ export default function AddEmployee() {
                                 type='phone' 
                                 className='input-standart' 
                                 id="phone" 
-                                defaultValue={editedEmployee ? editedEmployee.phone : null}
+                                defaultValue={editableEmployee ? editableEmployee.phone : null}
                                 />
                             {Array.isArray(message) && (
                                 <ErrorMessage myParam="phone"></ErrorMessage>
@@ -384,7 +411,7 @@ export default function AddEmployee() {
                                         name='street' 
                                         className='input-standart' 
                                         id="street"
-                                        defaultValue={editedEmployee ? editedEmployee.street : null} 
+                                        defaultValue={editableEmployee ? editableEmployee.street : null} 
                                     />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="street"></ErrorMessage>
@@ -396,7 +423,7 @@ export default function AddEmployee() {
                                         name='city' 
                                         className='input-standart' 
                                         id="city" 
-                                        defaultValue={editedEmployee ? editedEmployee.city : null}
+                                        defaultValue={editableEmployee ? editableEmployee.city : null}
                                     />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="city"></ErrorMessage>
@@ -420,7 +447,7 @@ export default function AddEmployee() {
                                         className='input-standart' 
                                         id="zipcode" 
                                         type='number' 
-                                        defaultValue={editedEmployee ? editedEmployee.zipcode : null}
+                                        defaultValue={editableEmployee ? editableEmployee.zipcode : null}
                                     />
                                     {Array.isArray(message) && (
                                         <ErrorMessage myParam="zipcode"></ErrorMessage>

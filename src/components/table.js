@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faAngleUp, faUserPlus, faTrashCan, faPen, faCircleUser, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import {setSortDirection, localDeleteEmployee} from '../slices/getAllEmployees.slice';
+import {setSortDirection, setLocalEmployee} from '../slices/getAllEmployees.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { transcription } from '../app.config';
 
 import { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { deleteEmployee } from "../slices/deleteEmployee.slice";
-import { getAllEmployees } from "../slices/getAllEmployees.slice";
+
 import { setSuccessFalse } from '../slices/deleteEmployee.slice';
 
 import {fillCalendar1, fillCalendar2} from '../slices/calendar.slice'
@@ -16,7 +16,7 @@ import {setActualItem1, setActualItem2} from '../slices/select.slice'
 import {setCloseSelect1, setCloseSelect2} from '../slices/select.slice'
 import {setImageUrl} from '../slices/file.slice'
 
-import {setEditEmployee} from '../slices/editEmployee.slice'
+import {setEditableEmployee} from '../slices/editEmployee.slice'
 
 import {API_REST_URL} from '../app.config'
 
@@ -98,6 +98,9 @@ export default function Table(props){
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
     const {success} = useSelector((state)=>state.delEmployee)
 
+    const {editEmployeeSuccess} = useSelector((state)=>state.editEmployee)
+
+
 
     const setTableSort = ((key)=>{
         return {
@@ -138,9 +141,7 @@ export default function Table(props){
         }
     })
 
-    useEffect(()=>{
-        dispatch(getAllEmployees())
-    },[])
+
 
     //after delete
     useEffect(()=>{
@@ -149,23 +150,27 @@ export default function Table(props){
             const clone = (Object.assign([], employeesState))
             const cloneIndex = clone.findIndex(item => item._id === elemId);
             clone.splice(cloneIndex, 1)
-            dispatch(localDeleteEmployee(clone))
+            dispatch(setLocalEmployee(clone))
             dispatch(setSuccessFalse())
         }
     }, [dispatch, success])
 
 
+
+
+
+
     useEffect(()=>{
         let clone = Object.assign([], searchResult);
 
-        dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
+        // dispatch(createSortedArray(clone.sort(byField(sort, sortDirection)))) 
  
     }, [sort, sortDirection])
 
     useEffect(()=>{
         const clone = Object.assign([], sortedArray);
         let arrayByPages = createSubarray(clone, paginCount)
-        dispatch(createPaginatedArray(arrayByPages))
+        // dispatch(createPaginatedArray(arrayByPages))
     }, [sortedArray, paginCount])
     
 
@@ -209,10 +214,11 @@ export default function Table(props){
 
     const editItem = (id) => {
         const item = employeesState.find(item=>item._id === id)
-        dispatch(setEditEmployee(item))
+        dispatch(setEditableEmployee(item))
         dispatch(fillCalendar1(dateToObject(item.birthday)))
         dispatch(fillCalendar2(dateToObject(item.startday)))
         if(item.state !== null){
+            console.log(item.state[0].stateName)
             dispatch(setActualItem1(item.state[0].stateName))
             dispatch(setCloseSelect1())
         }
