@@ -27,6 +27,9 @@ export default function Employees(){
     const {employeesState} = useSelector((state)=>state.allEmployees)
     const {isLoggedIn} = useSelector((state)=> state.auth)
 
+    const {hidden1} = useSelector((state) => state.modal1)
+    const {hidden2} = useSelector((state) => state.modal2)
+
  
     useEffect(()=>{
         dispatch(setSuccessFalse())
@@ -94,7 +97,10 @@ export default function Employees(){
         <div className='container'>
                 <div className="row">
                     <div className="col-12">
-                        <h1>{langData[0]}</h1>
+                        <h1 
+                            tabIndex={hidden1 && hidden2 ? '4': '-1'}
+                            title={langData[0]}
+                        >{langData[0]}</h1>
                         <Table />
                     </div>
                 </div> 

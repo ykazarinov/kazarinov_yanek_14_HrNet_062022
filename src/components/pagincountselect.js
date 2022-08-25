@@ -11,6 +11,10 @@ export default function PaginCountSelect(){
     const emplCount = sortedArray.length
     const {paginCount} = useSelector((state) => state.allEmployees)
 
+    const {hidden1} = useSelector((state) => state.modal1)
+    const {hidden2} = useSelector((state) => state.modal2)
+    const {hidden3} = useSelector((state) => state.modal3)
+
     const createCountSelect = ((num)=>{
         return {
             type: "allEmployees/setPaginCount",
@@ -30,10 +34,12 @@ export default function PaginCountSelect(){
 
     return(
         <React.StrictMode>
-            <label htmlFor="langselect">
+            <label htmlFor="langselect" aria-label={langData[2] + paginCount + langData[4]}>
                 {langData[2]}
             
                 <select 
+                    tabIndex={hidden1 && hidden2 && hidden3 ? '6': '-1'}
+                    aria-labelledby='langselect'
                     value={paginCount}
                     onChange={(e)=> changePaginSelect(e)}
                     className='paginselect'

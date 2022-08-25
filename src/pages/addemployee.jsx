@@ -23,6 +23,8 @@ import axios from "../axios";
 import { API_REST_URL } from '../app.config'
 import handleDeleteFile from '../resurces/deletefile'
 
+import {setHidden3} from '../slices/modal.slice'
+
 import { LightBox } from '@artfish/lightbox'
 
 import loadable from '@loadable/component'
@@ -51,7 +53,8 @@ export default function AddEmployee() {
 
     const {editableEmployee} = useSelector((state) => state.editEmployee)
 
-    const [hidden, setHidden] = useState(true);
+
+    const {hidden3} = useSelector((state)=> state.modal3)
 
     const [uploadedFile, setUploadedFile] = useState(null)
 
@@ -228,16 +231,16 @@ export default function AddEmployee() {
 
 
     const openModal = () => {
-        setHidden(false)
+        dispatch(setHidden3(false))
     }
     const closeModal = () => {
-        setHidden(true)
+        dispatch(setHidden3(true))
     }
 
     return <main className={currentTheme}>
         <LightBox
             content={
-                <div className="error-container">
+                <div className="error-container" tabIndex='1'>
                     <div className="error-icon">
                     
                         <FontAwesomeIcon icon={faCircleExclamation} />
@@ -246,14 +249,14 @@ export default function AddEmployee() {
                     {langData[18]}
                 </div>
             }
-            hidden={hidden}
+            hidden={hidden3}
             onClick={closeModal}
             close={<FontAwesomeIcon icon={faXmark} />}
         ></LightBox>
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    <h1>{langData[0]}</h1>
+                    <h1 title={langData[0]} tabIndex={hidden3 ? '3': '-1'}>{langData[0]}</h1>
                 </div>
             </div>
             <form className="row" onSubmit={handleSubmit}>
@@ -278,10 +281,19 @@ export default function AddEmployee() {
 
                             {imageUrl === '' ?
                                 <>
-                                    <FontAwesomeIcon className="defaultImage" icon={faCircleUser} />
+                                    <FontAwesomeIcon 
+                                        className="defaultImage" 
+                                        icon={faCircleUser}
+                                        title={langData[19]} 
+                                        aria-label={langData[19]}
+                                        tabIndex={hidden3 ? '4': '-1'} 
+                                    />
                                     <div className="butUplCont">
                                         <button
                                             type="button"
+                                            tabIndex={hidden3 ? '5': '-1'} 
+                                            aria-label={langData[16]}
+                                            title={langData[16]}
                                             className={
                                                 actualTheme === 'theme-light' ?
                                                     'btn btn-primary color-blue' :
@@ -295,10 +307,20 @@ export default function AddEmployee() {
                                 </>
                                 :
                                 <>
-                                    <img className="uploadedImage" src={API_REST_URL + imageUrl} alt='Uploaded' />
+                                    <img 
+                                        className="uploadedImage" 
+                                        src={API_REST_URL + imageUrl} 
+                                        alt={langData[20]}  
+                                        title={langData[20]} 
+                                        aria-label={langData[20]}
+                                        tabIndex={hidden3 ? '4': '-1'} 
+                                    />
                                     <div className="butUplCont">
                                         <button
                                             type="button"
+                                            tabIndex={hidden3 ? '5': '-1'} 
+                                            aria-label={langData[17]}
+                                            title={langData[17]}
                                             className={
                                                 actualTheme === 'theme-light' ?
                                                     'btn btn-sm btn-danger color-red' :
@@ -318,152 +340,178 @@ export default function AddEmployee() {
 
 
                             {Array.isArray(message) && (
-                                <ErrorMessage myParam="photo"></ErrorMessage>
+                                <ErrorMessage myParam="photo"  tabIndex={hidden3 ? '6': '-1'}></ErrorMessage>
                             )}
 
 
                         </div>
                         <div className="col-6">
-                            <label htmlFor='firstName'>{langData[1]}</label>
+                            <label htmlFor='firstName'  aria-label={langData[1]}>{langData[1]}</label>
                             <input
                                 name='firstName'
                                 className='input-standart'
                                 id="firstName"
                                 defaultValue={editableEmployee ? editableEmployee.firstName : null}
+                                tabIndex={hidden3 ? '7': '-1'}
+                                aria-labelledby='firstName'
 
                             />
                             {Array.isArray(message) && (
-                                <ErrorMessage myParam="firstName"></ErrorMessage>
+                                <ErrorMessage myParam="firstName"  tabIndex={hidden3 ? '8': '-1'}></ErrorMessage>
                             )}
                         </div>
                         <div className="col-6">
-                            <label htmlFor='lastName'>{langData[2]}</label>
+                            <label htmlFor='lastName'aria-label={langData[2]}>{langData[2]}</label>
                             <input
                                 name='lastName'
                                 className='input-standart'
                                 id="lastName"
                                 defaultValue={editableEmployee ? editableEmployee.lastName : null}
+                                tabIndex={hidden3 ? '9': '-1'}
+                                aria-labelledby='lastName'
 
                             />
                             {Array.isArray(message) && (
-                                <ErrorMessage myParam="lastName"></ErrorMessage>
+                                <ErrorMessage myParam="lastName"  tabIndex={hidden3 ? '10': '-1'}></ErrorMessage>
                             )}
                         </div>
 
                         <div className="col-6">
-                            <label htmlFor='email'>{langData[13]}</label>
+                            <label htmlFor='email' aria-label={langData[13]}>{langData[13]}</label>
                             <input 
                                 name='email' 
                                 type='email' 
                                 className='input-standart' 
                                 id="email" 
                                 defaultValue={editableEmployee ? editableEmployee.email : null}
+                                tabIndex={hidden3 ? '11': '-1'}
+                                aria-labelledby='email'
                             />
                             {Array.isArray(message) && (
-                                <ErrorMessage myParam="email"></ErrorMessage>
+                                <ErrorMessage myParam="email"  tabIndex={hidden3 ? '12': '-1'}></ErrorMessage>
                             )}
                         </div>
                         <div className="col-6">
-                            <label htmlFor='phone'>{langData[14]}</label>
+                            <label htmlFor='phone' aria-label={langData[14]}>{langData[14]}</label>
                             <input 
                                 name='phone' 
                                 type='phone' 
                                 className='input-standart' 
                                 id="phone" 
                                 defaultValue={editableEmployee ? editableEmployee.phone : null}
+                                tabIndex={hidden3 ? '13': '-1'}
+                                aria-labelledby='phone'
                                 />
                             {Array.isArray(message) && (
-                                <ErrorMessage myParam="phone"></ErrorMessage>
+                                <ErrorMessage myParam="phone"  tabIndex={hidden3 ? '14': '-1'}></ErrorMessage>
                             )}
                         </div>
 
                         <div className="address col-6">
-                            <label htmlFor="birthday">{langData[3]}</label>
+                            <label htmlFor="birthday" aria-label={langData[3]}>{langData[3]}</label>
                             <OutsideAlerter myDispatch={() => dispatch(setClose1())}>
                                
-                                    <Calendar fieldName='birthday' calNum={1}></Calendar>
+                                    <Calendar fieldName='birthday' calNum={1}  tabIndex={hidden3 ? '15': '-1'}></Calendar>
                                
                             </OutsideAlerter>
                             {Array.isArray(message) && (
-                                <ErrorMessage myParam="birthday"></ErrorMessage>
+                                <ErrorMessage myParam="birthday"  tabIndex={hidden3 ? '16': '-1'}></ErrorMessage>
                             )}
 
 
                         </div>
                         <div className="address col-6">
-                            <label htmlFor="startday">{langData[4]}</label>
+                            <label htmlFor="startday" aria-label={langData[4]}>{langData[4]}</label>
                             <OutsideAlerter myDispatch={() => dispatch(setClose2())}>
                                
-                                    <Calendar fieldName='startday' calNum={2}></Calendar>
+                                    <Calendar fieldName='startday' calNum={2}   tabIndex={hidden3 ? '17': '-1'}></Calendar>
                                
                             </OutsideAlerter>
                             {Array.isArray(message) && (
-                                <ErrorMessage myParam="startday"></ErrorMessage>
+                                <ErrorMessage myParam="startday"  tabIndex={hidden3 ? '18': '-1'}></ErrorMessage>
                             )}
 
 
                         </div>
 
                         <fieldset className="scheduler-border col-12">
-                            <legend className="scheduler-border">{langData[5]}</legend>
+                            <legend className="scheduler-border"   tabIndex={hidden3 ? '19': '-1'}>{langData[5]}</legend>
                             <div className="row">
                                 <div className="col-6">
-                                    <label htmlFor='street'>{langData[6]}</label>
+                                    <label htmlFor='street' aria-label={langData[6]}>{langData[6]}</label>
                                     <input 
                                         name='street' 
                                         className='input-standart' 
                                         id="street"
                                         defaultValue={editableEmployee ? editableEmployee.street : null} 
+                                        tabIndex={hidden3 ? '20': '-1'}
+                                        aria-labelledby='street'
                                     />
                                     {Array.isArray(message) && (
-                                        <ErrorMessage myParam="street"></ErrorMessage>
+                                        <ErrorMessage myParam="street"  tabIndex={hidden3 ? '21': '-1'}></ErrorMessage>
                                     )}
                                 </div>
                                 <div className="col-6">
-                                    <label htmlFor='city'>{langData[7]}</label>
+                                    <label htmlFor='city' aria-label={langData[7]}>{langData[7]}</label>
                                     <input 
                                         name='city' 
                                         className='input-standart' 
                                         id="city" 
                                         defaultValue={editableEmployee ? editableEmployee.city : null}
+                                        tabIndex={hidden3 ? '22': '-1'}
+                                        aria-labelledby='city'
                                     />
                                     {Array.isArray(message) && (
-                                        <ErrorMessage myParam="city"></ErrorMessage>
+                                        <ErrorMessage myParam="city"  tabIndex={hidden3 ? '23': '-1'}></ErrorMessage>
                                     )}
                                 </div>
                                 <div className="address col-6">
-                                    <label htmlFor="state">{langData[8]}</label>
+                                    <label htmlFor="state" aria-label={langData[8]}>{langData[8]}</label>
                                     <OutsideAlerter myDispatch={() => dispatch(setCloseSelect1())}>
-                                        <Select fieldName='state' data={statesList} calNum={1} prefix='select'></Select>
+                                        <Select 
+                                            fieldName='state' 
+                                            data={statesList} 
+                                            calNum={1} 
+                                            prefix='select'
+                                            tabIndex={hidden3 ? '24': '-1'}
+                                        ></Select>
                                     </OutsideAlerter>
                                     {Array.isArray(message) && (
-                                        <ErrorMessage myParam="state"></ErrorMessage>
+                                        <ErrorMessage myParam="state"  tabIndex={hidden3 ? '25': '-1'}></ErrorMessage>
                                     )}
 
 
                                 </div>
                                 <div className="col-6">
-                                    <label htmlFor='zipcode'>{langData[9]}</label>
+                                    <label htmlFor='zipcode' aria-label={langData[9]}>{langData[9]}</label>
                                     <input 
                                         name='zipcode' 
                                         className='input-standart' 
                                         id="zipcode" 
                                         type='number' 
                                         defaultValue={editableEmployee ? editableEmployee.zipcode : null}
+                                        tabIndex={hidden3 ? '26': '-1'}
+                                        aria-labelledby='zipcode'
                                     />
                                     {Array.isArray(message) && (
-                                        <ErrorMessage myParam="zipcode"></ErrorMessage>
+                                        <ErrorMessage myParam="zipcode"  tabIndex={hidden3 ? '27': '-1'}></ErrorMessage>
                                     )}
                                 </div>
                             </div>
                         </fieldset>
                         <div className="address col-6">
-                            <label htmlFor="department">{langData[10]}</label>
+                            <label htmlFor="department" aria-label={langData[10]}>{langData[10]}</label>
                             <OutsideAlerter myDispatch={() => dispatch(setCloseSelect2())}>
-                                <Select fieldName='department' data={departmentsList} calNum={2} prefix='select'></Select>
+                                <Select 
+                                    fieldName='department' 
+                                    data={departmentsList} 
+                                    calNum={2} 
+                                    prefix='select'
+                                    tabIndex={hidden3 ? '28': '-1'}
+                                ></Select>
                             </OutsideAlerter>
                             {Array.isArray(message) && (
-                                <ErrorMessage myParam="department"></ErrorMessage>
+                                <ErrorMessage myParam="department"  tabIndex={hidden3 ? '29': '-1'}></ErrorMessage>
                             )}
 
                         </div>
@@ -475,17 +523,24 @@ export default function AddEmployee() {
                                         'btn btn-lg btn-primary color-blue' :
                                         'btn btn-lg btn-outline-dark color-blue'
                                 }
+                                tabIndex={hidden3 ? '30': '-1'}
+                                title={langData[11]}
+                                aria-label={langData[11]}
                             >
                                 {langData[11]}
                             </button>
                             <Link
                                 to='/employees'
                                 onClick={clickAndImageDelete}
+                                onKeyDown={(e) => e.keyCode === 13 ? clickAndImageDelete : null}
                                 className={
                                     actualTheme === 'theme-light' ?
                                         'btn btn-lg btn-dark color-white' :
                                         'btn btn-lg btn-outline-dark color-white'
                                 }
+                                tabIndex={hidden3 ? '31': '-1'}
+                                aria-label={langData[12]}
+                                title={langData[11]}
                             >
                                 {langData[12]}
                             </Link>

@@ -274,7 +274,7 @@ export default function Calendar(props){
                 onClick={()=>dispatch(setOpen())} 
                 // maxLength='10'
                 value={inputDate}
-                
+                tabIndex={props.tabIndex}
                 onFocus={()=> dispatch(setOpen())}
                 onBlur={(e)=>{
                     
@@ -297,6 +297,7 @@ export default function Calendar(props){
                         dispatch(inputDateFromCalendar(frenchFormatDate(myDay, myMonth, myYear)))
                          e.target.value = inputDate
                     }
+                    dispatch(setClose())
                 }
                 }
                 onChange={(e)=>{

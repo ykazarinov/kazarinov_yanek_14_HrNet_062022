@@ -36,6 +36,7 @@ export default function Select( props ){
     return <div className={props.prefix}>
         <div className={props.prefix + "--def-item-cont"}>
             <input 
+                tabIndex={props.tabIndex}
                 name={props.fieldName}
                 id={props.fieldName}
                 className={props.prefix + "--def-item-cont--input actual-item-cont"}

@@ -19,6 +19,11 @@ export default function Headers(){
     const  currentLang  = useSelector((state) => state['lang'].actualLang)
     const langData = transcription.find(lng => lng.lang === currentLang).data.header
     const {imageUrl} = useSelector((state) => state.newEmployee)
+
+    const {hidden1} = useSelector((state) => state.modal1)
+    const {hidden2} = useSelector((state) => state.modal2)
+    const {hidden3} = useSelector((state) => state.modal3)
+
     const clickAndImageDelete = (()=>{
         if(imageUrl !== ''){
             handleDeleteFile(imageUrl)
@@ -35,7 +40,8 @@ export default function Headers(){
                         <div className="logo">
                             <Link 
                                 to='/employees'
-                                onClick={clickAndImageDelete}   
+                                onClick={clickAndImageDelete} 
+                                tabIndex={hidden1 && hidden2 && hidden3 ? '1': '-1'} 
                             >
                                 <FontAwesomeIcon icon={faIdCard} /> HR<span>Net</span>
                             </Link>
@@ -55,15 +61,19 @@ export default function Headers(){
                                     className="authcont-user-icon" 
                                     to="/" title={user.email}
                                     onClick={clickAndImageDelete} 
+                                    tabIndex={hidden1 && hidden2 && hidden3 ? '2': '-1'}
                                 >
                                     {user.email.substr(0, 1)}
                                 </Link>
                 
-                                <button  className="authcont-text" onClick={()=>(
+                                <button  
+                                    className="authcont-text" 
+                                    onClick={()=>(
                                         clickAndImageDelete(), 
                                         dispatch(logout())
                                         
-                                        )}
+                                    )}
+                                    tabIndex={hidden1 && hidden2 && hidden3 ? '2': '-1'}
                                 >
                                     <FontAwesomeIcon icon={faSignOut} />
                                     {langData[1]} 
@@ -72,10 +82,10 @@ export default function Headers(){
                         )
                     ) : (
                         <div className="authcont">
-                            <Link className='user-icon' to="/">
+                            <Link className='user-icon' to="/" tabIndex={hidden1 && hidden2 && hidden3 ? '2': '-1'}>
                                 <FontAwesomeIcon icon={faUserCircle}   />
                             </Link>
-                            <Link className="authcont-text" to="/" >
+                            <Link className="authcont-text" to="/" tabIndex={hidden1 && hidden2 && hidden3 ? '2': '-1'} >
                                 {langData[0]} 
                             </Link>
                         </div>

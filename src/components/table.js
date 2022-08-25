@@ -16,13 +16,18 @@ import {setActualItem1, setActualItem2} from '../slices/select.slice'
 import {setCloseSelect1, setCloseSelect2} from '../slices/select.slice'
 import {setImageUrl} from '../slices/file.slice'
 
+import { setHidden1, setHidden2 } from '../slices/modal.slice';
+import { setElemModalId1 } from '../slices/modal.slice';
+import { setElemModalId2 } from '../slices/modal.slice';
+import { setElemModalImage2 } from '../slices/modal.slice';
+
 import {setEditableEmployee} from '../slices/editEmployee.slice'
 
 import {API_REST_URL} from '../app.config'
 
 import {toFrenchFormatDate} from './calendar'
 import {LightBox} from '@artfish/lightbox'
-import {useState} from "react"
+// import {useState} from "react"
 
 import loadable from '@loadable/component'
 
@@ -100,7 +105,11 @@ export default function Table(props){
 
     const {editEmployeeSuccess} = useSelector((state)=>state.editEmployee)
 
-
+    const {hidden1} = useSelector((state)=>state.modal1)
+    const {hidden2} = useSelector((state)=>state.modal2)
+    const {elemModalId1} = useSelector((state)=>state.modal1)
+    const {elemModalId2} = useSelector((state)=>state.modal2)
+    const {elemModalImage2} = useSelector((state)=>state.modal2)
 
     const setTableSort = ((key)=>{
         return {
@@ -148,7 +157,7 @@ export default function Table(props){
 
         if(success === true){
             const clone = (Object.assign([], employeesState))
-            const cloneIndex = clone.findIndex(item => item._id === elemId);
+            const cloneIndex = clone.findIndex(item => item._id === elemModalId1);
             clone.splice(cloneIndex, 1)
             dispatch(setLocalEmployee(clone))
             dispatch(setSuccessFalse())
@@ -174,30 +183,31 @@ export default function Table(props){
     }, [sortedArray, paginCount])
     
 
-    const [hidden, setHidden] = useState(true);
-    const [elemId, setElemId] = useState(null)
+    // const [hidden, setHidden] = useState(true);
+    // const [elemId, setElemId] = useState(null)
     const openModal = (id) => {
-      setHidden(false)
-      setElemId(id)
+      dispatch(setHidden1(false))
+      dispatch(setElemModalId1(id))
     }
     const closeModal = () => {
-      setHidden(true)
+      dispatch(setHidden1(true))
     }
 
     const deleteItem = (()=>{
-        dispatch(deleteEmployee(elemId))
+        dispatch(deleteEmployee(elemModalId1))
 
-        setHidden(true)
+        dispatch(setHidden1(true))
     })
 
-    const [hidden2, setHidden2] = useState(true);
-    const [elemImg, setElemImg] = useState(null)
-    const openModal2 = (img) => {
-      setHidden2(false)
-      setElemImg(img)
+    // const [hidden2, setHidden2] = useState(true);
+    // const [elemImg, setElemImg] = useState(null)
+    const openModal2 = (img, id) => {
+      dispatch(setHidden2(false))
+      dispatch(setElemModalImage2(img))
+      dispatch(setElemModalId2(id))
     }
     const closeModal2 = () => {
-      setHidden2(true)
+      dispatch(setHidden2(true))
     }
 
     const dateToObject = (date) => {
@@ -240,11 +250,13 @@ export default function Table(props){
             <LightBox 
                 content={
                     <>
-                    {langData[13]}
+                    <span tabIndex='1'>{langData[13]}</span>
                     <div className='buttons-container'>
                         <button 
+                            tabIndex='2'
                             type='button' 
                             onClick={deleteItem}
+                            onKeyDown={(e) => e.keyCode === 13 ? deleteItem : null}
                             className={ 
                                 actualTheme === 'theme-light' ?
                                 'btn btn-sm btn-danger color-red' :
@@ -252,8 +264,10 @@ export default function Table(props){
                             }
                         >{langData[14]}</button>
                         <button 
+                            tabIndex='3'
                             type='button'
                             onClick={closeModal}
+                            onKeyDown={(e) => e.keyCode === 13 ? closeModal : null}
                             className={ 
                                 actualTheme === 'theme-light' ?
                                 'btn btn-sm btn-primary color-blue' :
@@ -264,15 +278,26 @@ export default function Table(props){
                     
                     </>
                 }
-                hidden={hidden}
+                hidden={hidden1}
                 onClick={closeModal}
                 close={<FontAwesomeIcon icon={faXmark} />}
             ></LightBox>
-
+            {elemModalId2 !== null ?
             <LightBox 
                 content={
                     <div className='uploadImgCont'>
-                        <img src={elemImg} alt='Uploaded' />
+                        <img 
+                            src={elemModalImage2} 
+                            alt={
+                                employeesState.find((elem) => (elem._id === elemModalId2)).firstName + ' ' +
+                                employeesState.find(elem => elem._id === elemModalId2).lastName
+                            } 
+                            title={
+                                employeesState.find((elem) => (elem._id === elemModalId2)).firstName + ' ' +
+                                employeesState.find(elem => elem._id === elemModalId2).lastName
+                            }
+                            
+                            tabIndex='1' />
                     </div>
                     
                 }
@@ -280,9 +305,13 @@ export default function Table(props){
                 onClick={closeModal2}
                 close={<FontAwesomeIcon icon={faXmark} />}
             ></LightBox>
+            : null}
             <section className='above-table'>
                 <section className='above-tabble-1'>
                     <Link 
+                        tabIndex={hidden1 && hidden2 ? '5': '-1'}
+                        aria-label={langData[19]}
+                        title={langData[19]}
                         to="/addemployee" 
                         className={
                             actualTheme === 'theme-light' ?
@@ -312,9 +341,11 @@ export default function Table(props){
                                     key={index} 
                                     title={objKey}
                                     onClick={() => sorting(objKey)}
+                                    tabIndex={hidden1 && hidden2 ? '8': '-1'}
+                                    onKeyDown={(e) => e.keyCode === 13 ? sorting(objKey) : null}
                                 >
                                     <div className='title'>
-                                        <div className='text'>
+                                        <div className='text' >
                                         
                                             {langData[1][objKey]}
                                         </div>
@@ -352,10 +383,10 @@ export default function Table(props){
                                 myKey === '__v' ?
                                 null : <td 
                                     key={`val`+index}
-                                    
+                                    tabIndex={hidden1 && hidden2 ? '9': '-1'}
                                     className={myKey === 'photo' ? 'photoTd data' : 'data'}
                                     title={
-                                        // myKey === 'photo' ?  <FontAwesomeIcon icon={faCircleUser} /> :
+                                        myKey === 'photo' ?  langData[18] :
                                         myKey === 'birthday' || myKey === 'startday' ?
                                             toFrenchFormatDate(
                                                 String(Object.values(emplObj)[index])
@@ -374,7 +405,7 @@ export default function Table(props){
                                         myKey === 'photo' && String(Object.values(emplObj)[index]) ?  
                                         <FontAwesomeIcon 
                                             className='photoTd-icon'
-                                            onClick={()=>openModal2(String(Object.values(emplObj)[index]))}
+                                            onClick={()=>openModal2(String(Object.values(emplObj)[index]), emplObj._id)}
                                             icon={faCircleUser} 
                                         /> :
                                         myKey === 'photo' && !String(Object.values(emplObj)[index]) ?  
@@ -397,6 +428,9 @@ export default function Table(props){
                         <td>
                             <div className='but-cont'>
                                 <Link
+                                    tabIndex={hidden1 && hidden2 ? '9': '-1'}
+                                    aria-label={langData[16]}
+                                    title={langData[16]}
                                     onClick={
                                         ()=>editItem(emplObj._id)
                                     }
@@ -409,6 +443,9 @@ export default function Table(props){
                                 >{<FontAwesomeIcon icon={faPen} />}</Link>
                                
                                     <button 
+                                        tabIndex={hidden1 && hidden2 ? '9': '-1'}
+                                        aria-label={langData[17]}
+                                        title={langData[17]}
                                         onClick={
                                             // ()=>dispatch(deleteEmployee(emplObj._id))
                                             ()=>openModal(emplObj._id)

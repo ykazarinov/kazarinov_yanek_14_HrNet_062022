@@ -6,6 +6,8 @@ const transcription = [
         data : {
             footer : [
                 'Choose language',
+                'Current mode: day',
+                'Current mode: night'
             ],
             header : [
                 'Sign In',
@@ -32,6 +34,8 @@ const transcription = [
                 'Upload a photo',
                 'Delete photo',
                 'File format error! Choose an image file!',
+                'Image not selected',
+                'Image selected'
             ],
             signin: [
                 'Sign In',
@@ -69,7 +73,11 @@ const transcription = [
                 'The search returned no results.',
                 'Are you sure you want to delete employee data?',
                 'Delete',
-                'Cancel'
+                'Cancel',
+                'Edit employee record',
+                'Delete employee record',
+                'Employee profile picture',
+                'Add employee profile'
             ]
         }
     },
@@ -77,6 +85,8 @@ const transcription = [
         data : {
             footer: [
                 'Choisissez la langue',
+                'Mode courant : jour',
+                'Mode courant : nuit'
             ],
             header: [
                 'Connexion',
@@ -101,7 +111,9 @@ const transcription = [
                 'Photo',
                 'Télécharger une photo',
                 'Supprimer la photo',
-                'Erreur de format de fichier! Choisissez un fichier image!'
+                'Erreur de format de fichier! Choisissez un fichier image!',
+                'Image non sélectionnée',
+                'Image sélectionnée'
             ],
             signin: [
                 'S\'identifier',
@@ -140,6 +152,10 @@ const transcription = [
                 'Êtes-vous sûr de vouloir supprimer les données des employés?',
                 'Effacer',
                 'Annuler',
+                'Modifier la fiche de l\'employé',
+                'Supprimer la fiche de l\'employé',
+                'Photo de profil de l\'employé',
+                'Ajouter un profil d\'employé'
             ]
         }
     }

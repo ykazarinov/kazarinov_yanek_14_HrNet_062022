@@ -5,6 +5,10 @@ export default function Pagination(props){
     const {actualPaginNumber} = useSelector((state)=>state.allEmployees)
     const {actualTheme} = useSelector((state) => state.theme)
 
+    const {hidden1} = useSelector((state) => state.modal1)
+    const {hidden2} = useSelector((state) => state.modal2)
+    const {hidden3} = useSelector((state) => state.modal3)
+
     const dispatch = useDispatch()
 
     const setPagNumber = ((num)=>{
@@ -25,6 +29,8 @@ export default function Pagination(props){
                 paginatedArray.map((line, index)=>(
 
                     <div 
+                    tabIndex={hidden1 && hidden2 && hidden3 ? '10': '-1'}
+                        title={index}
                         className={
                             actualTheme === 'theme-light' ? (
                                 actualPaginNumber === index ? 
@@ -41,6 +47,7 @@ export default function Pagination(props){
                             (e)=> 
                             pagNumberClick(e)
                         }
+                        onKeyDown={(e) => e.keyCode === 13 ? pagNumberClick(e) : null}
                     >
                         {index}
                     </div>

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import {calendarReducer1, calendarReducer2} from "./slices/calendar.slice"
 import { selectReducer1, selectReducer2, } from "./slices/select.slice"
+import { modalReducer1, modalReducer2, modalReducer3 } from "./slices/modal.slice"
 import langReducer from "./slices/lang.slice"
 import themeReducer from "./slices/theme.slice"
 import authReducer from "./slices/auth";
@@ -19,6 +20,9 @@ const reducer = {
   calendarReducer2: calendarReducer2,
   selectReducer1: selectReducer1,
   selectReducer2: selectReducer2,
+  modal1: modalReducer1,
+  modal2: modalReducer2,
+  modal3: modalReducer3,
   lang: langReducer,
   theme: themeReducer,
   auth: authReducer,

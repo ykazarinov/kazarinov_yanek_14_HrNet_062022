@@ -100,29 +100,29 @@ const Login = (props) => {
           <section className="sign-in-content">
 
            
-            <h1>{langData[0]}</h1>
+            <h1 title={langData[0]} tabIndex="3">{langData[0]}</h1>
              
                 <form onSubmit={handleLogin}>
                   <div className="form-group input-wrapper">
-                    <label htmlFor="email">{langData[1]}</label>
-                    <input name="email" type="text" className="form-control input-standart" />
+                    <label htmlFor="email"  aria-label={langData[1]}>{langData[1]}</label>
+                    <input name="email" type="text" aria-labelledby='email' className="form-control input-standart" tabIndex="3" />
                     {Array.isArray(message) && (
-                                <ErrorMessage myParam="all"></ErrorMessage>
+                                <ErrorMessage myParam="all" tabIndex='3'></ErrorMessage>
                             )}
                   </div>
                   <div className="form-group input-wrapper">
-                    <label htmlFor="password">{langData[2]}</label>
-                    <input name="password" type="password" className="form-control input-standart" />
+                    <label htmlFor="password" aria-label={langData[2]}>{langData[2]}</label>
+                    <input name="password" type="password" aria-labelledby='password' className="form-control input-standart" tabIndex="4" />
                     {Array.isArray(message) && (
-                                <ErrorMessage myParam="all"></ErrorMessage>
+                                <ErrorMessage myParam="all" tabIndex='4'></ErrorMessage>
                             )}
                   </div>
                   <div className="input-remember">
-                    <input type="checkbox" id="remember-me" name="rememberMeToggle" />
-                    <label htmlFor="remember-me">{langData[3]}</label>
+                    <input type="checkbox"  aria-labelledby='remember-me' id="remember-me" name="rememberMeToggle" tabIndex="5" />
+                    <label aria-label={langData[3]} htmlFor="remember-me">{langData[3]}</label>
                   </div>
                   <div className="form-group button-container">
-                    <button type="submit" className="btn btn-primary btn-lg"
+                    <button aria-label={langData[4]} type="submit" className="btn btn-primary btn-lg" tabIndex="6"
                     >
                       {langData[4]}
                     </button>
