@@ -35,6 +35,10 @@ $darker2: rgba(0, 0, 0, .3);
     flex: 0 0 auto;
   }
 
+  h1{
+    height: unset;
+    
+  }
 
 $themes: (
     'theme-light': (
@@ -159,7 +163,7 @@ $themes: (
 
     .#{$name}{
 
-
+        
         background-color: $bgNormal;
 
         .uploadContainer{
@@ -734,8 +738,9 @@ legend.scheduler-border {
 
 .table-cont{
     margin-bottom: .5rem;
-    max-width: 720px;
-    overflow: scroll;
+    // max-width: 720px;
+    // overflow: scroll;
+    width: 1110px;
 
     th{
         padding: .5rem;
@@ -830,9 +835,7 @@ legend.scheduler-border {
 }
 
 .above-table{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+   
     margin-bottom: 1rem;
 }
 
@@ -897,4 +900,39 @@ legend.scheduler-border {
 
 .error-container{
     text-align: center;
+}
+
+.bottom-margin{
+    margin-bottom: 1rem;
+}
+
+.text-align-center{
+    text-align: center;
+}
+
+.text-align-right{
+    text-align: right;
+}
+
+.text-align-left{
+    text-align: left;
+}
+
+.table-container{
+    width: 100%;
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 1024px){
+    .text-align-right{
+        text-align: center;
+    }
+
+    .text-align-left{
+        text-align: center;
+    }
+}
+
+.btn-block{
+    width: 100%;
 }

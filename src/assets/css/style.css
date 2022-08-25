@@ -10783,6 +10783,10 @@ footer {
   flex: 0 0 auto;
 }
 
+h1, .h1 {
+  height: unset;
+}
+
 header.theme-light {
   background-color: white;
   color: black;
@@ -11543,8 +11547,7 @@ legend.scheduler-border {
 
 .table-cont {
   margin-bottom: 0.5rem;
-  max-width: 720px;
-  overflow: scroll;
+  width: 1110px;
 }
 .table-cont th {
   padding: 0.5rem;
@@ -11625,9 +11628,6 @@ legend.scheduler-border {
 }
 
 .above-table {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 1rem;
 }
 
@@ -11687,6 +11687,39 @@ legend.scheduler-border {
 
 .error-container {
   text-align: center;
+}
+
+.bottom-margin {
+  margin-bottom: 1rem;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .text-align-right {
+    text-align: center;
+  }
+  .text-align-left {
+    text-align: center;
+  }
+}
+.btn-block {
+  width: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */

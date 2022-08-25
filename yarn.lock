@@ -19,10 +19,10 @@
     "jsonpointer" "^5.0.0"
     "leven" "^3.1.0"
 
-"@artfish/lightbox@^0.1.14":
-  "integrity" "sha512-gH4TczMxgMt+oia3I04P4omoShVzh27UuKjk6wRsd9QDCRPjwu1c84UVXo+U4u5YNjks/j8j1pKkWRSEjNa3nA=="
-  "resolved" "https://registry.npmjs.org/@artfish/lightbox/-/lightbox-0.1.14.tgz"
-  "version" "0.1.14"
+"@artfish/lightbox@^0.1.17":
+  "integrity" "sha512-Yhxp9z4BZAAo955imBia5w/ddaHrGKgc92EhixUXuWzNgs4R2RA0+A8UvMtngh9qcP6jCcdmtpB8xoDcbbeQGQ=="
+  "resolved" "https://registry.npmjs.org/@artfish/lightbox/-/lightbox-0.1.17.tgz"
+  "version" "0.1.17"
   dependencies:
     "web-vitals" "^2.1.4"
 

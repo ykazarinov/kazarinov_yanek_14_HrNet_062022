@@ -281,6 +281,7 @@ export default function Table(props){
                 hidden={hidden1}
                 onClick={closeModal}
                 close={<FontAwesomeIcon icon={faXmark} />}
+                onKeyDown={closeModal}
             ></LightBox>
             {elemModalId2 !== null ?
             <LightBox 
@@ -306,26 +307,29 @@ export default function Table(props){
                 close={<FontAwesomeIcon icon={faXmark} />}
             ></LightBox>
             : null}
-            <section className='above-table'>
-                <section className='above-tabble-1'>
-                    <Link 
-                        tabIndex={hidden1 && hidden2 ? '5': '-1'}
-                        aria-label={langData[19]}
-                        title={langData[19]}
-                        to="/addemployee" 
-                        className={
-                            actualTheme === 'theme-light' ?
-                            'btn btn-primary color-blue' :
-                            'btn btn-outline-dark color-blue'
-                        }
-                    >
-                        <FontAwesomeIcon icon={faUserPlus} />
-                    </Link>
-                    <PaginCountSelect></PaginCountSelect>
-                </section>
-                <Search></Search>
+            <section className='above-table container'>
+                <div className='row'>
+                    <section className='above-tabble-1 col-lg-6 col-sm-12 text-align-left bottom-margin'>
+                        <Link 
+                            tabIndex={hidden1 && hidden2 ? '5': '-1'}
+                            aria-label={langData[19]}
+                            title={langData[19]}
+                            to="/addemployee" 
+                            className={
+                                actualTheme === 'theme-light' ?
+                                'btn btn-primary color-blue' :
+                                'btn btn-outline-dark color-blue'
+                            }
+                        >
+                            <FontAwesomeIcon icon={faUserPlus} />
+                        </Link>
+                        <PaginCountSelect></PaginCountSelect>
+                    </section>
+                    <Search></Search>
+                </div>
             </section>
             {paginatedArray.length > 0 ?
+            <div className='table-container'>
             <table className="table-cont">
             <thead>
                     <tr>
@@ -469,6 +473,7 @@ export default function Table(props){
                 </tbody>
             
             </table>
+            </div>
             : 
             <div className="alert alert-secondary" role="alert">
                 {langData[12]}

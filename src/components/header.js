@@ -36,7 +36,7 @@ export default function Headers(){
         <header className={currentTheme}>
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-4 logo-cont">
+                    <div className="col-lg-4 col-sm-6 logo-cont">
                         <div className="logo">
                             <Link 
                                 to='/employees'
@@ -50,7 +50,7 @@ export default function Headers(){
                     </div>
                 
                     
-                    <div className="col-8 flex-right">
+                    <div className="col-lg-8 col-sm-6 flex-right">
                         
                     {isLoggedIn ? (
                         user.email === null ? ( 

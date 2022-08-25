@@ -262,74 +262,94 @@ export default function AddEmployee() {
             <form className="row" onSubmit={handleSubmit}>
                 <div className="col-2"></div>
                 <div className="col-8">
+                
                     <div className="row">
                         <div className="col-12 uploadContainer">
+                           
+                            
+                                    <input
+                                        name='photo'
+                                        type='file'
+                                        accept="image/*"
+                                        // className='input-standart' 
+                                        id="photo"
+                                        onChange={handleChangeFile}
+                                        ref={inputFileRef}
+                                        hidden
+                                        // defaultValue={editableEmployee ? editableEmployee.photo : null}
 
-                            <input
-                                name='photo'
-                                type='file'
-                                accept="image/*"
-                                // className='input-standart' 
-                                id="photo"
-                                onChange={handleChangeFile}
-                                ref={inputFileRef}
-                                hidden
-                                // defaultValue={editableEmployee ? editableEmployee.photo : null}
 
-
-                            />
+                                    />
+                                  
 
                             {imageUrl === '' ?
                                 <>
-                                    <FontAwesomeIcon 
-                                        className="defaultImage" 
-                                        icon={faCircleUser}
-                                        title={langData[19]} 
-                                        aria-label={langData[19]}
-                                        tabIndex={hidden3 ? '4': '-1'} 
-                                    />
-                                    <div className="butUplCont">
-                                        <button
-                                            type="button"
-                                            tabIndex={hidden3 ? '5': '-1'} 
-                                            aria-label={langData[16]}
-                                            title={langData[16]}
-                                            className={
-                                                actualTheme === 'theme-light' ?
-                                                    'btn btn-primary color-blue' :
-                                                    'btn btn-outline-dark color-blue'
-                                            }
-                                            onClick={() => inputFileRef.current.click()}
-                                        >
-                                            {langData[16]}
-                                        </button>
+                                    <div className="container">
+                                    <div className="row">
+                                    
+                                        <div className="col-lg-6 col-sm-12 text-align-center bottom-margin">
+                                            <FontAwesomeIcon 
+                                                className="defaultImage" 
+                                                icon={faCircleUser}
+                                                title={langData[19]} 
+                                                aria-label={langData[19]}
+                                                tabIndex={hidden3 ? '4': '-1'} 
+                                            />
+                                        </div>
+                                        <div className="col-lg-6 col-sm-12 flex-center">
+                                            <div className="butUplCont">
+                                                <button
+                                                    type="button"
+                                                    tabIndex={hidden3 ? '5': '-1'} 
+                                                    aria-label={langData[16]}
+                                                    title={langData[16]}
+                                                    className={
+                                                        actualTheme === 'theme-light' ?
+                                                            'btn btn-primary color-blue' :
+                                                            'btn btn-outline-dark color-blue'
+                                                    }
+                                                    onClick={() => inputFileRef.current.click()}
+                                                >
+                                                    {langData[16]}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 </>
                                 :
                                 <>
-                                    <img 
-                                        className="uploadedImage" 
-                                        src={API_REST_URL + imageUrl} 
-                                        alt={langData[20]}  
-                                        title={langData[20]} 
-                                        aria-label={langData[20]}
-                                        tabIndex={hidden3 ? '4': '-1'} 
-                                    />
-                                    <div className="butUplCont">
-                                        <button
-                                            type="button"
-                                            tabIndex={hidden3 ? '5': '-1'} 
-                                            aria-label={langData[17]}
-                                            title={langData[17]}
-                                            className={
-                                                actualTheme === 'theme-light' ?
-                                                    'btn btn-sm btn-danger color-red' :
-                                                    'btn btn-sm btn-outline-dark color-red'
-                                            }
-                                            onClick={() => onClickRemoveImage(API_REST_URL + imageUrl)}
-                                        >
-                                            {langData[17]}
-                                        </button>
+                                <div className="container">
+                                 <div className="row">
+                                        <div className="col-lg-6 col-sm-12 text-align-center bottom-margin">
+                                            <img 
+                                                className="uploadedImage" 
+                                                src={API_REST_URL + imageUrl} 
+                                                alt={langData[20]}  
+                                                title={langData[20]} 
+                                                aria-label={langData[20]}
+                                                tabIndex={hidden3 ? '4': '-1'} 
+                                            />
+                                        </div>
+                                        <div className="col-lg-6 col-sm-12 flex-center">
+                                            <div className="butUplCont">
+                                                <button
+                                                    type="button"
+                                                    tabIndex={hidden3 ? '5': '-1'} 
+                                                    aria-label={langData[17]}
+                                                    title={langData[17]}
+                                                    className={
+                                                        actualTheme === 'theme-light' ?
+                                                            'btn btn-sm btn-danger color-red' :
+                                                            'btn btn-sm btn-outline-dark color-red'
+                                                    }
+                                                    onClick={() => onClickRemoveImage(API_REST_URL + imageUrl)}
+                                                >
+                                                    {langData[17]}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 </>
 
@@ -345,7 +365,7 @@ export default function AddEmployee() {
 
 
                         </div>
-                        <div className="col-6">
+                        <div className="col-lg-6 col-sm-12">
                             <label htmlFor='firstName'  aria-label={langData[1]}>{langData[1]}</label>
                             <input
                                 name='firstName'
@@ -360,7 +380,7 @@ export default function AddEmployee() {
                                 <ErrorMessage myParam="firstName"  tabIndex={hidden3 ? '8': '-1'}></ErrorMessage>
                             )}
                         </div>
-                        <div className="col-6">
+                        <div className="col-lg-6 col-sm-12">
                             <label htmlFor='lastName'aria-label={langData[2]}>{langData[2]}</label>
                             <input
                                 name='lastName'
@@ -376,7 +396,7 @@ export default function AddEmployee() {
                             )}
                         </div>
 
-                        <div className="col-6">
+                        <div className="col-lg-6 col-sm">
                             <label htmlFor='email' aria-label={langData[13]}>{langData[13]}</label>
                             <input 
                                 name='email' 
@@ -391,7 +411,7 @@ export default function AddEmployee() {
                                 <ErrorMessage myParam="email"  tabIndex={hidden3 ? '12': '-1'}></ErrorMessage>
                             )}
                         </div>
-                        <div className="col-6">
+                        <div className="col-lg-6 col-sm-12">
                             <label htmlFor='phone' aria-label={langData[14]}>{langData[14]}</label>
                             <input 
                                 name='phone' 
@@ -407,7 +427,7 @@ export default function AddEmployee() {
                             )}
                         </div>
 
-                        <div className="address col-6">
+                        <div className="address col-lg-6 col-sm-12">
                             <label htmlFor="birthday" aria-label={langData[3]}>{langData[3]}</label>
                             <OutsideAlerter myDispatch={() => dispatch(setClose1())}>
                                
@@ -420,7 +440,7 @@ export default function AddEmployee() {
 
 
                         </div>
-                        <div className="address col-6">
+                        <div className="address col-lg-6 col-sm-12">
                             <label htmlFor="startday" aria-label={langData[4]}>{langData[4]}</label>
                             <OutsideAlerter myDispatch={() => dispatch(setClose2())}>
                                
@@ -437,7 +457,7 @@ export default function AddEmployee() {
                         <fieldset className="scheduler-border col-12">
                             <legend className="scheduler-border"   tabIndex={hidden3 ? '19': '-1'}>{langData[5]}</legend>
                             <div className="row">
-                                <div className="col-6">
+                                <div className="col-lg-6 col-sm-12">
                                     <label htmlFor='street' aria-label={langData[6]}>{langData[6]}</label>
                                     <input 
                                         name='street' 
@@ -451,7 +471,7 @@ export default function AddEmployee() {
                                         <ErrorMessage myParam="street"  tabIndex={hidden3 ? '21': '-1'}></ErrorMessage>
                                     )}
                                 </div>
-                                <div className="col-6">
+                                <div className="col-lg-6 col-sm-12">
                                     <label htmlFor='city' aria-label={langData[7]}>{langData[7]}</label>
                                     <input 
                                         name='city' 
@@ -465,7 +485,7 @@ export default function AddEmployee() {
                                         <ErrorMessage myParam="city"  tabIndex={hidden3 ? '23': '-1'}></ErrorMessage>
                                     )}
                                 </div>
-                                <div className="address col-6">
+                                <div className="address col-lg-6 col-sm-12">
                                     <label htmlFor="state" aria-label={langData[8]}>{langData[8]}</label>
                                     <OutsideAlerter myDispatch={() => dispatch(setCloseSelect1())}>
                                         <Select 
@@ -482,7 +502,7 @@ export default function AddEmployee() {
 
 
                                 </div>
-                                <div className="col-6">
+                                <div className="col-lg-6 col-sm-12">
                                     <label htmlFor='zipcode' aria-label={langData[9]}>{langData[9]}</label>
                                     <input 
                                         name='zipcode' 
@@ -499,7 +519,7 @@ export default function AddEmployee() {
                                 </div>
                             </div>
                         </fieldset>
-                        <div className="address col-6">
+                        <div className="address col-lg-6 col-sm-12">
                             <label htmlFor="department" aria-label={langData[10]}>{langData[10]}</label>
                             <OutsideAlerter myDispatch={() => dispatch(setCloseSelect2())}>
                                 <Select 
@@ -516,34 +536,40 @@ export default function AddEmployee() {
 
                         </div>
                         <div className="col-12 button-container">
-                            <button
-                                type="submit"
-                                className={
-                                    actualTheme === 'theme-light' ?
-                                        'btn btn-lg btn-primary color-blue' :
-                                        'btn btn-lg btn-outline-dark color-blue'
-                                }
-                                tabIndex={hidden3 ? '30': '-1'}
-                                title={langData[11]}
-                                aria-label={langData[11]}
-                            >
-                                {langData[11]}
-                            </button>
-                            <Link
-                                to='/employees'
-                                onClick={clickAndImageDelete}
-                                onKeyDown={(e) => e.keyCode === 13 ? clickAndImageDelete : null}
-                                className={
-                                    actualTheme === 'theme-light' ?
-                                        'btn btn-lg btn-dark color-white' :
-                                        'btn btn-lg btn-outline-dark color-white'
-                                }
-                                tabIndex={hidden3 ? '31': '-1'}
-                                aria-label={langData[12]}
-                                title={langData[11]}
-                            >
-                                {langData[12]}
-                            </Link>
+                            <div className="row">
+                                <div className="col-lg-6 col-sm-12">
+                                    <button
+                                        type="submit"
+                                        className={
+                                            actualTheme === 'theme-light' ?
+                                                'btn btn-lg btn-primary color-blue bottom-margin btn-block' :
+                                                'btn btn-lg btn-outline-dark color-blue bottom-margin btn-block'
+                                        }
+                                        tabIndex={hidden3 ? '30': '-1'}
+                                        title={langData[11]}
+                                        aria-label={langData[11]}
+                                    >
+                                        {langData[11]}
+                                    </button>
+                                </div>
+                                <div className="col-lg-6 col-sm-12">
+                                    <Link
+                                        to='/employees'
+                                        onClick={clickAndImageDelete}
+                                        onKeyDown={(e) => e.keyCode === 13 ? clickAndImageDelete : null}
+                                        className={
+                                            actualTheme === 'theme-light' ?
+                                                'btn btn-lg btn-dark color-white btn-block' :
+                                                'btn btn-lg btn-outline-dark color-white btn-block'
+                                        }
+                                        tabIndex={hidden3 ? '31': '-1'}
+                                        aria-label={langData[12]}
+                                        title={langData[11]}
+                                    >
+                                        {langData[12]}
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

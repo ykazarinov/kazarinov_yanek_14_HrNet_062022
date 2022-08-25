@@ -32,7 +32,7 @@ export default function Search(){
 
 
     return(
-        <div>
+        <div className='col-lg-6 col-sm-12 text-align-right'>
             <label htmlFor='search'  aria-label={langData[5]} > {langData[5]}
                 <input 
                     aria-labelledby='search'

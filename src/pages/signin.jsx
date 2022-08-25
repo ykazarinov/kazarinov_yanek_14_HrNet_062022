@@ -95,8 +95,8 @@ const Login = (props) => {
     <main className={currentTheme}>
     <div className="container">
       <div className="row">
-        <div className="col-3"></div>
-        <div className="col-6">
+        <div className="col-sm-2 col-lg-3"></div>
+        <div className="col-sm-8 col-lg-6">
           <section className="sign-in-content">
 
            
@@ -131,7 +131,7 @@ const Login = (props) => {
             
           </section>
         </div>
-        <div className="col-3"></div>
+        <div className="col-sm-2 col-lg-3"></div>
       </div>
     </div>
   </main>
