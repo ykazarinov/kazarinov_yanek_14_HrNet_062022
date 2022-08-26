@@ -10,6 +10,7 @@ import {afterEditSuccess} from "../slices/editEmployee.slice"
 import {setLocalEmployee} from "../slices/getAllEmployees.slice"
 import {setEditedEmployee} from "../slices/editEmployee.slice"
 import { getAllEmployees } from "../slices/getAllEmployees.slice";
+import {clearMessage} from "../slices/message"
 
 
 import loadable from '@loadable/component'
@@ -33,6 +34,7 @@ export default function Employees(){
  
     useEffect(()=>{
         dispatch(setSuccessFalse())
+        dispatch(clearMessage())
     }, [])
 
         //after create

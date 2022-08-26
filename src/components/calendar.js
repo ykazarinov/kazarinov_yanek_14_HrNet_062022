@@ -297,7 +297,7 @@ export default function Calendar(props){
                         dispatch(inputDateFromCalendar(frenchFormatDate(myDay, myMonth, myYear)))
                          e.target.value = inputDate
                     }
-                    dispatch(setClose())
+                    // dispatch(setClose())
                 }
                 }
                 onChange={(e)=>{

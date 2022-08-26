@@ -162,7 +162,10 @@ $themes: (
     }
 
     .#{$name}{
-
+        .lightbox{
+            background-color: $bgNormal;
+            color: $textNormal;
+        }
         
         background-color: $bgNormal;
 

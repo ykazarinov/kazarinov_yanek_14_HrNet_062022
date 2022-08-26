@@ -34,6 +34,7 @@ import loadable from '@loadable/component'
 const PaginCountSelect = loadable(() => import('./pagincountselect'));
 const Pagination = loadable(() => import('./pagination'));
 const Search = loadable(() => import('./search'));
+const OutsideAlerter = loadable(() => import("../components/outsidealerter"))
 
 export function byField(field, sortDirection) {
     let result
@@ -247,6 +248,7 @@ export default function Table(props){
 
     return (
         <div>
+            <OutsideAlerter myDispatch={closeModal}>
             <LightBox 
                 content={
                     <>
@@ -283,7 +285,9 @@ export default function Table(props){
                 close={<FontAwesomeIcon icon={faXmark} />}
                 onKeyDown={closeModal}
             ></LightBox>
+            </OutsideAlerter>
             {elemModalId2 !== null ?
+            <OutsideAlerter myDispatch={closeModal2}>
             <LightBox 
                 content={
                     <div className='uploadImgCont'>
@@ -306,6 +310,7 @@ export default function Table(props){
                 onClick={closeModal2}
                 close={<FontAwesomeIcon icon={faXmark} />}
             ></LightBox>
+            </OutsideAlerter>
             : null}
             <section className='above-table container'>
                 <div className='row'>

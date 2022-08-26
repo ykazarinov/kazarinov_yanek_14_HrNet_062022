@@ -238,21 +238,23 @@ export default function AddEmployee() {
     }
 
     return <main className={currentTheme}>
-        <LightBox
-            content={
-                <div className="error-container" tabIndex='1'>
-                    <div className="error-icon">
-                    
-                        <FontAwesomeIcon icon={faCircleExclamation} />
-                    
+        <OutsideAlerter myDispatch={closeModal}>
+            <LightBox
+                content={
+                    <div className="error-container" tabIndex='1'>
+                        <div className="error-icon">
+                        
+                            <FontAwesomeIcon icon={faCircleExclamation} />
+                        
+                        </div>
+                        {langData[18]}
                     </div>
-                    {langData[18]}
-                </div>
-            }
-            hidden={hidden3}
-            onClick={closeModal}
-            close={<FontAwesomeIcon icon={faXmark} />}
-        ></LightBox>
+                }
+                hidden={hidden3}
+                onClick={closeModal}
+                close={<FontAwesomeIcon icon={faXmark} />}
+            ></LightBox>
+        </OutsideAlerter>
         <div className="container">
             <div className="row">
                 <div className="col-12">
