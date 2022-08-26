@@ -12,6 +12,8 @@ import { transcription } from '../app.config';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
+import {setEditableEmployee} from "../slices/editEmployee.slice"
+
 import {patchEmployee} from '../slices/editEmployee.slice'
 import {setEditedEmployee} from '../slices/editEmployee.slice'
 
@@ -218,6 +220,7 @@ export default function AddEmployee() {
     }
 
     const clickAndImageDelete = (() => {
+        dispatch(setEditableEmployee(null))
         if (imageUrl !== '') {
             handleDeleteFile(imageUrl)
             dispatch(setImageUrl(''))
@@ -253,7 +256,10 @@ export default function AddEmployee() {
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    <h1 title={langData[0]} tabIndex={hidden3 ? '3': '-1'}>{langData[0]}</h1>
+                    {editableEmployee === null ?
+                        <h1 title={langData[0]} tabIndex={hidden3 ? '3': '-1'}>{langData[0]}</h1> :
+                        <h1 title={langData[21]} tabIndex={hidden3 ? '3': '-1'}>{langData[21]}</h1>
+                    }
                 </div>
             </div>
             <form className="row" onSubmit={handleSubmit}>

@@ -11,6 +11,9 @@ import {setLocalEmployee} from "../slices/getAllEmployees.slice"
 import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import {clearMessage} from "../slices/message"
 
+import {setEditableEmployee} from "../slices/editEmployee.slice"
+
+
 
 import loadable from '@loadable/component'
 const Table = loadable(() => import("../components/table"))
@@ -34,6 +37,8 @@ export default function Employees(){
     useEffect(()=>{
         dispatch(setSuccessFalse())
         dispatch(clearMessage())
+        dispatch(setEditableEmployee(null))
+        
     }, [])
 
     //after create

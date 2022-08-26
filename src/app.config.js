@@ -35,7 +35,8 @@ const transcription = [
                 'Delete photo',
                 'File format error! Choose an image file!',
                 'Image not selected',
-                'Image selected'
+                'Image selected',
+                'Edit employee',
             ],
             signin: [
                 'Sign In',
@@ -113,7 +114,8 @@ const transcription = [
                 'Supprimer la photo',
                 'Erreur de format de fichier! Choisissez un fichier image!',
                 'Image non sélectionnée',
-                'Image sélectionnée'
+                'Image sélectionnée',
+                'Modifier l\'employé'
             ],
             signin: [
                 'S\'identifier',
