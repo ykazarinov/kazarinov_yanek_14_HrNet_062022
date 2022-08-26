@@ -32,12 +32,13 @@ Cette société utilise une application web interne, appelée HRnet, qui gère l
 
 ### 1 Backend API
 
+-   Go to folder "hrnetserver" by command cd hrnetserver
 -   Run the Backend Api, which will then listen on port 4000 by default : npm run start:dev
 -   In the terminal window, you will see the message: Server OK DB ok
 
 ### 2 Frontend APP
 
--   Go to folder "HRNETNEW" by command cd HRNETNEW
+-   Go to folder "hrnetnew" by command cd hrnetnew
 
 You can run the development version:
 -   Run the application locally, which will then listen on port 3000 by default: npm run start
