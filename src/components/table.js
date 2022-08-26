@@ -27,7 +27,6 @@ import {API_REST_URL} from '../app.config'
 
 import {toFrenchFormatDate} from './calendar'
 import {LightBox} from '@artfish/lightbox'
-// import {useState} from "react"
 
 import loadable from '@loadable/component'
 
@@ -104,8 +103,6 @@ export default function Table(props){
     const langData = transcription.find(lng => lng.lang === currentLang).data.employees
     const {success} = useSelector((state)=>state.delEmployee)
 
-    const {editEmployeeSuccess} = useSelector((state)=>state.editEmployee)
-
     const {hidden1} = useSelector((state)=>state.modal1)
     const {hidden2} = useSelector((state)=>state.modal2)
     const {elemModalId1} = useSelector((state)=>state.modal1)
@@ -152,7 +149,6 @@ export default function Table(props){
     })
 
 
-
     //after delete
     useEffect(()=>{
 
@@ -164,10 +160,6 @@ export default function Table(props){
             dispatch(setSuccessFalse())
         }
     }, [dispatch, success])
-
-
-
-
 
 
     useEffect(()=>{
@@ -184,8 +176,6 @@ export default function Table(props){
     }, [sortedArray, paginCount])
     
 
-    // const [hidden, setHidden] = useState(true);
-    // const [elemId, setElemId] = useState(null)
     const openModal = (id) => {
       dispatch(setHidden1(false))
       dispatch(setElemModalId1(id))
@@ -200,8 +190,6 @@ export default function Table(props){
         dispatch(setHidden1(true))
     })
 
-    // const [hidden2, setHidden2] = useState(true);
-    // const [elemImg, setElemImg] = useState(null)
     const openModal2 = (img, id) => {
       dispatch(setHidden2(false))
       dispatch(setElemModalImage2(img))
@@ -456,7 +444,6 @@ export default function Table(props){
                                         aria-label={langData[17]}
                                         title={langData[17]}
                                         onClick={
-                                            // ()=>dispatch(deleteEmployee(emplObj._id))
                                             ()=>openModal(emplObj._id)
                                         }
                                         type='submit' 

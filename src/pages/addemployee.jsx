@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 
 import {patchEmployee} from '../slices/editEmployee.slice'
 import {setEditedEmployee} from '../slices/editEmployee.slice'
-import {setCreatedEmployee} from '../slices/employee.slice'
 
 import { faCircleUser, faXmark, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -76,7 +75,6 @@ export default function AddEmployee() {
         let formValuesForLocalUpdate = {}
 
         formValuesForCreate = {
-            // _id: editableEmployee !== null ? editableEmployee._id : '', 
             photo: imageUrl ? API_REST_URL + imageUrl: '',
             firstName: e.target.elements.firstName.value,
             lastName: e.target.elements.lastName.value,
@@ -94,8 +92,6 @@ export default function AddEmployee() {
                 departmentsList.find(val => val.departmentName === e.target.elements.department.value)._id :
                 null,
         }
-
-       
 
         formValuesForServerUpdate = (Object.assign([], formValuesForCreate))
         formValuesForServerUpdate.id = editableEmployee !== null ? editableEmployee._id : ''
@@ -120,7 +116,6 @@ export default function AddEmployee() {
        
         if(editableEmployee === null){
             dispatch(setEmployee(formValuesForCreate))
-            // dispatch(setCreatedEmployee(formValuesForLocalCreate))
         }else{
             dispatch(patchEmployee(formValuesForServerUpdate))
             dispatch(setEditedEmployee(formValuesForLocalUpdate))
@@ -273,13 +268,10 @@ export default function AddEmployee() {
                                         name='photo'
                                         type='file'
                                         accept="image/*"
-                                        // className='input-standart' 
                                         id="photo"
                                         onChange={handleChangeFile}
                                         ref={inputFileRef}
                                         hidden
-                                        // defaultValue={editableEmployee ? editableEmployee.photo : null}
-
 
                                     />
                                   

@@ -5,7 +5,7 @@ import authHeader from "../services/auth-header";
 // import { Formik, Field, Form, ErrorMessage } from "formik";
 // import * as Yup from "yup";
 import { login, rememberMe, signIn } from "../slices/auth";
-import { clearMessage } from "../slices/message";
+
 import { transcription } from '../app.config';
 import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import axios from "../axios";
@@ -48,7 +48,6 @@ const Login = (props) => {
   },[])
 
   useEffect(() => {
-    // dispatch(clearMessage());
     document.title = "HRNet - Sign-in Page"
   }, [dispatch]);
 

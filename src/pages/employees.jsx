@@ -8,7 +8,6 @@ import { resetCalendar1, resetCalendar2 } from "../slices/calendar.slice";
 import {setImageUrl, setFileType} from "../slices/file.slice"
 import {afterEditSuccess} from "../slices/editEmployee.slice"
 import {setLocalEmployee} from "../slices/getAllEmployees.slice"
-import {setEditedEmployee} from "../slices/editEmployee.slice"
 import { getAllEmployees } from "../slices/getAllEmployees.slice";
 import {clearMessage} from "../slices/message"
 
@@ -36,11 +35,6 @@ export default function Employees(){
         dispatch(setSuccessFalse())
         dispatch(clearMessage())
     }, [])
-
-        //after create
-    // useEffect(()=>{
-    //     dispatch(setLocalEmployee(employeesAfterLocalEdit()))
-    // },[])
 
     //after create
     useEffect(()=>{
@@ -84,16 +78,10 @@ export default function Employees(){
         
     }, [editEmployeeSuccess])
 
-
-
-    
     
     if (!isLoggedIn) {
         return <Navigate to="/" />;
     }
-
-
-    
 
     return <main className={currentTheme}>
         <div className='container'>
