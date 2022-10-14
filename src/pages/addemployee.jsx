@@ -94,15 +94,12 @@ export default function AddEmployee() {
                 departmentsList.find(val => val.departmentName === e.target.elements.department.value)._id :
                 null,
         }
-
         formValuesForServerUpdate = (Object.assign([], formValuesForCreate))
         formValuesForServerUpdate.id = editableEmployee !== null ? editableEmployee._id : ''
-      
 
         formValuesForLocalUpdate = (Object.assign([], formValuesForCreate))
         formValuesForLocalUpdate._id = editableEmployee !== null ? editableEmployee._id : ''
 
-        
             if(e.target.elements.state.value !== ''){
                 formValuesForLocalUpdate.state = []
                 formValuesForLocalUpdate.state[0] = statesList.find(val => val.stateName === e.target.elements.state.value)

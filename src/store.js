@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-
 import {calendarReducer1, calendarReducer2} from "./slices/calendar.slice"
 import { selectReducer1, selectReducer2, } from "./slices/select.slice"
 import { modalReducer1, modalReducer2, modalReducer3 } from "./slices/modal.slice"

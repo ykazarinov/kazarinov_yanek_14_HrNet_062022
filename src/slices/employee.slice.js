@@ -77,14 +77,6 @@ const newEmployeeSlice = createSlice({
     reducers: {
         setSuccessFalse: (state, action) => {
             state.createEmployeeSuccess = false
-            
-            // state.actualItem1 = 'Choose item...'
-            // state.actualItem2 = 'Choose item...'
-            // state.inputDate1 = ''
-            // state.inputDate2 = ''
-            // state.entities = '111'
-            
-
         },
         setImageUrl: (state, action) => {
             state.imageUrl = action.payload

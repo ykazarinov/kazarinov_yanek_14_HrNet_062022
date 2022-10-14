@@ -50,18 +50,12 @@ const delEmployeeSlice = createSlice({
     [deleteEmployee.fulfilled]: (state, action) => {
         state.loading = false
         state.success = action.payload
-       
-        
-
-        
     },
     [deleteEmployee.rejected]: (state) => {
         state.loading = false
-        
     },
     [deleteEmployee.pending]: (state) => {
         state.loading = true
-        
     },
 
   },

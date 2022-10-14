@@ -282,12 +282,14 @@ export default function Table(props){
                         <img 
                             src={elemModalImage2} 
                             alt={
-                                employeesState.find((elem) => (elem._id === elemModalId2)).firstName + ' ' +
-                                employeesState.find(elem => elem._id === elemModalId2).lastName
+                                employeesState.find((elem) => (elem._id === elemModalId2)) ?
+                                (employeesState.find((elem) => (elem._id === elemModalId2)).firstName + ' ' +
+                                employeesState.find(elem => elem._id === elemModalId2).lastName) : null
                             } 
                             title={
-                                employeesState.find((elem) => (elem._id === elemModalId2)).firstName + ' ' +
-                                employeesState.find(elem => elem._id === elemModalId2).lastName
+                                employeesState.find((elem) => (elem._id === elemModalId2)) ?
+                                (employeesState.find((elem) => (elem._id === elemModalId2)).firstName + ' ' +
+                                employeesState.find(elem => elem._id === elemModalId2).lastName) : null
                             }
                             
                             tabIndex='1' />
