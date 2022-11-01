@@ -56,5 +56,3 @@ You can also run the production version:
 ## Author information
 
 Kazarinov Yanek aka Artfish (https://artfish.pro)
-
--   Study at OpenClassrooms)
