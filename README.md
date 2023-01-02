@@ -2,6 +2,8 @@
 
 Cette société utilise une application web interne, appelée HRnet, qui gère les dossiers des employés.
 
+Demo: https://hrnet-five.vercel.app/
+
 ## Prerequisites
 
 -   NodeJS Version 10.19
@@ -54,5 +56,3 @@ You can also run the production version:
 ## Author information
 
 Kazarinov Yanek aka Artfish (https://artfish.pro)
-
--   Study at OpenClassrooms)
